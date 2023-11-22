@@ -254,7 +254,7 @@ public class DangNhap extends javax.swing.JFrame {
                     dispose();
                 }   
             }else{
-                JOptionPane.showMessageDialog(null, "Sai mật khẩu!", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Thông tin đăng nhập hoặc mật khẩu không hợp lệ!", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btn_DangNhapActionPerformed
