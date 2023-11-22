@@ -361,7 +361,7 @@ CREATE TABLE [dbo].[ThanhLySach] (
     [soLuongSachHong] [int] NULL,
     [lyDoThanhLy] [nvarchar](100) NULL,
     [ngayThanhLy] [date] NULL,
-    [ghiChu] [text] NULL,
+    [ghiChu] nvarchar(MAX) NULL,
     [tongTienThanhLy] [money] NOT NULL,
     PRIMARY KEY CLUSTERED (
         [maThanhLySach] ASC
@@ -488,6 +488,137 @@ as
 	END
 GO
 
+
+CREATE TRIGGER UpdateTienPhat
+	ON dbo.ChiTietPhieuMuon
+	AFTER UPDATE
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		DECLARE @maPhieuMuon varchar(5), @maSach varchar(5), @ngayThucTra date, @tinhTrangSach nvarchar(100), @tinhTrangSachHienTai nvarchar(100);
+		DECLARE @giaTienSach money, @tienPhat money, @tienboithuong money, @soLuongMuon int, @soNgayTre  int;
+		DECLARE @matDoHai int;
+
+		-- Lấy thông tin từ bảng Inserted
+		SELECT @maPhieuMuon = i.maPhieuMuon, @maSach = i.maSach, @ngayThucTra = i.ngayThucTra, @tinhTrangSach = i.tinhTrangSach
+		FROM inserted i;
+
+		-- Lấy mức độ hư hỏng từ tình trạng sách
+		SET @matDoHai = CASE 
+			WHEN @tinhTrangSach = N'Mất' THEN -1
+			WHEN @tinhTrangSach IN (N'Bình thường', N'Hư hỏng mức ít', N'Hư hỏng mức vừa', N'Hư hỏng mức nhiều', N'Hư hỏng mức nghiêm trọng') THEN
+				CASE @tinhTrangSach
+					WHEN N'Hư hỏng mức ít' THEN 1
+					WHEN N'Hư hỏng mức vừa' THEN 2
+					WHEN N'Hư hỏng mức nhiều' THEN 3
+					WHEN N'Hư hỏng mức nghiêm trọng' THEN 4
+					ELSE 0
+				END
+			ELSE 0
+		END;
+		-- Lấy giá tiền sách từ bảng ThongTinSach
+		SELECT @giaTienSach = ts.giaTienSach
+		FROM dbo.ThongTinSach ts
+		WHERE ts.maSach = @maSach;
+		-- Tính toán số ngày trễ hạn
+		SET @soNgayTre = DATEDIFF(day, (SELECT hanTraSach FROM dbo.PhieuMuon WHERE maPhieuMuon = @maPhieuMuon), @ngayThucTra);
+
+		IF UPDATE(ngayThucTra) and update (tinhTrangSach)
+		BEGIN
+		
+			-- Tính tiền trễ hạn
+			IF @soNgayTre > 0
+			BEGIN
+				
+					SET @tienPhat = @soNgayTre * 1000;   
+			END
+			ELSE
+			BEGIN
+				SET @tienPhat = 0;
+			END
+			-- Tính toán tiền phạt dựa trên điều kiện và số ngày trễ hạn
+			IF @matDoHai = -1
+				SET @tienboithuong = @giaTienSach * 1.2
+			ELSE
+				IF @matDoHai > 0
+					SET @tienboithuong = @giaTienSach * 0.05 + 0.1 * (POWER(2, @matDoHai - 1) - 1);
+				ELSE
+					SET @tienboithuong = 0;
+
+			-- Cập nhật tienPhat trong bảng ChiTietPhieuMuon
+			IF @soNgayTre > 0
+			BEGIN
+				
+				UPDATE dbo.ChiTietPhieuMuon
+				SET tinhTrangSach = @tinhTrangSach+', (' + CAST(@soNgayTre AS varchar(5)) + N' ngày trễ)', tienPhat = @tienPhat + @tienboithuong
+				WHERE maPhieuMuon = @maPhieuMuon AND maSach = @maSach; 
+			END
+			else
+			begin
+				UPDATE dbo.ChiTietPhieuMuon
+				set tienPhat = @tienPhat + @tienboithuong
+				WHERE maPhieuMuon = @maPhieuMuon AND maSach = @maSach; 
+			end
+
+
+
+
+			-- Cập nhật soLuongMuon trong bảng TaiKhoan
+			UPDATE dbo.TaiKhoan
+			SET soLuongMuon = soLuongMuon - 1
+			WHERE maTaiKhoan = (SELECT maTaiKhoan FROM dbo.PhieuMuon WHERE maPhieuMuon = @maPhieuMuon);
+
+			-- Cập nhật KhoSach
+			IF @matDoHai > 0
+				UPDATE dbo.KhoSach
+				SET soLuongSachHong = soLuongSachHong + 1
+				WHERE maSach = @maSach;
+			ELSE if @matDoHai = 0
+				UPDATE dbo.KhoSach
+				SET soLuongCon = soLuongCon + 1
+				WHERE maSach = @maSach;
+		end
+		IF update (tinhTrangSach)
+		BEGIN
+			-- Tính tiền trễ hạn
+			IF @soNgayTre > 0
+			BEGIN
+				
+					SET @tienPhat = @soNgayTre * 5000;   
+			END
+			ELSE
+			BEGIN
+				SET @tienPhat = 0;
+			END
+			-- Tính toán tiền phạt dựa trên điều kiện và số ngày trễ hạn
+			IF @matDoHai = -1
+				SET @tienboithuong = @giaTienSach * 1.2
+       			ELSE
+            			IF @matDoHai > 0
+                			SET @tienboithuong = @giaTienSach * 0.05 + 0.1 * (POWER(2, @matDoHai - 1) - 1);
+           			ELSE
+                			SET @tienboithuong = 0;
+
+			-- Cập nhật tienPhat trong bảng ChiTietPhieuMuon
+			IF @soNgayTre > 0
+			BEGIN
+				
+				UPDATE dbo.ChiTietPhieuMuon
+				SET tinhTrangSach = @tinhTrangSach+', (' + CAST(@soNgayTre AS varchar(5)) + N' ngày trễ)', tienPhat = @tienPhat + @tienboithuong
+				WHERE maPhieuMuon = @maPhieuMuon AND maSach = @maSach; 
+			END
+			else
+			begin
+				UPDATE dbo.ChiTietPhieuMuon
+				set tienPhat = @tienPhat + @tienboithuong
+				WHERE maPhieuMuon = @maPhieuMuon AND maSach = @maSach; 
+			end
+		end
+	END
+	go
+
+
 CREATE TRIGGER tr_nextMaPhieuNhap ON dbo.PhieuNhapSach
 FOR INSERT
 AS
@@ -498,6 +629,54 @@ BEGIN
     UPDATE PhieuNhapSach SET maPhieuNhap = dbo.func_nextID(@lastIdMaPhieuNhap, 'PN', 5) WHERE maPhieuNhap = ''
 END
 go
+
+/******************************* TỰ ĐỘNG TĂNG MÃ Thanh lý *******************/
+CREATE TABLE ThanhLySachCounter (
+    Counter INT
+);
+
+INSERT INTO ThanhLySachCounter (Counter) VALUES (1);
+
+Go
+CREATE TRIGGER tr_ThanhLySach_Insert
+ON [dbo].[ThanhLySach]
+INSTEAD OF INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @Counter INT;
+    DECLARE @Prefix NVARCHAR(2) = 'TL';
+
+    SELECT @Counter = Counter FROM ThanhLySachCounter;
+
+    INSERT INTO [dbo].[ThanhLySach] (
+        [maThanhLySach],
+	[maQuanLy],
+        [maSach],
+        [soLuongSachHong],
+        [lyDoThanhLy],
+        [ngayThanhLy],
+        [ghiChu],
+        [tongTienThanhLy]
+    )
+    SELECT
+        @Prefix + RIGHT('000' + CAST(@Counter AS NVARCHAR(3)), 3),
+	[maQuanLy],
+        [maSach],
+        [soLuongSachHong],
+        [lyDoThanhLy],
+        [ngayThanhLy],
+        [ghiChu],
+        [tongTienThanhLy]
+    FROM inserted;
+
+    SET @Counter = @Counter + 1;
+
+    UPDATE ThanhLySachCounter SET Counter = @Counter;
+END;
+go
+
 CREATE TRIGGER tr_updateSoLuongNhapSach ON dbo.ChiTietPhieuNhapSach
 FOR INSERT
 AS
@@ -599,16 +778,16 @@ INSERT [dbo].[ThongTinSach] ([maSach], [tenSach], [maDMSach], [maTheLoai],[maTac
 INSERT INTO [dbo].[LoaiThe] ([maLoaiThe], [tenLoaiThe], [soSachDuocMuon], [thoiGianDuocMuonToiDa], [giaTienGiaHan]) VALUES (N'3000', N'Cán Bộ Giảng Viên', 25, 90, 100000)
 INSERT INTO [dbo].[LoaiThe] ([maLoaiThe], [tenLoaiThe], [soSachDuocMuon], [thoiGianDuocMuonToiDa], [giaTienGiaHan]) VALUES (N'3200', N'Học Sinh - Sinh Viên',10, 20, 100000)
 
-INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141001', N'abc123', N'3200', N'Phạm Văn Tâm', CAST(N'2001-09-02' AS Date), N'Nam', N'phamvantam@gmail.com', N'0776155064', N' 495/18 Tô Hiến Thành, Phường 14 , Quận 10 ',  CAST(N'2023-01-01' AS Date), CAST(N'2023-12-31' AS Date ), 1, 0)
-INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141002', N'abc123', N'3200', N'Hà Nguyễn Yến Vy', CAST(N'2001-07-09' AS Date), N'Nữ', N'hanguyenyenvy@gmail.com', N'0777443873',N' 336 Trần Xuân Soạn, Tân Hưng , Quận 7' , CAST(N'2023-01-05' AS Date), CAST(N'2023-12-31' AS Date ),1, 2)
-INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312041001', N'abc123', N'3000', N'Nguyễn Bá Sĩ Trâm', CAST(N'2001-07-09' AS Date), N'Nam', N'nguyenbasitram@gmail.com', N'0795841141',N' 793 Trần Xuân Soạn, Tân Hưng , Quận 7 ', CAST(N'2023-01-13' AS Date), CAST(N'2023-12-31' AS Date ), 1, 0)
-INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141003', N'abc123', N'3200', N'Phan Thị Anh Thư', CAST(N'2001-07-09' AS Date), N'Nữ', N'phanthianhthu@gmail.com', N'0375141345',N' 628/12 Phan Văn Trị ,Phường 10, Gò Vấp', CAST(N'2023-02-03' AS Date), CAST(N'2024-02-03' AS Date ), 1, 0)
-INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312041002', N'abc123', N'3000', N'Nguyễn Thanh Tiến', CAST(N'2001-07-09' AS Date), N'Nam', N'thanhtien123@gmail.com', N'0779997865', N' 235/2 Nguyễn Văn Cừ, Phường Nguyễn Cư Trinh , Quận 1', CAST(N'2023-02-10' AS Date), CAST(N'2024-02-10' AS Date ), 1, 2)
-INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141004', N'abc123', N'3200', N'Trương Tiến Anh', CAST(N'2001-07-09' AS Date), N'Nam', N'tienanh7723@gmail.com', N'0901345667', N' 1050 Tạ Quang Bửu, Phường 6 , Quận 8', CAST(N'2023-01-20' AS Date), CAST(N'2023-12-31' AS Date ),1, 0)
-INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141005', N'abc123', N'3200', N'Nguyễn Quang Tuấn Nghĩa', CAST(N'2001-07-09' AS Date), N'Nam', N'tuannghia@gmail.com', N'0366123421',N' 74 Trần Hưng Đạo, Phường 7, Quận 5',  CAST(N'2023-03-18' AS Date), CAST(N'2024-03-30' AS Date ),1, 2)
-INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141006', N'abc123', N'3200', N'Trần Hồng Quang', CAST(N'2001-07-09' AS Date), N'Nam', N'hongquang@gmail.com', N'0789901451', N' 1001 Đường Cách Mạng Tháng 8 , Phường 5, Quận Tân Bình', CAST(N'2023-09-05' AS Date), CAST(N'2024-09-30' AS Date ), 1, 2)
+INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141001', N'abc1231', N'3200', N'Phạm Văn Tâm', CAST(N'2001-09-02' AS Date), N'Nam', N'phamvantam@gmail.com', N'0776155064', N' 495/18 Tô Hiến Thành, Phường 14 , Quận 10 ',  CAST(N'2023-01-01' AS Date), CAST(N'2023-12-31' AS Date ), 1, 0)
+INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141002', N'abc1232', N'3200', N'Hà Nguyễn Yến Vy', CAST(N'2001-07-09' AS Date), N'Nữ', N'hanguyenyenvy@gmail.com', N'0777443873',N' 336 Trần Xuân Soạn, Tân Hưng , Quận 7' , CAST(N'2023-01-05' AS Date), CAST(N'2023-12-31' AS Date ),1, 2)
+INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312041001', N'abc1233', N'3000', N'Nguyễn Bá Sĩ Trâm', CAST(N'2001-07-09' AS Date), N'Nam', N'nguyenbasitram@gmail.com', N'0795841141',N' 793 Trần Xuân Soạn, Tân Hưng , Quận 7 ', CAST(N'2023-01-13' AS Date), CAST(N'2023-12-31' AS Date ), 1, 0)
+INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141003', N'abc1234', N'3200', N'Phan Thị Anh Thư', CAST(N'2001-07-09' AS Date), N'Nữ', N'phanthianhthu@gmail.com', N'0375141345',N' 628/12 Phan Văn Trị ,Phường 10, Gò Vấp', CAST(N'2023-02-03' AS Date), CAST(N'2024-02-03' AS Date ), 1, 0)
+INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312041002', N'abc1235', N'3000', N'Nguyễn Thanh Tiến', CAST(N'2001-07-09' AS Date), N'Nam', N'thanhtien123@gmail.com', N'0779997865', N' 235/2 Nguyễn Văn Cừ, Phường Nguyễn Cư Trinh , Quận 1', CAST(N'2023-02-10' AS Date), CAST(N'2024-02-10' AS Date ), 1, 2)
+INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141004', N'abc1236', N'3200', N'Trương Tiến Anh', CAST(N'2001-07-09' AS Date), N'Nam', N'tienanh7723@gmail.com', N'0901345667', N' 1050 Tạ Quang Bửu, Phường 6 , Quận 8', CAST(N'2023-01-20' AS Date), CAST(N'2023-12-31' AS Date ),1, 0)
+INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141005', N'abc1237', N'3200', N'Nguyễn Quang Tuấn Nghĩa', CAST(N'2001-07-09' AS Date), N'Nam', N'tuannghia@gmail.com', N'0366123421',N' 74 Trần Hưng Đạo, Phường 7, Quận 5',  CAST(N'2023-03-18' AS Date), CAST(N'2024-03-30' AS Date ),1, 2)
+INSERT [dbo].[TaiKhoan] ([maTaiKhoan], [matKhau], [loaiTaiKhoan], [tenNguoiDung], [ngaySinh], [gioiTinh], [email], [sdt], [diaChi], [ngayMoThe], [hanSuDung], [trangThai], [soLuongMuon]) VALUES (N'312141006', N'abc1238', N'3200', N'Trần Hồng Quang', CAST(N'2001-07-09' AS Date), N'Nam', N'hongquang@gmail.com', N'0789901451', N' 1001 Đường Cách Mạng Tháng 8 , Phường 5, Quận Tân Bình', CAST(N'2023-09-05' AS Date), CAST(N'2024-09-30' AS Date ), 1, 2)
 
-INSERT [dbo].[QuanLy] ([maQuanLy], [matKhau], [tenQuanLy], [ngaySinh], [gioiTinh], [diaChi], [sdt], [email], [trangThai]) VALUES (N'101010', N'abc123', N'ADMIN', CAST(N'1990-07-02' AS Date), N'Nam', N'TP.Hồ Chí Minh', N'0773123889', N'admin@gmail.com', 1)
+INSERT [dbo].[QuanLy] ([maQuanLy], [matKhau], [tenQuanLy], [ngaySinh], [gioiTinh], [diaChi], [sdt], [email], [trangThai]) VALUES (N'101010', N'admin123', N'ADMIN', CAST(N'1990-07-02' AS Date), N'Nam', N'TP.Hồ Chí Minh', N'0773123889', N'admin@gmail.com', 1)
 INSERT [dbo].[QuanLy] ([maQuanLy], [matKhau], [tenQuanLy], [ngaySinh], [gioiTinh], [diaChi], [sdt], [email], [trangThai]) VALUES (N'101011', N'abc123', N'THỦ THƯ', CAST(N'1997-02-28' AS Date), N'Nữ', N'TP.Hồ Chí Minh', N'0795841141', N'thuthu@gmail.com', 1)
 
 INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM001', CAST(N'2023-08-10' AS Date), 7, CAST(N'2023-08-17' AS Date), 2 , N'312141002', N'101010 ', N'', N'Chưa trả')
@@ -653,11 +832,11 @@ INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTa
 INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN002',N'S0029',N'Vật lý đại cương',N'TG006',N'TL002',N'NXB Giáo dục',2023,15,176000)
 INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN002',N'S0030',N'Hóa học đại cương',N'TG012',N'TL003',N'NXB Giáo dục',2023,15, 97000)
 
-INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL002', N'101011', N'S0001', 2, N'Sách bị cũ', CAST(N'2023-08-13' AS Date) , N'Không có',20000)
-INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL003', N'101011', N'S0002', 3, N'Sách bị mốc', CAST(N'2023-08-14'AS Date), N'Không có',525000)
-INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL004', N'101011', N'S0003', 4, N'Sách bị mất trang', CAST(N'2023-08-15'AS Date), N'Không có',150000)
-INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL005', N'101011', N'S0004', 5, N'Sách bị lỗi in', CAST(N'2023-08-16'AS Date), N'Không có',224000)
-INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL006', N'101011', N'S0005', 6, N'Sách bị cháy', CAST(N'2023-08-17' AS Date), N'Không có',632000)
+INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL002', N'101011', N'S0001', 2, N'Hư hỏng mức ít', CAST(N'2023-08-13' AS Date) ,N'Sách bị cũ',20000)
+INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL003', N'101011', N'S0002', 3, N'Hư hỏng mức độ vừa', CAST(N'2023-08-14'AS Date), N'Sách bị mốc',525000)
+INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL004', N'101011', N'S0003', 4, N'Hư hỏng mức độ nhiều', CAST(N'2023-08-15'AS Date), N'Sách bị mất trang',150000)
+INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL005', N'101011', N'S0004', 5, N'Hư hỏng mức độ nhiều', CAST(N'2023-08-16'AS Date), N'Sách bị lỗi in',224000)
+INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL006', N'101011', N'S0005', 6, N'Hư hỏng nghiêm trọng', CAST(N'2023-08-17' AS Date), N'Sách bị cháy',632000)
 
 ALTER TABLE [dbo].[QuanLy] ADD  DEFAULT ('1') FOR [trangThai]
 GO
