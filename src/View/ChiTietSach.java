@@ -11,13 +11,10 @@ package View;
  */
 public class ChiTietSach extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ChiTietSach
-     */
-
-    public ChiTietSach() {
+    private String userID;
+    public ChiTietSach(String userID) {
+        this.userID = userID;
         initComponents();
-
     }
 
     @SuppressWarnings("unchecked")
@@ -314,7 +311,8 @@ public class ChiTietSach extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThoatCTActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnThoatCTActionPerformed
-        this.dispose();
+        new TrangChuDocGia(userID).setVisible(true);
+        this.setVisible(false);
     }// GEN-LAST:event_btnThoatCTActionPerformed
 
     private void btnThemMuonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnThemMuonActionPerformed

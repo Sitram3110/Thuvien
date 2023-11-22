@@ -149,6 +149,32 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
         }
         return result;
     }
+    public List<PhieuMuon> selectByUserId(String maTaiKhoan) {
+        List<PhieuMuon> rowSelected = new ArrayList<>();
+        String sql = "SELECT * FROM dbo.[PhieuMuon] WHERE maTaiKhoan = ?";
+        try (Connection conn = KetNoiSQL.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setString(1, maTaiKhoan);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                String maPhieuMuon = rs.getString("maPhieuMuon");
+                LocalDate ngayMuon = rs.getDate("ngayMuon").toLocalDate();
+                int soNgayMuon = rs.getInt("soNgayMuon");
+                LocalDate hanTraSach = rs.getDate("hanTraSach").toLocalDate();
+                int soLuongSach = rs.getInt("soLuongSach");
+                String maTaikhoan = rs.getString("maTaikhoan");
+                String maQuanly = rs.getString("maQuanly");
+                String ghiChu = rs.getString("ghiChu");
+                String trangThai = rs.getString("trangThai");
+                PhieuMuon phieuMuon = new PhieuMuon(maPhieuMuon, ngayMuon, soNgayMuon, hanTraSach, soLuongSach,
+                        maTaikhoan, maQuanly, ghiChu, trangThai);
+                rowSelected.add(phieuMuon);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rowSelected;
+    }
     public List<String> selectAllMaCanBo() {
         List<String > rowSelected = new ArrayList<>();
         try (Connection conn = KetNoiSQL.getConnection();
