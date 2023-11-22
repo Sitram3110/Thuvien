@@ -5,9 +5,13 @@
  */
 package View;
 
+import DAO.DanhMucSach_DAO;
 import DAO.KhoSach_DAO;
+import DAO.PhanLoaiSach_DAO;
 import DAO.Sach_DAO;
+import DTO.DanhMucSach;
 import DTO.KhoSach;
+import DTO.PhanLoaiSach;
 import DTO.Sach;
 //import Service.Sach_Service;
 
@@ -49,7 +53,6 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
         setTableData_Sach(Sach_DAO.getInstance().selectAll());
 
     }
-
     private void setTableData_Sach(List<Sach> listSach) {
         for (Sach sach : listSach) {
             KhoSach khoSach = KhoSach_DAO.getInstance().selectById(sach.getMaSach());

@@ -5,6 +5,20 @@
  */
 package View;
 
+import DAO.ChiTietPhieuMuon_DAO;
+import DAO.KhoSach_DAO;
+import DAO.PhieuMuon_DAO;
+import DAO.Sach_DAO;
+import DTO.ChiTietPhieuMuon;
+import DTO.KhoSach;
+import DTO.PhieuMuon;
+import DTO.Sach;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import java.util.List;
+
 /**
  *
  * @author Windows 10
@@ -14,13 +28,62 @@ public class TrangChuDocGia extends javax.swing.JFrame {
     /**
      * Creates new form MuonSach
      */
+    DefaultTableModel defaultTableModel_Sach;
+    DefaultTableModel defaultTableModel_CTPM;
+    private String userID;
     
-    
-    
-    public TrangChuDocGia() {
+    public TrangChuDocGia(String userID) {
+        this.userID = userID;
+
         initComponents();
+        loadChiTietPhieuMuon();
+        defaultTableModel_Sach = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tblDanhMucSach.setModel(defaultTableModel_Sach);
+        tblDanhMucSach.setCellSelectionEnabled(true);
+        defaultTableModel_Sach.addColumn("Mã sách");
+        defaultTableModel_Sach.addColumn("Tên sách");
+        defaultTableModel_Sach.addColumn("Số lượng còn");
+        setTableData_Sach(Sach_DAO.getInstance().selectAll());
+
     }
-   
+    public void loadChiTietPhieuMuon() {
+        defaultTableModel_CTPM = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tblDSMuon1.setModel(defaultTableModel_CTPM);
+        defaultTableModel_CTPM.addColumn("Mã phiếu mượn");
+        defaultTableModel_CTPM.addColumn("Ngày mượn");
+        defaultTableModel_CTPM.addColumn("Hạn trả");
+        defaultTableModel_CTPM.addColumn("Số lượng sách");
+        defaultTableModel_CTPM.addColumn("Trạng Thái");
+        List<PhieuMuon> chiTietPhieuNhapSaches = PhieuMuon_DAO.getInstance().selectByUserId(userID);
+        for (PhieuMuon ctpns : chiTietPhieuNhapSaches) {
+            defaultTableModel_CTPM
+                    .addRow(new Object[] { ctpns.getMaPhieuMuon(), ctpns.getNgayMuon(), ctpns.getHanTraSach(), ctpns.getSoLuongSach(), ctpns.getTrangThai() });
+        }
+    }
+
+    private void setTableData_Sach(List<Sach> listSach) {
+        for (Sach sach : listSach) {
+            KhoSach khoSach = KhoSach_DAO.getInstance().selectById(sach.getMaSach());
+            defaultTableModel_Sach.addRow(new Object[] { sach.getMaSach(), sach.getTenSach(), khoSach.getSoLuongCon() });
+        }
+    }
+    private void timkiemSach(String query) {
+        TableRowSorter<DefaultTableModel> tbl = new TableRowSorter<DefaultTableModel>(defaultTableModel_Sach);
+        tblDanhMucSach.setRowSorter(tbl);
+        tbl.setRowFilter(RowFilter.regexFilter(query));
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,17 +137,22 @@ public class TrangChuDocGia extends javax.swing.JFrame {
             }
         });
 
-        cbbDanhMuc.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cbbDanhMuc.setFont(new java.awt.Font("Times New Roman", 0, 18));
+        cbbDanhMuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm theo danh mục",
+                "Chuyên ngành Điện-Điện tử", "Chuyên ngành Cơ khí", "Chuyên ngành Công nghệ thông tin",
+                "Chuyên ngành Xây dựng", "Sách Tiếng Anh", "Kỹ năng sống" }));// NOI18N
         cbbDanhMuc.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbDanhMucItemStateChanged(evt);
             }
         });
 
-        cbbTheLoai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cbbTheLoai.setFont(new java.awt.Font("Times New Roman", 0, 18));
+        cbbTheLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm theo thể loại", "Giáo trình học",
+                "Sách tham khảo", "Văn hóa lịch sử", "Chính trị, Pháp luật", "Tạp chí" }));// NOI18N
         cbbTheLoai.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbDanhMucItemStateChanged(evt);
+                cbbTheLoaiItemStateChanged(evt);
             }
         });
 
@@ -325,23 +393,56 @@ public class TrangChuDocGia extends javax.swing.JFrame {
         new DangNhap().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
-
 //Chức năng tra cứu sách
     private void btnXemCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemCTActionPerformed
-        new ChiTietSach().setVisible(true);
+        new ChiTietSach(userID).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnXemCTActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-
+        txtTimSach.setText("");
+        timkiemSach("");
+        setTableData_Sach(Sach_DAO.getInstance().selectAll());
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void cbbDanhMucItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbDanhMucItemStateChanged
-
+        String DM = "DM00";
+        int index = cbbDanhMuc.getSelectedIndex();
+        if (index == 0)
+            return;
+        DM += Integer.toString(index);
+        // List<sach_th> sachByCate = getSach.getSachByCategory(DM);
+        List<Sach> sachByCate = Sach_DAO.getInstance().selectByCategory(DM);
+        DefaultTableModel sachtb = (DefaultTableModel) tblDanhMucSach.getModel();
+        sachtb.setRowCount(0);
+        int i = 0;
+        for (Sach s : sachByCate) {
+            i++;
+            KhoSach khoSach = KhoSach_DAO.getInstance().selectById(s.getMaSach());
+            sachtb.addRow(new Object[] { i, s.getTenSach(), s.getTenTacGia(), s.getNXB(),
+                    khoSach.getSoLuongCon() });
+        }
     }//GEN-LAST:event_cbbDanhMucItemStateChanged
-
+    private void cbbTheLoaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbDanhMucItemStateChanged
+        String TL = "TL00";
+        int index = cbbTheLoai.getSelectedIndex();
+        if (index == 0)
+            return;
+        TL += Integer.toString(index);
+        List<Sach> sachBytheloai = Sach_DAO.getInstance().selectByGenre(TL);
+        DefaultTableModel sachtb = (DefaultTableModel) tblDanhMucSach.getModel();
+        sachtb.setRowCount(0);
+        int i = 0;
+        for (Sach s : sachBytheloai) {
+            i++;
+            KhoSach khoSach = KhoSach_DAO.getInstance().selectById(s.getMaSach());
+            sachtb.addRow(new Object[] { i, s.getTenSach(), s.getTenTacGia(), s.getNXB(),
+                    khoSach.getSoLuongCon() });
+        }
+    }//GEN-LAST:event_cbbDanhMucItemStateChanged
     private void txtTimSachKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimSachKeyReleased
-
+        String query = txtTimSach.getText();
+        timkiemSach(query);
     }//GEN-LAST:event_txtTimSachKeyReleased
 
     

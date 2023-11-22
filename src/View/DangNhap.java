@@ -249,7 +249,7 @@ public class DangNhap extends javax.swing.JFrame {
                     frameThuthu.setVisible(true);
                     dispose();
                 }else{
-                    TrangChuDocGia frameDocgia = new TrangChuDocGia();
+                    TrangChuDocGia frameDocgia = new TrangChuDocGia(txt_tenDangNhap.getText());
                     frameDocgia.setVisible(true);
                     dispose();
                 }   
