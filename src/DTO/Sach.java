@@ -5,10 +5,6 @@
  */
 package DTO;
 
-/**
- *
- * @author KHP2T
- */
 public class Sach {
     private String maSach = "";
     private String tenSach;
@@ -20,14 +16,17 @@ public class Sach {
     private int namXuatBan;
     private double giaTienSach;
     private String tinhTrangSach;
-    private String tomTatND ;
+    private String tomTatND;
 
     public Sach() {
     }
-    public Sach(String maSach){
+
+    public Sach(String maSach) {
         this.maSach = maSach;
     }
-    public Sach(String maSach, String tenSach, String maDMSach, String maTheLoai, String maTacGia, String tenTacGia, String NXB, int namXuatBan, double giaTienSach, String tinhTrangSach, String tomTatND) {
+
+    public Sach(String maSach, String tenSach, String maDMSach, String maTheLoai, String maTacGia, String tenTacGia,
+            String NXB, int namXuatBan, double giaTienSach, String tinhTrangSach, String tomTatND) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.maDMSach = maDMSach;
@@ -40,7 +39,9 @@ public class Sach {
         this.tinhTrangSach = tinhTrangSach;
         this.tomTatND = tomTatND;
     }
-    public Sach (String maSach, String tenSach, String maTacGia, String tenTacGia, String maTheLoai, String nxb, int namXuatBan) {
+
+    public Sach(String maSach, String tenSach, String maTacGia, String tenTacGia, String maTheLoai, String nxb,
+            int namXuatBan) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.maTheLoai = maTheLoai;
@@ -49,6 +50,7 @@ public class Sach {
         this.NXB = nxb;
         this.namXuatBan = namXuatBan;
     }
+
     public String getMaTacGia() {
         return maTacGia;
     }
@@ -144,6 +146,5 @@ public class Sach {
     public void setTomTatND(String tomTatND) {
         this.tomTatND = tomTatND;
     }
-    
-    
+
 }
