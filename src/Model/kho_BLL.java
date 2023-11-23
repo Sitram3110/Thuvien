@@ -48,9 +48,14 @@ public class kho_BLL {
     }
     
     public boolean update (KhoSach khoSach){
+        KhoSach khosachnow = khodal.getKhoSachIntoId(khoSach.getMaSach()).get(0);
         if(khoSach.getSoLuongCon() < 0 || khoSach.getSoLuongCon() > khoSach.getTongSoLuong() || khoSach.getSoLuongSachHong()< 0 || khoSach.getSoLuongSachHong() > khoSach.getTongSoLuong()){
             return false;
         }else if(khoSach.getSoLuongCon()+khoSach.getSoLuongSachHong() > khoSach.getTongSoLuong()){
+            return false;
+        }else if(khoSach.getSoLuongCon() == khosachnow.getSoLuongCon()
+                && khoSach.getTongSoLuong()== khosachnow.getTongSoLuong()
+                && khoSach.getSoLuongSachHong() == khosachnow.getSoLuongSachHong()){
             return false;
         }
         else{

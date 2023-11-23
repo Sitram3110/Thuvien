@@ -49,6 +49,38 @@ public class khosach_DAL {
         }
         return khoSachs;
     }
+    
+    public List<KhoSach> getKhoSachIntoId(String id){
+        List<KhoSach> khoSachs = new ArrayList<KhoSach>();
+        Connection connection = KetNoiSQL.getConnection();
+        try {
+            Statement statement = connection.createStatement();
+            String query = "select * from Khosach WHERE maSach = '"+id+"'";
+            System.out.println(query);
+			
+            ResultSet rss =  statement.executeQuery(query);
+			
+            while(rss.next()) {
+                String Masach = rss.getString("maSach");
+                int tongsoluong = rss.getInt("tongSoLuong");
+                int soluongcon = rss.getInt("soLuongCon");
+                int sachhong = rss.getInt("soLuongSachHong");
+                
+                    
+                KhoSach khoSach = new KhoSach(Masach, tongsoluong, soluongcon, sachhong );
+                khoSachs.add(khoSach);
+            }
+            rss.close();
+            statement.close();
+            connection.close();
+            return khoSachs;
+			
+        } catch (SQLException e) {
+		System.out.println(e);
+        }
+        return khoSachs;
+    } 
+    
 
     public void update(KhoSach khoSach) {
         Connection connection = KetNoiSQL.getConnection();
