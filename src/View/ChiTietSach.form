@@ -8,7 +8,7 @@
   </Properties>
   <AccessibilityProperties>
     <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
-      <ComponentRef name="btnThemMuon"/>
+      <ComponentRef name="default"/>
     </Property>
   </AccessibilityProperties>
   <SyntheticProperties>
@@ -51,54 +51,38 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <EmptySpace min="-2" pref="223" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="190" max="-2" attributes="0"/>
-                          <Component id="btnThemMuon" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnThoatCT" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="223" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel4" alignment="1" min="-2" pref="139" max="-2" attributes="0"/>
-                                          <Component id="jLabel6" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
-                                          <Component id="jLabel8" min="-2" pref="139" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="jLabel10" min="-2" pref="139" max="-2" attributes="0"/>
-                                      <Component id="jLabel12" min="-2" pref="90" max="-2" attributes="0"/>
-                                      <Component id="jLabel13" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lblNXB" min="-2" pref="194" max="-2" attributes="0"/>
-                                              <Component id="lblTacGia" min="-2" pref="177" max="-2" attributes="0"/>
-                                              <Component id="lblNamXB" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
-                                              <Component id="lblDanhMuc" min="-2" pref="212" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <Component id="lblTheLoai" min="-2" pref="220" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Component id="lblTheLoai1" max="32767" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel4" alignment="1" min="-2" pref="139" max="-2" attributes="0"/>
+                                  <Component id="jLabel6" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" min="-2" pref="139" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="jLabel10" min="-2" pref="139" max="-2" attributes="0"/>
+                              <Component id="jLabel12" min="-2" pref="90" max="-2" attributes="0"/>
+                              <Component id="jLabel13" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblNXB" min="-2" pref="194" max="-2" attributes="0"/>
+                              <Component id="lblTacGia" min="-2" pref="177" max="-2" attributes="0"/>
+                              <Component id="lblNamXB" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
+                              <Component id="lblDanhMuc" min="-2" pref="212" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jScrollPane2" min="-2" pref="338" max="-2" attributes="0"/>
-                                      <Component id="jLabel14" min="-2" pref="175" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblTheLoai" min="-2" pref="220" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
+                              <Component id="lblTheLoai1" max="32767" attributes="0"/>
                           </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPane2" min="-2" pref="338" max="-2" attributes="0"/>
+                              <Component id="jLabel14" min="-2" pref="175" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
@@ -107,6 +91,11 @@
                   <EmptySpace min="-2" pref="190" max="-2" attributes="0"/>
                   <Component id="lblTenSach" min="-2" pref="481" max="-2" attributes="0"/>
                   <EmptySpace pref="121" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="btnThoatCT" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -150,10 +139,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnThemMuon" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnThoatCT" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="btnThoatCT" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -187,20 +173,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThoatCTActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnThemMuon">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="20" style="1"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Images/plus.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Th&#xea;m v&#xe0;o danh s&#xe1;ch m&#x1b0;&#x1ee3;n"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemMuonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
