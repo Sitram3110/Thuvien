@@ -210,7 +210,6 @@ public class TrangChuDocGia extends javax.swing.JFrame {
 
             }
         ));
-        tblDanhMucSach.setEnabled(false);
         jScrollPane2.setViewportView(tblDanhMucSach);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
