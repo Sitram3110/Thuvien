@@ -5,6 +5,15 @@
  */
 package View;
 
+import DAO.DanhMucSach_DAO;
+import DAO.PhanLoaiSach_DAO;
+import DAO.Sach_DAO;
+import DAO.TheLoai_DAO;
+import DTO.DanhMucSach;
+import DTO.PhanLoaiSach;
+import DTO.Sach;
+import DTO.TheLoai;
+
 /**
  *
  * @author Windows 10
@@ -12,8 +21,14 @@ package View;
 public class ChiTietSach extends javax.swing.JFrame {
 
     private String userID;
-    public ChiTietSach(String userID) {
+    private Sach sach;
+    private DanhMucSach danhMucSach;
+    private PhanLoaiSach theLoai;
+    public ChiTietSach(String userID, String maSach) {
         this.userID = userID;
+        sach = Sach_DAO.getInstance().selectById(maSach);
+        danhMucSach = DanhMucSach_DAO.getInstance().selectById(sach.getMaDMSach());
+        theLoai = PhanLoaiSach_DAO.getInstance().selectById(sach.getMaTheLoai());
         initComponents();
     }
 
@@ -76,7 +91,7 @@ public class ChiTietSach extends javax.swing.JFrame {
 
         lblTacGia.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblTacGia.setForeground(new java.awt.Color(0, 51, 204));
-        lblTacGia.setText("lblTacGia");
+        lblTacGia.setText(sach.getTenTacGia());
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 153));
@@ -84,7 +99,7 @@ public class ChiTietSach extends javax.swing.JFrame {
 
         lblNXB.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblNXB.setForeground(new java.awt.Color(0, 51, 204));
-        lblNXB.setText("lblNXB");
+        lblNXB.setText(sach.getNXB());
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 153));
@@ -92,15 +107,15 @@ public class ChiTietSach extends javax.swing.JFrame {
 
         lblNamXB.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblNamXB.setForeground(new java.awt.Color(0, 51, 204));
-        lblNamXB.setText("lblNamXB");
+        lblNamXB.setText(String.valueOf(sach.getNamXuatBan()));
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 153));
-        jLabel10.setText("Số lượng sách:");
+        jLabel10.setText("Danh mục:");
 
         lblDanhMuc.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblDanhMuc.setForeground(new java.awt.Color(0, 51, 204));
-        lblDanhMuc.setText("soluong");
+        lblDanhMuc.setText(danhMucSach.getTenDM());
 
         jLabel12.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 153));
@@ -108,7 +123,7 @@ public class ChiTietSach extends javax.swing.JFrame {
 
         lblTheLoai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblTheLoai.setForeground(new java.awt.Color(0, 51, 204));
-        lblTheLoai.setText("lblTheLoai");
+        lblTheLoai.setText(theLoai.getTenTheLoai());
 
         jLabel14.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 153));
@@ -123,6 +138,7 @@ public class ChiTietSach extends javax.swing.JFrame {
         lblNoiDung.setRows(5);
         lblNoiDung.setBorder(null);
         lblNoiDung.setCaretColor(new java.awt.Color(255, 255, 204));
+        lblNoiDung.setText(sach.getTomTatND());
         jScrollPane2.setViewportView(lblNoiDung);
 
         jLabel13.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
@@ -131,7 +147,7 @@ public class ChiTietSach extends javax.swing.JFrame {
 
         lblTheLoai1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblTheLoai1.setForeground(new java.awt.Color(0, 51, 204));
-        lblTheLoai1.setText("lblGiaTien");
+        lblTheLoai1.setText(String.valueOf(sach.getGiaTienSach()));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
