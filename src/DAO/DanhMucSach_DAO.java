@@ -81,8 +81,8 @@ public class DanhMucSach_DAO implements DAO_Interface<DanhMucSach> {
             pst.setString(1, maDM);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                result.setMaDM(rs.getString("maDM"));
-                result.setTenDM(rs.getString("tenDM"));
+                result.setMaDM(rs.getString("maDMSach"));
+                result.setTenDM(rs.getString("tenDMSach"));
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -390,7 +390,8 @@ public class TrangChuDocGia extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 //Chức năng tra cứu sách
     private void btnXemCTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemCTActionPerformed
-        new ChiTietSach(userID).setVisible(true);
+        int selectedRow = tblDanhMucSach.getSelectedRow();
+        new ChiTietSach(userID, tblDanhMucSach.getValueAt(selectedRow, 0).toString()).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnXemCTActionPerformed
 
