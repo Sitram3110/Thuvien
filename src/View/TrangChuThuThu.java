@@ -584,6 +584,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         quanlyttdg2.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
 
         jPanel29.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel29.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tableDocgia2.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         tableDocgia2.setModel(new javax.swing.table.DefaultTableModel(
@@ -601,41 +602,51 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         });
         jScrollPane17.setViewportView(tableDocgia2);
 
+        jPanel29.add(jScrollPane17, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 257, 1114, 214));
+
         jLabel86.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel86.setForeground(new java.awt.Color(0, 0, 0));
         jLabel86.setText("Mã độc giả:");
+        jPanel29.add(jLabel86, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 12, -1, -1));
 
         jLabel87.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel87.setForeground(new java.awt.Color(0, 0, 0));
         jLabel87.setText("Tên độc giả:");
+        jPanel29.add(jLabel87, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 108, -1, -1));
 
         jLabel88.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel88.setForeground(new java.awt.Color(0, 0, 0));
         jLabel88.setText("Giới tính:");
+        jPanel29.add(jLabel88, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 144, -1, -1));
 
         jLabel89.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel89.setForeground(new java.awt.Color(0, 0, 0));
         jLabel89.setText("Số điện thoại:");
+        jPanel29.add(jLabel89, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 12, -1, -1));
 
         jLabel90.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel90.setForeground(new java.awt.Color(0, 0, 0));
         jLabel90.setText("Phân loại");
+        jPanel29.add(jLabel90, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 144, -1, -1));
 
         jLabel91.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel91.setForeground(new java.awt.Color(0, 0, 0));
         jLabel91.setText("Ngày sinh");
+        jPanel29.add(jLabel91, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
 
         gioitinhnam16.setBackground(new java.awt.Color(255, 255, 204));
         buttonGroup1.add(gioitinhnam16);
         gioitinhnam16.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         gioitinhnam16.setForeground(new java.awt.Color(0, 0, 0));
         gioitinhnam16.setText("Nam");
+        jPanel29.add(gioitinhnam16, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 144, -1, -1));
 
         gioitinhnu16.setBackground(new java.awt.Color(255, 255, 204));
         buttonGroup1.add(gioitinhnu16);
         gioitinhnu16.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         gioitinhnu16.setForeground(new java.awt.Color(0, 0, 0));
         gioitinhnu16.setText("Nữ");
+        jPanel29.add(gioitinhnu16, new org.netbeans.lib.awtextra.AbsoluteConstraints(234, 144, -1, -1));
 
         sdt2.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         sdt2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -649,8 +660,10 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 sdt2KeyTyped(evt);
             }
         });
+        jPanel29.add(sdt2, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 6, 200, -1));
 
         matKhauField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jPanel29.add(matKhauField, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 54, 200, -1));
 
         themmoidg2.setBackground(new java.awt.Color(255, 204, 204));
         themmoidg2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -662,6 +675,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 themmoidg2ActionPerformed(evt);
             }
         });
+        jPanel29.add(themmoidg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(363, 204, -1, 41));
 
         updatedg2.setBackground(new java.awt.Color(255, 204, 204));
         updatedg2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -673,6 +687,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 updatedg2ActionPerformed(evt);
             }
         });
+        jPanel29.add(updatedg2, new org.netbeans.lib.awtextra.AbsoluteConstraints(526, 204, -1, 41));
 
         khoatk8.setBackground(new java.awt.Color(255, 204, 204));
         khoatk8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -684,6 +699,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 khoatk8ActionPerformed(evt);
             }
         });
+        jPanel29.add(khoatk8, new org.netbeans.lib.awtextra.AbsoluteConstraints(644, 204, -1, 41));
 
         ngaysinh2.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         ngaysinh2.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -696,6 +712,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 ngaysinh2KeyPressed(evt);
             }
         });
+        jPanel29.add(ngaysinh2, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 54, 200, -1));
 
         mokhoa3.setBackground(new java.awt.Color(255, 204, 204));
         mokhoa3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -707,29 +724,38 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 mokhoa3ActionPerformed(evt);
             }
         });
+        jPanel29.add(mokhoa3, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 204, -1, 41));
+        jPanel29.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 182, 1126, 10));
 
         jLabel92.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel92.setForeground(new java.awt.Color(0, 0, 0));
         jLabel92.setText("Mật khẩu:");
+        jPanel29.add(jLabel92, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 60, -1, -1));
 
         jLabel127.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel127.setForeground(new java.awt.Color(0, 0, 0));
         jLabel127.setText("Email:");
+        jPanel29.add(jLabel127, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 108, -1, -1));
 
         soLuongmuonLabel.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         soLuongmuonLabel.setForeground(new java.awt.Color(0, 0, 0));
         soLuongmuonLabel.setText("Số lượng mượn:");
+        jPanel29.add(soLuongmuonLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(714, 108, -1, -1));
 
         tenDocGiaField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jPanel29.add(tenDocGiaField, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 102, 200, -1));
 
         maDocGiaField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jPanel29.add(maDocGiaField, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 6, 200, -1));
 
         soLuongmuonField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jPanel29.add(soLuongmuonField, new org.netbeans.lib.awtextra.AbsoluteConstraints(884, 102, 200, -1));
 
         jLabel143.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel143.setForeground(new java.awt.Color(0, 0, 0));
         jLabel143.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/searching.png"))); // NOI18N
         jLabel143.setText("Tìm kiếm:");
+        jPanel29.add(jLabel143, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 208, -1, -1));
 
         timKiemDG.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         timKiemDG.addActionListener(new java.awt.event.ActionListener() {
@@ -737,6 +763,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 timKiemDGActionPerformed(evt);
             }
         });
+        jPanel29.add(timKiemDG, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 206, 200, -1));
 
         emailDocgia4.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         emailDocgia4.addActionListener(new java.awt.event.ActionListener() {
@@ -744,18 +771,25 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 emailDocgia4ActionPerformed(evt);
             }
         });
+        jPanel29.add(emailDocgia4, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 102, 200, -1));
 
         jLabel129.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel129.setForeground(new java.awt.Color(0, 0, 0));
         jLabel129.setText("Hạn dùng:");
+        jPanel29.add(jLabel129, new org.netbeans.lib.awtextra.AbsoluteConstraints(714, 12, -1, -1));
 
         hanDungField1.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jPanel29.add(hanDungField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(884, 6, 200, -1));
 
         ngayMotheLabel.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         ngayMotheLabel.setForeground(new java.awt.Color(0, 0, 0));
         ngayMotheLabel.setText("Ngày mở thẻ:");
+        jPanel29.add(ngayMotheLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(714, 60, -1, -1));
 
         ngayMotheField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        jPanel29.add(ngayMotheField, new org.netbeans.lib.awtextra.AbsoluteConstraints(884, 54, 200, -1));
+
+        jPanel29.add(Hc_maTheLoai3, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 144, 200, -1));
 
         updatedg4.setBackground(new java.awt.Color(255, 204, 204));
         updatedg4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -767,133 +801,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 updatedg4ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
-        jPanel29.setLayout(jPanel29Layout);
-        jPanel29Layout.setHorizontalGroup(
-            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel29Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane17)
-                    .addGroup(jPanel29Layout.createSequentialGroup()
-                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel29Layout.createSequentialGroup()
-                                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel87)
-                                    .addComponent(jLabel92)
-                                    .addComponent(jLabel86)
-                                    .addComponent(jLabel88))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel29Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(gioitinhnam16)
-                                        .addGap(45, 45, 45)
-                                        .addComponent(gioitinhnu16))
-                                    .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(matKhauField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                        .addComponent(maDocGiaField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(tenDocGiaField)))
-                                .addGap(58, 58, 58)
-                                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel89)
-                                    .addComponent(jLabel90)
-                                    .addComponent(jLabel91)
-                                    .addComponent(jLabel127))
-                                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(sdt2)
-                                    .addComponent(ngaysinh2)
-                                    .addComponent(emailDocgia4)
-                                    .addComponent(Hc_maTheLoai3, 0, 200, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(soLuongmuonLabel)
-                                    .addComponent(jLabel129)
-                                    .addComponent(ngayMotheLabel))
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(hanDungField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(soLuongmuonField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ngayMotheField, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel29Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(jLabel143)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(timKiemDG, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(themmoidg2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(updatedg2)
-                                .addGap(18, 18, 18)
-                                .addComponent(khoatk8)
-                                .addGap(18, 18, 18)
-                                .addComponent(mokhoa3)
-                                .addGap(18, 18, 18)
-                                .addComponent(updatedg4)))
-                        .addGap(0, 36, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addComponent(jSeparator5)
-        );
-        jPanel29Layout.setVerticalGroup(
-            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel29Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel29Layout.createSequentialGroup()
-                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel86)
-                            .addComponent(maDocGiaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel92)
-                            .addComponent(matKhauField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel87)
-                            .addComponent(tenDocGiaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel88)
-                            .addComponent(gioitinhnam16)
-                            .addComponent(gioitinhnu16)))
-                    .addGroup(jPanel29Layout.createSequentialGroup()
-                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel89)
-                            .addComponent(sdt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel129)
-                            .addComponent(hanDungField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel91)
-                            .addComponent(ngaysinh2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ngayMotheLabel)
-                            .addComponent(ngayMotheField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel127)
-                            .addComponent(emailDocgia4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(soLuongmuonLabel)
-                            .addComponent(soLuongmuonField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel90)
-                            .addComponent(Hc_maTheLoai3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel143)
-                    .addComponent(timKiemDG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(themmoidg2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updatedg2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(khoatk8, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mokhoa3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updatedg4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane17, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jPanel29.add(updatedg4, new org.netbeans.lib.awtextra.AbsoluteConstraints(923, 204, -1, 41));
 
         quanlyttdg2.addTab("Quản lý Độc giả", jPanel29);
 
