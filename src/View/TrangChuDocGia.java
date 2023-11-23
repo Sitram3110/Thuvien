@@ -137,22 +137,17 @@ public class TrangChuDocGia extends javax.swing.JFrame {
             }
         });
 
-        cbbDanhMuc.setFont(new java.awt.Font("Times New Roman", 0, 18));
-        cbbDanhMuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm theo danh mục",
-                "Chuyên ngành Điện-Điện tử", "Chuyên ngành Cơ khí", "Chuyên ngành Công nghệ thông tin",
-                "Chuyên ngành Xây dựng", "Sách Tiếng Anh", "Kỹ năng sống" }));// NOI18N
+        cbbDanhMuc.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cbbDanhMuc.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbDanhMucItemStateChanged(evt);
             }
         });
 
-        cbbTheLoai.setFont(new java.awt.Font("Times New Roman", 0, 18));
-        cbbTheLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm theo thể loại", "Giáo trình học",
-                "Sách tham khảo", "Văn hóa lịch sử", "Chính trị, Pháp luật", "Tạp chí" }));// NOI18N
+        cbbTheLoai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cbbTheLoai.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbTheLoaiItemStateChanged(evt);
+                cbbDanhMucItemStateChanged(evt);
             }
         });
 
@@ -215,6 +210,7 @@ public class TrangChuDocGia extends javax.swing.JFrame {
 
             }
         ));
+        tblDanhMucSach.setEnabled(false);
         jScrollPane2.setViewportView(tblDanhMucSach);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 204));
@@ -405,7 +401,7 @@ public class TrangChuDocGia extends javax.swing.JFrame {
         setTableData_Sach(Sach_DAO.getInstance().selectAll());
     }//GEN-LAST:event_btnResetActionPerformed
 
-    private void cbbDanhMucItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbDanhMucItemStateChanged
+    private void cbbDanhMucItemStateChanged(java.awt.event.ItemEvent evt) {                                            
         String DM = "DM00";
         int index = cbbDanhMuc.getSelectedIndex();
         if (index == 0)
@@ -422,7 +418,7 @@ public class TrangChuDocGia extends javax.swing.JFrame {
             sachtb.addRow(new Object[] { i, s.getTenSach(), s.getTenTacGia(), s.getNXB(),
                     khoSach.getSoLuongCon() });
         }
-    }//GEN-LAST:event_cbbDanhMucItemStateChanged
+    }                                           
     private void cbbTheLoaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbDanhMucItemStateChanged
         String TL = "TL00";
         int index = cbbTheLoai.getSelectedIndex();
