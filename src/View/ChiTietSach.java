@@ -64,7 +64,7 @@ public class ChiTietSach extends javax.swing.JFrame {
         lblTenSach.setForeground(new java.awt.Color(0, 0, 153));
         lblTenSach.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTenSach.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/book (1).png"))); // NOI18N
-        lblTenSach.setText("TÊN SÁCH: LẬP TRÌNH C");
+        lblTenSach.setText("TÊN SÁCH: " + sach.getTenSach());
 
         btnThoatCT.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         btnThoatCT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/remove (1).png"))); // NOI18N
