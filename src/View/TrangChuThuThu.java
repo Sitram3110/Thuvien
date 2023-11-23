@@ -500,8 +500,10 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         tableSearchSach2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1447, 669));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel1.setMaximumSize(new java.awt.Dimension(631, 118));
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 26)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 102));
@@ -561,6 +563,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setMaximumSize(new java.awt.Dimension(1447, 539));
 
         jTP_main2.setBackground(new java.awt.Color(255, 255, 204));
         jTP_main2.setForeground(new java.awt.Color(0, 0, 102));
@@ -2310,7 +2313,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         );
         jPK_QuanLyPhieuMuon5Layout.setVerticalGroup(
             jPK_QuanLyPhieuMuon5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTPK_QuanLyPM5, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+            .addComponent(jTPK_QuanLyPM5, javax.swing.GroupLayout.PREFERRED_SIZE, 515, Short.MAX_VALUE)
         );
 
         jTP_main2.addTab(" QUẢN LÝ MƯỢN TRẢ ", new javax.swing.ImageIcon(getClass().getResource("/Images/exchange.png")), jPK_QuanLyPhieuMuon5); // NOI18N
@@ -2548,7 +2551,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTP_main2, javax.swing.GroupLayout.PREFERRED_SIZE, 1435, Short.MAX_VALUE)
+                .addComponent(jTP_main2, javax.swing.GroupLayout.DEFAULT_SIZE, 1435, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
