@@ -5,14 +5,8 @@
  */
 package View;
 
-import DAO.ChiTietPhieuMuon_DAO;
-import DAO.KhoSach_DAO;
-import DAO.PhieuMuon_DAO;
-import DAO.Sach_DAO;
-import DTO.ChiTietPhieuMuon;
-import DTO.KhoSach;
-import DTO.PhieuMuon;
-import DTO.Sach;
+import DAO.*;
+import DTO.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -37,6 +31,8 @@ public class TrangChuDocGia extends javax.swing.JFrame {
 
         initComponents();
         loadChiTietPhieuMuon();
+        loadComboBoxDanhMuc();
+        loadComboBoxTheLoai();
         defaultTableModel_Sach = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -51,6 +47,21 @@ public class TrangChuDocGia extends javax.swing.JFrame {
         defaultTableModel_Sach.addColumn("Số lượng còn");
         setTableData_Sach(Sach_DAO.getInstance().selectAll());
 
+    }
+    private void loadComboBoxDanhMuc() {
+        cbbDanhMuc.addItem("Chọn danh mục");
+        List<DanhMucSach> DanhMuc = DanhMucSach_DAO.getInstance().selectAll();
+        for (DanhMucSach dm : DanhMuc) {
+            cbbDanhMuc.addItem(dm.getTenDM());
+        }
+    }
+
+    private void loadComboBoxTheLoai() {
+        cbbTheLoai.addItem("Chọn thể loại");
+        List<PhanLoaiSach> theLoais = PhanLoaiSach_DAO.getInstance().selectAll();
+        for (PhanLoaiSach tl : theLoais) {
+            cbbTheLoai.addItem(tl.getTenTheLoai());
+        }
     }
     public void loadChiTietPhieuMuon() {
         defaultTableModel_CTPM = new DefaultTableModel() {
@@ -145,9 +156,10 @@ public class TrangChuDocGia extends javax.swing.JFrame {
         });
 
         cbbTheLoai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+       // cbbTheLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tìm theo danh mục", "Chuyên ngành Điện-Điện tử", "Chuyên ngành Cơ khí", "Chuyên ngành Công nghệ thông tin", "Chuyên ngành Xây dựng", "Sách Tiếng Anh", "Kỹ năng sống" }));
         cbbTheLoai.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbbDanhMucItemStateChanged(evt);
+                cbbTheLoaiItemStateChanged(evt);
             }
         });
 
@@ -415,8 +427,7 @@ public class TrangChuDocGia extends javax.swing.JFrame {
         for (Sach s : sachByCate) {
             i++;
             KhoSach khoSach = KhoSach_DAO.getInstance().selectById(s.getMaSach());
-            sachtb.addRow(new Object[] { i, s.getTenSach(), s.getTenTacGia(), s.getNXB(),
-                    khoSach.getSoLuongCon() });
+            sachtb.addRow(new Object[] { s.getMaSach(), s.getTenSach(), khoSach.getSoLuongCon() });
         }
     }                                           
     private void cbbTheLoaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbDanhMucItemStateChanged
@@ -432,8 +443,7 @@ public class TrangChuDocGia extends javax.swing.JFrame {
         for (Sach s : sachBytheloai) {
             i++;
             KhoSach khoSach = KhoSach_DAO.getInstance().selectById(s.getMaSach());
-            sachtb.addRow(new Object[] { i, s.getTenSach(), s.getTenTacGia(), s.getNXB(),
-                    khoSach.getSoLuongCon() });
+            sachtb.addRow(new Object[] { s.getMaSach(), s.getTenSach(), khoSach.getSoLuongCon() });
         }
     }//GEN-LAST:event_cbbDanhMucItemStateChanged
     private void txtTimSachKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimSachKeyReleased
@@ -449,7 +459,7 @@ public class TrangChuDocGia extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -472,6 +482,11 @@ public class TrangChuDocGia extends javax.swing.JFrame {
 
         //</editor-fold>
         //</editor-fold>
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TrangChuDocGia("312141001").setVisible(true);
+            }
+        });
 
         /* Create and display the form */
 
