@@ -27,6 +27,7 @@ import java.util.List;
 public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
     DefaultTableModel defaultTableModel_PN;
     DefaultTableModel defaultTableModel_CTPN;
+
     /**
      * Creates new form TrangChuThuThu_QLPNhap
      */
@@ -766,6 +767,11 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
             }
         };
         jTable1.setModel(defaultTableModel_PN);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         defaultTableModel_PN.addColumn("Mã phiếu nhập");
         defaultTableModel_PN.addColumn("Ngày nhập");
         defaultTableModel_PN.addColumn("Mã nhà cung cấp");
@@ -784,6 +790,11 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
             }
         };
         jTable2.setModel(defaultTableModel_CTPN);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         defaultTableModel_CTPN.addColumn("Mã phiếu nhập");
         defaultTableModel_CTPN.addColumn("Mã sách");
         defaultTableModel_CTPN.addColumn("Tên sách");
@@ -795,9 +806,12 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
         defaultTableModel_CTPN.addColumn("Giá nhập");
         List<ChiTietPhieuNhapSach> chiTietPhieuNhapSaches = ChiTietPhieuNhap_DAO.getInstance().selectAll();
         for (ChiTietPhieuNhapSach ctpns : chiTietPhieuNhapSaches) {
-            defaultTableModel_CTPN.addRow(new Object[] { ctpns.getMaPhieuNhap(), ctpns.getMaSach(), ctpns.getTenSach(), ctpns.getMaTacGia(), ctpns.getMaTheLoai(), ctpns.getNXB(), ctpns.getNamXuatBan(), ctpns.getSoLuongNhap(), ctpns.getGiaNhap()});
+            defaultTableModel_CTPN.addRow(new Object[] { ctpns.getMaPhieuNhap(), ctpns.getMaSach(), ctpns.getTenSach(),
+                    ctpns.getMaTacGia(), ctpns.getMaTheLoai(), ctpns.getNXB(), ctpns.getNamXuatBan(),
+                    ctpns.getSoLuongNhap(), ctpns.getGiaNhap() });
         }
     }
+
     public void loadChiTietTPhieuNhap(String id) {
         defaultTableModel_CTPN = new DefaultTableModel() {
             @Override
