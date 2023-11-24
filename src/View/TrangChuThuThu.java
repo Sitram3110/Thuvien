@@ -490,7 +490,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         TABLEPhieuXuat = new javax.swing.JTable();
         Panel_DanhSachPM15 = new javax.swing.JPanel();
         K_tieuDe16 = new javax.swing.JLabel();
-        btnK_themPM33 = new javax.swing.JButton();
+
         txt_timkiemDMSach25 = new javax.swing.JTextField();
         btnQLPN = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -2264,16 +2264,6 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         K_tieuDe16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/bill.png"))); // NOI18N
         K_tieuDe16.setText("DANH SÁCH CÁC PHIẾU NHẬP");
 
-        btnK_themPM33.setBackground(new java.awt.Color(255, 204, 204));
-        btnK_themPM33.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        btnK_themPM33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/plus.png"))); // NOI18N
-        btnK_themPM33.setText("Xem chi tiết");
-        btnK_themPM33.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnK_themPM33btnK_themPM1ActionPerformed(evt);
-            }
-        });
-
         txt_timkiemDMSach25.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txt_timkiemDMSach25.setText("Tìm kiếm");
         txt_timkiemDMSach25.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -2323,8 +2313,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                                                                 Short.MAX_VALUE)
                                                         .addComponent(btnQLPN, javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(18, 18, 18)
-                                                        .addComponent(btnK_themPM33))
+                                                        .addGap(18, 18, 18))
                                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING,
                                                         Panel_DanhSachPM15Layout.createSequentialGroup()
                                                                 .addGap(98, 98, 98)
@@ -2353,8 +2342,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(Panel_DanhSachPM15Layout
                                         .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(btnQLPN)
-                                        .addComponent(btnK_themPM33))
+                                        .addComponent(btnQLPN))
                                 .addGap(30, 30, 30)));
 
         jTPK_QuanLyPM4.addTab("Danh sách phiếu nhập", Panel_DanhSachPM15);
@@ -3918,10 +3906,6 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_btnK_themPM32btnK_themPM2ActionPerformed
 
-    private void btnK_themPM33btnK_themPM1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnK_themPM33btnK_themPM1ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnK_themPM33btnK_themPM1ActionPerformed
-
     private void txt_timkiemDMSach25txt_timkiemDMSach3KeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txt_timkiemDMSach25txt_timkiemDMSach3KeyReleased
         // TODO add your handling code here:
         String query = txt_timkiemDMSach25.getText();
@@ -4135,7 +4119,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
     private javax.swing.JButton btnChiTietView;
     private javax.swing.JButton btnH_suaSach2;
     private javax.swing.JButton btnH_themSach2;
-    private javax.swing.JButton btnK_themPM33;
+
     private javax.swing.JButton btnK_themPM40;
     private javax.swing.JButton btnQLPN;
     private javax.swing.JButton btn_LuuDMSach6;

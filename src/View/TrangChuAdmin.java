@@ -572,7 +572,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 new Object[][] {
 
                 }, columnNames));
-        tableDocgia2.setEnabled(false);
+
         tableDocgia2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableDocgia2MouseClicked(evt);
