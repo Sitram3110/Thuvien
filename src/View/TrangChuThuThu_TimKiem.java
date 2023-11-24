@@ -64,7 +64,6 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
         TableRowSorter<DefaultTableModel> tbl = new TableRowSorter<DefaultTableModel>(defaultTableModel_Sach);
         tblK_Sach.setRowSorter(tbl);
         tbl.setRowFilter(RowFilter.regexFilter(query));
-
     }
 
     /**

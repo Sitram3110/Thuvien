@@ -60,6 +60,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
     DefaultTableModel defaultTableModel_TG;
     DefaultTableModel defaultTableModel_Sach;
     DefaultTableModel defaultTableModel_CTPM;
+    DefaultTableModel defaultTableModel_ThongKe;
     DefaultTableModel defaultTableModelPhieuTra;
     PhieuTra_BLL phieuTra_BLL = new PhieuTra_BLL();
     DefaultTableModel defaultTableModelXuat;
@@ -81,6 +82,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         loadThongTinSach();
         loadChiTietPhieuMuon();
         loadChiTietTPhieuNhap();
+        loadThongKe();
         loadPhieuTra(phieuTra_BLL.loaddata());
         loaddataPX(thanhLyBLL.loaddata());
     }
@@ -197,6 +199,30 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         }
     }
 
+    public void loadThongKe() {
+        defaultTableModel_ThongKe = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tabletksach2.setModel(defaultTableModel_ThongKe);
+        defaultTableModel_ThongKe.addColumn("STT");
+        defaultTableModel_ThongKe.addColumn("Mã sách");
+        defaultTableModel_ThongKe.addColumn("Tên sách");
+        defaultTableModel_ThongKe.addColumn("Số lượng");
+        List<KhoSach> sachByCate;
+        int soluong = 0;
+        sachByCate = ThongKeDao.getInstance().ToanBoSach();
+        soluong = ThongKeDao.getInstance().SoLuongTong();
+        int i = 0;
+        for (KhoSach ks : sachByCate) {
+            i++;
+            Sach s = Sach_DAO.getInstance().selectById(ks.getMaSach());
+            defaultTableModel_ThongKe.addRow(new Object[] { i, s.getMaSach(), s.getTenSach(), ks.getTongSoLuong() });
+        }
+        fieldSoluongthongkesach.setText(String.valueOf(soluong));
+    }
     private void loadComboBoxDanhMuc() {
         List<DanhMucSach> DanhMuc = DanhMucSach_DAO.getInstance().selectAll();
         for (DanhMucSach dm : DanhMuc) {
@@ -2226,7 +2252,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
 
         cbb_chucNangThongKe7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cbb_chucNangThongKe7.setForeground(new java.awt.Color(0, 0, 153));
-        cbb_chucNangThongKe7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Số lượng sách còn", "Số lượng sách hỏng", "Tổng số lượng" }));
+        cbb_chucNangThongKe7.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tổng số lượng", "Số lượng sách hỏng", "Số lượng còn" }));
         cbb_chucNangThongKe7.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbb_chucNangThongKe7ItemStateChanged(evt);
@@ -2546,7 +2572,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         sachtb.setRowCount(0);
         List<KhoSach> sachByCate;
         int soluong = 0;
-        if (index == 0) {
+        if (index == 2) {
             sachByCate = ThongKeDao.getInstance().SachCon();
             soluong = ThongKeDao.getInstance().SoLuongSachCon();
             int i = 0;
@@ -3062,6 +3088,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
             }
             refresh();
             loadThongTinSach();
+            loadThongKe();
         }
     }// GEN-LAST:event_btnH_themSach2ActionPerformed
 
@@ -3072,34 +3099,31 @@ public class TrangChuThuThu extends javax.swing.JFrame {
                 || H_nhaXB2.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn thông tin sách muốn sửa!");
         } else {
-            int x = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thay đổi không?");
-            if (x == JOptionPane.NO_OPTION) {
-                return;
-            } else {
-                Sach sach = new Sach();
-                sach.setMaSach(H_tenSach2.getText());
-                sach.setTenSach(H_tenSach3.getText());
-                sach.setMaDMSach(Hc_maDM2.getItemAt(Hc_maDM2.getSelectedIndex()));
-                sach.setMaTheLoai(Hc_maTheLoai2.getItemAt(Hc_maTheLoai2.getSelectedIndex()));
-                sach.setTacGia(H_tacGia5.getText());
-                sach.setMaTacGia(H_tacGia4.getText());
-                sach.setNXB(H_nhaXB2.getText());
-                sach.setNamXuatBan(Integer.parseInt(H_namXB2.getText()));
-                // sach.setSoLuongCon(Integer.parseInt(H_soLuongCon.getText()));
-                sach.setGiaTienSach(Double.parseDouble(H_soLuongCon2.getText()));
-                sach.setTomTatND(H_tomTat2.getText());
-
-                // s_Service.updateSach(sach);
-                if (Sach_DAO.getInstance().update(sach) > 0) {
-                    JOptionPane.showMessageDialog(null, "Sửa sách thành công!");
+            if (!H_tacGia5.getText().equals("") || !H_tacGia4.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Bạn không thể sữa mã tác giả hay tên tác giả. Vui lòng để trống!");
+            }else{
+                int x = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thay đổi không?");
+                if (x == JOptionPane.NO_OPTION) {
+                    return;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Sửa sách thất bại!");
+                    Sach sach = Sach_DAO.getInstance().selectById(H_tenSach2.getText());
+                    sach.setTenSach(H_tenSach3.getText());
+                    sach.setMaDMSach(Hc_maDM2.getItemAt(Hc_maDM2.getSelectedIndex()));
+                    sach.setMaTheLoai(Hc_maTheLoai2.getItemAt(Hc_maTheLoai2.getSelectedIndex()));
+                    sach.setNXB(H_nhaXB2.getText());
+                    sach.setNamXuatBan(Integer.parseInt(H_namXB2.getText()));
+                    sach.setGiaTienSach(Double.parseDouble(H_soLuongCon2.getText()));
+                    sach.setTomTatND(H_tomTat2.getText());
+                    if (Sach_DAO.getInstance().update(sach) > 0) {
+                        JOptionPane.showMessageDialog(null, "Đã hoàn tất!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Sửa sách thất bại!");
+                    }
                 }
-                // defaultTableModel_S.setRowCount(0);
-                // setTableData_S(s_Service.getDSSach());
             }
         }
         loadThongTinSach();
+        loadThongKe();
     }// GEN-LAST:event_btnH_suaSach2ActionPerformed
 
     private void btn_lamMoiSach2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btn_lamMoiSach2ActionPerformed
