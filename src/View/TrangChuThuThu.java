@@ -375,7 +375,8 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         hanDungField1 = new javax.swing.JTextField();
         ngayMotheLabel = new javax.swing.JLabel();
         ngayMotheField = new javax.swing.JTextField();
-        Hc_maTheLoai3 = new javax.swing.JComboBox<>();
+        String[] dsTenLoaiThe = new QuanLiDocGia_DAO().tenLoaiThe();
+        Hc_maTheLoai3 = new javax.swing.JComboBox<>(dsTenLoaiThe);
         updatedg4 = new javax.swing.JButton();
         jPanel40 = new javax.swing.JPanel();
         jScrollPane25 = new javax.swing.JScrollPane();
@@ -585,21 +586,22 @@ public class TrangChuThuThu extends javax.swing.JFrame {
 
         jPanel29.setBackground(new java.awt.Color(255, 255, 204));
         jPanel29.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
+        String[] columnNames = { "Mã độc giả", "Tên độc giả", "Loại Tài Khoản", "Mật khẩu", "Số điện thoại",
+                "Ngày sinh", "Email", "Giới tính", "Địa Chỉ", "Ngày Mở Thẻ", "Hạn Sử Dụng", "SoLuongMuon",
+                "Trạng Thái" };
         tableDocgia2.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         tableDocgia2.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {
 
-                },
-                new String[] {
-
-                }));
+                }, columnNames));
         tableDocgia2.setEnabled(false);
         tableDocgia2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableDocgia2MouseClicked(evt);
             }
         });
+        loadTableDocGia(tableDocgia2, new DanhSachTaiKhoan(new QuanLiDocGia_DAO().dsDOCGIA()));
+        new QuanLiDocGia_DAO().khoaQuaHan();
         jScrollPane17.setViewportView(tableDocgia2);
 
         jPanel29.add(jScrollPane17, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 257, 1114, 214));
@@ -760,9 +762,10 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         jPanel29.add(jLabel143, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 208, -1, -1));
 
         timKiemDG.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
-        timKiemDG.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                timKiemDGActionPerformed(evt);
+        timKiemDG.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                loadTableDocGia(tableDocgia2,
+                        new DanhSachTaiKhoan(new QuanLiDocGia_DAO().timKiem(timKiemDG.getText())));
             }
         });
         jPanel29.add(timKiemDG, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 206, 200, -1));
@@ -782,7 +785,8 @@ public class TrangChuThuThu extends javax.swing.JFrame {
 
         hanDungField1.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jPanel29.add(hanDungField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(884, 6, 200, -1));
-
+        hanDungField1.setEditable(false);
+        hanDungField1.setText(LocalDate.now().plusYears(1) + "");
         ngayMotheLabel.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         ngayMotheLabel.setForeground(new java.awt.Color(0, 0, 0));
         ngayMotheLabel.setText("Ngày mở thẻ:");
@@ -792,7 +796,8 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         jPanel29.add(ngayMotheField, new org.netbeans.lib.awtextra.AbsoluteConstraints(884, 54, 200, -1));
 
         jPanel29.add(Hc_maTheLoai3, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 144, 200, -1));
-
+        ngayMotheField.setEditable(false);
+        ngayMotheField.setText(LocalDate.now() + "");
         updatedg4.setBackground(new java.awt.Color(255, 204, 204));
         updatedg4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         updatedg4.setForeground(new java.awt.Color(0, 0, 0));
@@ -806,22 +811,26 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         jPanel29.add(updatedg4, new org.netbeans.lib.awtextra.AbsoluteConstraints(923, 204, -1, 41));
 
         quanlyttdg2.addTab("Quản lý Độc giả", jPanel29);
-
+        quanlyttdg2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loadTableLoaiThe(tableDocgia3, new DanhSachLoaiThe(new QLDG_PhanLoai_DAO().dsLoaiThe()));
+                loadTableDocGia(tableDocgia2, new DanhSachTaiKhoan(new QuanLiDocGia_DAO().dsDOCGIA()));
+            }
+        });
         jPanel40.setBackground(new java.awt.Color(255, 255, 204));
-
+        String[] nameColumnLoaiThe = { "Mã loại thẻ", "Tên loại thẻ",
+                "Số sách được mượn", "Thời gian mượn", "Giá tiền mở thẻ" };
         tableDocgia3.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         tableDocgia3.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {
 
-                },
-                new String[] {
-
-                }));
+                }, nameColumnLoaiThe));
         tableDocgia3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableDocgia3MouseClicked(evt);
             }
         });
+        loadTableLoaiThe(tableDocgia3, new DanhSachLoaiThe(new QLDG_PhanLoai_DAO().dsLoaiThe()));
         jScrollPane25.setViewportView(tableDocgia3);
 
         jLabel131.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
@@ -885,9 +894,10 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         });
 
         tenLoaiField2.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
-        tenLoaiField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tenLoaiField2ActionPerformed(evt);
+        tenLoaiField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                loadTableLoaiThe(tableDocgia3,
+                        new DanhSachLoaiThe(new QLDG_PhanLoai_DAO().timKiem(tenLoaiField2.getText())));
             }
         });
 
