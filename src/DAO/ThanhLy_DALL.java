@@ -378,7 +378,7 @@ public class ThanhLy_DALL {
         Connection connection = KetNoiSQL.getConnection();
         try {
             Statement statement = connection.createStatement();
-            String query = "select giaTienSach from ThongTinSach";
+            String query = "select giaTienSach from ThongTinSach where maSach = '" +idbook+ "'";
             System.out.println(query);
 			
             ResultSet rs =  statement.executeQuery(query);
