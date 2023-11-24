@@ -5,6 +5,9 @@
 package View;
 
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -38,7 +41,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
      */
     DefaultTableModel defaultTableModelPhieuTra;
     DefaultTableModel defaultTableModelkho;
-
+    DefaultTableModel defaultTableModel_ThongKe;
     DefaultTableModel defaultTableModel_CTPN;
     DefaultTableModel defaultTableModel_DM;
     DefaultTableModel defaultTableModel_TL;
@@ -61,8 +64,32 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         loadmaTacGia();
         loadThongTinSach();
         loadChiTietPhieuMuon();
+        loadThongKe();
     }
-
+    public void loadThongKe() {
+        defaultTableModel_ThongKe = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tabletksach2.setModel(defaultTableModel_ThongKe);
+        defaultTableModel_ThongKe.addColumn("STT");
+        defaultTableModel_ThongKe.addColumn("Mã sách");
+        defaultTableModel_ThongKe.addColumn("Tên sách");
+        defaultTableModel_ThongKe.addColumn("Số lượng");
+        List<KhoSach> sachByCate;
+        int soluong = 0;
+        sachByCate = ThongKeDao.getInstance().ToanBoSach();
+        soluong = ThongKeDao.getInstance().SoLuongTong();
+        int i = 0;
+        for (KhoSach ks : sachByCate) {
+            i++;
+            Sach s = Sach_DAO.getInstance().selectById(ks.getMaSach());
+            defaultTableModel_ThongKe.addRow(new Object[] { i, s.getMaSach(), s.getTenSach(), ks.getTongSoLuong() });
+        }
+        fieldSoluongthongkesach.setText(String.valueOf(soluong));
+    }
     private void loadPhieuTra(List<PhieuMuon> phieuMuons) {
         defaultTableModelPhieuTra = new DefaultTableModel();
         table_PhieuTra.setModel(defaultTableModelPhieuTra);
@@ -3875,6 +3902,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             }
             refresh();
             loadThongTinSach();
+            loadThongKe();
         }
 
     }// GEN-LAST:event_btnH_themSach2ActionPerformed
@@ -3886,34 +3914,31 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 || H_nhaXB2.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn thông tin sách muốn sửa!");
         } else {
-            int x = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thay đổi không?");
-            if (x == JOptionPane.NO_OPTION) {
-                return;
-            } else {
-                Sach sach = new Sach();
-                sach.setMaSach(H_tenSach2.getText());
-                sach.setTenSach(H_tenSach3.getText());
-                sach.setMaDMSach(Hc_maDM2.getItemAt(Hc_maDM2.getSelectedIndex()));
-                sach.setMaTheLoai(Hc_maTheLoai2.getItemAt(Hc_maTheLoai2.getSelectedIndex()));
-                sach.setTacGia(H_tacGia5.getText());
-                sach.setMaTacGia(H_tacGia4.getText());
-                sach.setNXB(H_nhaXB2.getText());
-                sach.setNamXuatBan(Integer.parseInt(H_namXB2.getText()));
-                // sach.setSoLuongCon(Integer.parseInt(H_soLuongCon.getText()));
-                sach.setGiaTienSach(Double.parseDouble(H_soLuongCon2.getText()));
-                sach.setTomTatND(H_tomTat2.getText());
-
-                // s_Service.updateSach(sach);
-                if (Sach_DAO.getInstance().update(sach) > 0) {
-                    JOptionPane.showMessageDialog(null, "Sửa sách thành công!");
+            if (!H_tacGia5.getText().equals("") || !H_tacGia4.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Bạn không thể sữa mã tác giả hay tên tác giả. Vui lòng để trống!");
+            }else{
+                int x = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thay đổi không?");
+                if (x == JOptionPane.NO_OPTION) {
+                    return;
                 } else {
-                    JOptionPane.showMessageDialog(null, "Sửa sách thất bại!");
+                    Sach sach = Sach_DAO.getInstance().selectById(H_tenSach2.getText());
+                    sach.setTenSach(H_tenSach3.getText());
+                    sach.setMaDMSach(Hc_maDM2.getItemAt(Hc_maDM2.getSelectedIndex()));
+                    sach.setMaTheLoai(Hc_maTheLoai2.getItemAt(Hc_maTheLoai2.getSelectedIndex()));
+                    sach.setNXB(H_nhaXB2.getText());
+                    sach.setNamXuatBan(Integer.parseInt(H_namXB2.getText()));
+                    sach.setGiaTienSach(Double.parseDouble(H_soLuongCon2.getText()));
+                    sach.setTomTatND(H_tomTat2.getText());
+                    if (Sach_DAO.getInstance().update(sach) > 0) {
+                        JOptionPane.showMessageDialog(null, "Đã hoàn tất!");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Sửa sách thất bại!");
+                    }
                 }
-                // defaultTableModel_S.setRowCount(0);
-                // setTableData_S(s_Service.getDSSach());
             }
         }
         loadThongTinSach();
+        loadThongKe();
     }// GEN-LAST:event_btnH_suaSach2ActionPerformed
 
     private void btnH_luuSach2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnH_luuSach2ActionPerformed
@@ -3934,10 +3959,24 @@ public class TrangChuAdmin extends javax.swing.JFrame {
 
     private void Hc_maTheLoai2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Hc_maTheLoai2ActionPerformed
         // TODO add your handling code here:
+        PhanLoaiSach phanLoaiSach = PhanLoaiSach_DAO.getInstance().selectById((String) Hc_maTheLoai2.getSelectedItem());
+        H_tenTheLoai2.setText(phanLoaiSach.getTenTheLoai());
     }// GEN-LAST:event_Hc_maTheLoai2ActionPerformed
 
     private void Hc_maDM2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Hc_maDM2ActionPerformed
         // TODO add your handling code here:
+        String sql = "SELECT tenDMSach FROM DanhMucSach WHERE maDMSach = ?";
+        try (Connection conn = KetNoiSQL.getConnection()) {
+            String maDMString = (String) Hc_maDM2.getSelectedItem();
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, maDMString);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                H_tenDM2.setText(rs.getString("tenDMSach"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }// GEN-LAST:event_Hc_maDM2ActionPerformed
 
     private void khoatk10ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_khoatk10ActionPerformed
