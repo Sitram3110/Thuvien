@@ -17,6 +17,13 @@
     "poi-bin-5.2.3/lib/commons-math3-3.6.1.jar",
     "poi-bin-5.2.3/lib/log4j-api-2.18.0.jar",
     "poi-bin-5.2.3/lib/SparseBitSet-1.2.jar",
-    "AbsoluteLayout-RELEASE190.jar"
+    "AbsoluteLayout-RELEASE190.jar",
+    "poi-bin-5.2.3/ooxml-lib/commons-compress-1.21.jar",
+    "poi-bin-5.2.3/ooxml-lib/commons-logging-1.2.jar",
+    "poi-bin-5.2.3/ooxml-lib/curvesapi-1.07.jar",
+    "poi-bin-5.2.3/ooxml-lib/jakarta.activation-2.0.1.jar",
+    "poi-bin-5.2.3/ooxml-lib/jakarta.xml.bind-api-3.0.1.jar",
+    "poi-bin-5.2.3/ooxml-lib/slf4j-api-1.7.36.jar",
+    "poi-bin-5.2.3/ooxml-lib/xmlbeans-5.1.1.jar"
   ]
 }
