@@ -780,6 +780,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         maDocGiaField.setBounds(122, 6, 200, 36);
 
         soLuongmuonField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        soLuongmuonField.setEditable(false);
         jPanel29.add(soLuongmuonField);
         soLuongmuonField.setBounds(850, 153, 200, 36);
 
@@ -3116,7 +3117,10 @@ public class TrangChuThuThu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (!new QLDG_PhanLoai_DAO().checkMaThe(maLoaiField.getText().toString())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Thẻ Đã Tồn Tại!!");
-        } else {
+        } else if(Integer.parseInt(soLuongField.getText()) < 0 || Double.parseDouble(thoiGianField.getText())<0 || Integer.parseInt(thoiGianField1.getText())<0){
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Yêu cầu không nhập số âm!");
+        }
+        else {
             int x = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), "Bạn Có Chắn Chắc Thêm Loại Thẻ!");
             if (x == JOptionPane.NO_OPTION)
                 return;
@@ -3144,7 +3148,9 @@ public class TrangChuThuThu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (new QLDG_PhanLoai_DAO().checkMaThe(maLoaiField.getText().toString())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Thẻ Đã Tồn Tại!!");
-        } else {
+        } else if(Integer.parseInt(soLuongField.getText()) < 0 || Integer.parseInt(thoiGianField.getText())<0 || Integer.parseInt(thoiGianField1.getText())<0){
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Yêu cầu không nhập số âm!");
+        }else {
             int x = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), "Bạn Có Chắn Chắc Sửa Loại Thẻ!");
             if (x == JOptionPane.NO_OPTION)
                 return;
@@ -3226,13 +3232,15 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         } else
             gioitinhnu16.setSelected(true);
 
-        // địa chỉ col 8
+        if (tableDocgia2.getValueAt(lineSelect, 8) == null){
+            diaChiField.setText("");
+        }else diaChiField.setText(tableDocgia2.getValueAt(lineSelect, 8).toString());
 
         ngayMotheField.setText(tableDocgia2.getValueAt(lineSelect, 9).toString().trim());
         hanDungField1.setText(tableDocgia2.getValueAt(lineSelect, 10).toString().trim());
         // số lượng mượn column 11
         soLuongmuonField.setText(tableDocgia2.getValueAt(lineSelect, 11).toString());
-
+        
         if (Integer.parseInt(tableDocgia2.getValueAt(lineSelect, 12).toString()) == 0) {
             khoatk8.setEnabled(false);
         } else {
@@ -3253,9 +3261,9 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         Hc_maTheLoai3.setSelectedItem("");
         soLuongmuonField.setText("");
         emailDocgia4.setText("");
-        ngayMotheField.setText("");
-        hanDungField1.setText("");
-
+        ngayMotheField.setText(LocalDate.now()+"");
+        hanDungField1.setText(LocalDate.now().plusYears(1)+"");
+        diaChiField.setText("");
         khoatk8.setEnabled(true);
         maDocGiaField.setEditable(true);
     }
@@ -3268,7 +3276,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
     // thêm độc giả
     private void themmoidg2ActionPerformed(java.awt.event.ActionEvent evt) {
         if (maDocGiaField.getText().equals("") || matKhauField.getText().equals("")
-                || Hc_maTheLoai3.getSelectedItem().equals("") || sdt2.getText().equals("")) {
+                || Hc_maTheLoai3.getSelectedItem().equals("") || sdt2.getText().equals("") || tenDocGiaField.getText().equals("")) {
             JOptionPane.showMessageDialog((JOptionPane.getRootFrame()), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (!new QuanLiDocGia_DAO().checkMaTaiKhoan(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Đã Tồn Tại!");
@@ -3300,7 +3308,8 @@ public class TrangChuThuThu extends javax.swing.JFrame {
             dg.setNgaySinh(ngaysinh2.getText());
             dg.setSdt(sdt2.getText());
             dg.setTrangThai(1);
-            dg.setSoLuongMuon(Integer.parseInt(soLuongmuonField.getText().trim()));
+            dg.setDiaChi(diaChiField.getText());
+            dg.setSoLuongMuon(0);
             dg.setNgayMoThe(ngayMotheField.getText());
             dg.setHanSuDung(hanDungField1.getText());
             // địa chỉ
@@ -3318,7 +3327,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
     // Cập nhật độc giả
     private void updatedg2ActionPerformed(java.awt.event.ActionEvent evt) {
         if (maDocGiaField.getText().equals("") || matKhauField.getText().equals("")
-                || emailDocgia4.getText().equals("") || sdt2.getText().equals("")) {
+                || emailDocgia4.getText().equals("") || sdt2.getText().equals("") || tenDocGiaField.getText().equals("")) {
             JOptionPane.showMessageDialog((JOptionPane.getRootFrame()), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (new QuanLiDocGia_DAO().checkMaTaiKhoan(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Không Tồn Tại!");
@@ -3356,8 +3365,8 @@ public class TrangChuThuThu extends javax.swing.JFrame {
             dg.setNgaySinh(ngaysinh2.getText());
             dg.setSdt(sdt2.getText());
             dg.setTrangThai(1);
+            dg.setDiaChi(diaChiField.getText().trim());
             dg.setSoLuongMuon(Integer.parseInt(soLuongmuonField.getText().trim()));
-            // dg.setDiaChi();
             dg.setNgayMoThe(ngayMotheField.getText());
             dg.setHanSuDung(hanDungField1.getText());
 

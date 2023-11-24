@@ -451,7 +451,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         jLabel179 = new javax.swing.JLabel();
         gioitinhnam22 = new javax.swing.JRadioButton();
         gioitinhnu22 = new javax.swing.JRadioButton();
-        Hc_maTheLoai6 = new javax.swing.JComboBox<>();
+        String[] tenQL={"ADMIN", "THỦ THƯ"};
+        Hc_maTheLoai6 = new javax.swing.JComboBox<>(tenQL);
         jLabel175 = new javax.swing.JLabel();
         jLabel174 = new javax.swing.JLabel();
         jLabel173 = new javax.swing.JLabel();
@@ -741,7 +742,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         ngayMotheField.setEditable(false);
         ngayMotheField.setText(LocalDate.now() + "");
         soLuongmuonField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
-
+        soLuongmuonField.setEditable(false);
         tenDocGiaField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
 
         diaChiLabel.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
@@ -2789,11 +2790,19 @@ public class TrangChuAdmin extends javax.swing.JFrame {
 
         tableSearchSach7.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         tableSearchSach7.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
+            new Object[][] {
 
-                },
-                new String[] {
-                        "Mã độc giả", "Tên độc giả", "Mật khẩu", "Trạng thái", "Hạn dùng", "Phí duy trì" }));
+            },
+            new String[] {
+                "Mã Quản Lý", "Tên Quản Lý", "Mật khẩu", "Ngày Sinh", "Giới Tính","Địa Chỉ", "SDT", "Email", "Trạng Thái"
+            }
+        ));
+        tableSearchSach7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableSearchSach7MouseClicked(evt);
+            }
+        });;
+        loadTaiKhoanQuanLy(tableSearchSach7, new DanhSachQuanLy( new QuanLy_DAO().dsAllTaiKhoan()));
         jScrollPane30.setViewportView(tableSearchSach7);
 
         themmoidg6.setBackground(new java.awt.Color(255, 204, 204));
@@ -2891,8 +2900,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         jLabel174.setText("Mật khẩu:");
 
         jLabel173.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        jLabel173.setText("Mã độc giả:");
-
+        jLabel173.setText("Mã quản lý:");
+        
         textboxsearch14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textboxsearch14ActionPerformed(evt);
@@ -3820,6 +3829,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             khoatk20.setEnabled(false);
             khoatk19.setEnabled(true);
         }
+
+        textboxsearch14.setEditable(false);
     }
 
     // load bảng tài khoản quản lý
@@ -3862,6 +3873,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
 
         khoatk19.setEnabled(true);
         khoatk20.setEnabled(true);
+
+        textboxsearch14.setEditable(true);
 
     }
 
@@ -4071,7 +4084,10 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (!new QLDG_PhanLoai_DAO().checkMaThe(maLoaiField.getText().toString())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Thẻ Đã Tồn Tại!!");
-        } else {
+        } else if(Integer.parseInt(soLuongField.getText()) < 0 || Double.parseDouble(thoiGianField.getText())<0 || Integer.parseInt(thoiGianField1.getText())<0){
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Yêu cầu không nhập số âm!");
+        }
+        else {
             int x = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), "Bạn Có Chắn Chắc Thêm Loại Thẻ!");
             if (x == JOptionPane.NO_OPTION)
                 return;
@@ -4099,6 +4115,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (new QLDG_PhanLoai_DAO().checkMaThe(maLoaiField.getText().toString())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Thẻ Đã Tồn Tại!!");
+        } else if(Integer.parseInt(soLuongField.getText()) < 0 || Double.parseDouble(thoiGianField.getText())<0 || Integer.parseInt(thoiGianField1.getText())<0){
+            JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Yêu cầu không nhập số âm!");
         } else {
             int x = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), "Bạn Có Chắn Chắc Sửa Loại Thẻ!");
             if (x == JOptionPane.NO_OPTION)
@@ -4181,7 +4199,10 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         } else
             gioitinhnu16.setSelected(true);
 
-        // địa chỉ col 8
+        if (tableDocgia2.getValueAt(lineSelect, 8) == null){
+            diaChiField.setText("");
+        }else diaChiField.setText(tableDocgia2.getValueAt(lineSelect, 8).toString());
+
 
         ngayMotheField.setText(tableDocgia2.getValueAt(lineSelect, 9).toString().trim());
         hanDungField1.setText(tableDocgia2.getValueAt(lineSelect, 10).toString().trim());
@@ -4206,9 +4227,9 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         Hc_maTheLoai3.setSelectedItem("");
         soLuongmuonField.setText("");
         emailDocgia4.setText("");
-        ngayMotheField.setText("");
-        hanDungField1.setText("");
-
+        ngayMotheField.setText(LocalDate.now()+"");
+        hanDungField1.setText(LocalDate.now().plusYears(1)+"");
+        diaChiField.setText("");
         khoatk8.setEnabled(true);
         maDocGiaField.setEditable(true);
     }
@@ -4221,7 +4242,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
     // thêm độc giả
     private void themmoidg2ActionPerformed(java.awt.event.ActionEvent evt) {
         if (maDocGiaField.getText().equals("") || matKhauField.getText().equals("")
-                || Hc_maTheLoai3.getSelectedItem().equals("") || sdt2.getText().equals("")) {
+                || Hc_maTheLoai3.getSelectedItem().equals("") || sdt2.getText().equals("") || tenDocGiaField.getText().equals("")) {
             JOptionPane.showMessageDialog((JOptionPane.getRootFrame()), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (!new QuanLiDocGia_DAO().checkMaTaiKhoan(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Đã Tồn Tại!");
@@ -4253,7 +4274,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             dg.setNgaySinh(ngaysinh2.getText());
             dg.setSdt(sdt2.getText());
             dg.setTrangThai(1);
-            dg.setSoLuongMuon(Integer.parseInt(soLuongmuonField.getText().trim()));
+            dg.setDiaChi(diaChiField.getText());
+            dg.setSoLuongMuon(0);
             // dg.setSoLuongMuon(Integer.parseInt(soLuongField.getText().trim()));
             dg.setNgayMoThe(ngayMotheField.getText());
             dg.setHanSuDung(hanDungField1.getText());
@@ -4272,7 +4294,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
     // Cập nhật độc giả
     private void updatedg2ActionPerformed(java.awt.event.ActionEvent evt) {
         if (maDocGiaField.getText().equals("") || matKhauField.getText().equals("")
-                || emailDocgia4.getText().equals("") || sdt2.getText().equals("")) {
+                || emailDocgia4.getText().equals("") || sdt2.getText().equals("") || tenDocGiaField.getText().equals("")) {
             JOptionPane.showMessageDialog((JOptionPane.getRootFrame()), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (new QuanLiDocGia_DAO().checkMaTaiKhoan(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Không Tồn Tại!");
@@ -4311,7 +4333,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             dg.setSdt(sdt2.getText());
             dg.setTrangThai(1);
             dg.setSoLuongMuon(Integer.parseInt(soLuongmuonField.getText().trim()));
-            // dg.setDiaChi();
+            dg.setDiaChi(diaChiField.getText().trim());
             dg.setNgayMoThe(ngayMotheField.getText());
             dg.setHanSuDung(hanDungField1.getText());
 
