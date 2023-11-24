@@ -6,6 +6,8 @@ package Model;
 
 import DAO.ThanhLySach_DAO;
 import DAO.ThanhLy_DALL;
+import DAO.khosach_DAL;
+import DTO.KhoSach;
 import DTO.Sach;
 import DTO.ThanhLySach;
 import java.io.FileOutputStream;
@@ -33,6 +35,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 public class ThanhLyBLL {
     ThanhLy_DALL thanhLy_DALL = new ThanhLy_DALL();
     ThanhLySach_DAO thanhLySach_DAO = new ThanhLySach_DAO();
+    khosach_DAL khoDAL = new khosach_DAL();
     public AbstractMap.SimpleEntry<List<Sach>, List<ThanhLySach>> loaddata() {
         List<Sach> books = thanhLy_DALL.selectidBook();
         List<ThanhLySach> thanhLySachs = thanhLySach_DAO.selectAll();
@@ -70,7 +73,7 @@ public class ThanhLyBLL {
         for(Sach sach : books){
             if(thanhly.getMaSach().equals(sach.getMaSach())){
                 thanhLy_DALL.add(thanhly);
-                thanhLy_DALL.UpdateKhoAfterAction(thanhly);
+                thanhLy_DALL.UpdateKhoAfterAdd(thanhly);
                 return true;
             }
         }
@@ -79,8 +82,11 @@ public class ThanhLyBLL {
     
     public boolean Update(ThanhLySach thanhly){
         int total = thanhLy_DALL.GetSoLuongSachHongByIdBook(thanhly)+ thanhLy_DALL.GetSoLuongSachHongByIdThanhLy(thanhly);
+        
         List<ThanhLySach> thanhlynow = thanhLy_DALL.loaddatatoExport(thanhly.getMaThanhLySach());
+        List<KhoSach> kho = khoDAL.getKhoSachIntoId(thanhly.getMaSach());
         ThanhLySach thanhly1 = thanhlynow.get(0);
+        KhoSach kho1 = kho.get(0);
         System.out.println(total);
         if(thanhly.getSoLuongSachHong() <= 0){
             return false;
@@ -89,11 +95,20 @@ public class ThanhLyBLL {
                 && thanhly1.getLyDoThanhLy().equals(thanhly.getLyDoThanhLy()) 
                 && thanhly1.getGhiChu().equals(thanhly.getGhiChu())){
             return false;
+        }else if(thanhly.getSoLuongSachHong()> total){
+            return false;
+        }else if(thanhly1.getMaSach().equals(thanhly.getMaSach()) && kho1.getSoLuongSachHong()> thanhly1.getSoLuongSachHong()){
+            int i = thanhly1.getSoLuongSachHong() - thanhly.getSoLuongSachHong();           
+            thanhLy_DALL.Update(thanhly);
+            thanhLy_DALL.UpdateKhoAfterUpdateSlg(thanhly, i);
+            return true;
         }
         List<Sach> books = thanhLy_DALL.selectidBook();
         for(Sach sach : books){
             if(thanhly.getMaSach().equals(sach.getMaSach())){
                 thanhLy_DALL.Update(thanhly);
+                thanhLy_DALL.UpdateKhoAfterUpdateIdBook(thanhly1.getMaSach(), thanhly1.getSoLuongSachHong(),
+                        thanhly.getMaSach(), thanhly.getSoLuongSachHong());
                 return true;
             }
         }
@@ -103,7 +118,10 @@ public class ThanhLyBLL {
     
     
     public boolean delete (String id){
-        if(thanhLy_DALL.delete(id)){
+        List<ThanhLySach> thanhlynow = thanhLy_DALL.loaddatatoExport(id);
+        ThanhLySach thanhly1 = thanhlynow.get(0);
+        if(thanhLy_DALL.delete(id)){      
+            thanhLy_DALL.UpdateKhoAfterDelete(thanhly1);
             return true;
         }
         return false;

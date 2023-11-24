@@ -200,11 +200,7 @@
                           <Component id="txt_Total" alignment="0" pref="444" max="32767" attributes="0"/>
                           <Component id="txtNameBook" alignment="0" max="32767" attributes="0"/>
                           <Component id="txt_ghichu" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="cb_lydo" min="-2" pref="165" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="txt_Lydo" min="-2" pref="190" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="cb_lydo" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
@@ -219,7 +215,6 @@
                           <Component id="txt_Id" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                           <Component id="labelMaphieuxuat" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                           <Component id="cb_lydo" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                          <Component id="txt_Lydo" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -415,13 +410,6 @@
             <Component class="javax.swing.JTextField" name="txt_idqly">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="18" style="0"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txt_Lydo">
-              <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="18" style="0"/>
                 </Property>

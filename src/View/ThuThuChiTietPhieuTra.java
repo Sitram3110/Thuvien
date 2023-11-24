@@ -562,6 +562,8 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
         if(commaIndex != -1){
             String tinhtrangsach = tinhtrangsachs.substring(0, commaIndex);
             cb_tinhtrang.setSelectedItem(tinhtrangsach);
+        }else{
+            cb_tinhtrang.setSelectedItem(tinhtrangsachs);
         }
         
         txtTienPhat.setText(tblK_ChiTiet.getValueAt(row, 3).toString());

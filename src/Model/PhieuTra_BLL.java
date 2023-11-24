@@ -84,24 +84,27 @@ public class PhieuTra_BLL {
     public boolean updateChiTietPhieuMuon(String id, String idbook, String tinhtrang){
         System.out.println("-----------------------------------------------------------");
         System.out.println(tinhtrang);
-        String tinhtrangsachs = phieuTra_DAL.getTinhTrangNow(id, idbook);
-        int commaIndex = tinhtrangsachs.indexOf(',');
-        String tinhtrangsach = tinhtrangsachs.substring(0, commaIndex);
-        if(tinhtrangsach.equals(tinhtrang)){
+        String tinhtrangnow = phieuTra_DAL.getTinhTrangNow(id, idbook);
+        int commaIndex = tinhtrangnow.indexOf(',');
+        if (commaIndex != -1){
+            tinhtrangnow = tinhtrangnow.substring(0, commaIndex);
+        }
+        System.out.println(tinhtrangnow);
+        if(tinhtrangnow.equals(tinhtrang)){
             return false;
         }else{
             phieuTra_DAL.updateTinhTrang(id, idbook, tinhtrang);
-            System.out.println(tinhtrangsach);
+            System.out.println(tinhtrangnow);
             int matDoHai = 0;
-            if ("Mất".equals(tinhtrangsach)) {
+            if ("Mất".equals(tinhtrangnow)) {
                 matDoHai = -1;
-            } else if ("Hư hỏng mức ít".equals(tinhtrangsach)) {
+            } else if ("Hư hỏng mức ít".equals(tinhtrangnow)) {
                 matDoHai = 1;
-            } else if ("Hư hỏng mức vừa".equals(tinhtrangsach)) {
+            } else if ("Hư hỏng mức vừa".equals(tinhtrangnow)) {
                 matDoHai = 2;
-            } else if ("Hư hỏng mức nhiều".equals(tinhtrangsach)) {
+            } else if ("Hư hỏng mức nhiều".equals(tinhtrangnow)) {
                 matDoHai = 3;
-            } else if ("Hư hỏng mức nghiêm trọng".equals(tinhtrangsach)) {
+            } else if ("Hư hỏng mức nghiêm trọng".equals(tinhtrangnow)) {
                 matDoHai = 4;
             } else {
                 matDoHai = 0;

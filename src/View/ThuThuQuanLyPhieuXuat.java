@@ -33,16 +33,20 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
     public static void setidQuanLy(String tenDangNhapMoi) {
         idQuanLy = tenDangNhapMoi;
     }
+    private List<String> thanhlysachs;
     public ThuThuQuanLyPhieuXuat(List<String> thanhlysach) {
         initComponents();
         fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Chọn đường dẫn lưu tệp Excel");
+        thanhlysachs = thanhlysach;
         txt_Id.setText(thanhlysach.get(0));
         txt_idqly.setText(thanhlysach.get(1));
         txt_IdBook.setText(thanhlysach.get(2));
         txtNameBook.setText(thanhlysach.get(3));
         txt_SLg.setText(thanhlysach.get(4));
-        txt_Lydo.setText(thanhlysach.get(5));
+//        txt_Lydo.setText(thanhlysach.get(5));
+        String lydo = thanhlysach.get(5);
+        cb_lydo.setSelectedItem(lydo);    
         txt_ghichu.setText(thanhlysach.get(7));
         txtDate.setText(thanhlysach.get(6));
         txt_Total.setText(thanhlysach.get(8));
@@ -82,7 +86,6 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
         cb_lydo = new javax.swing.JComboBox<>();
         labelGia1 = new javax.swing.JLabel();
         txt_idqly = new javax.swing.JTextField();
-        txt_Lydo = new javax.swing.JTextField();
         jPK_button = new javax.swing.JPanel();
         jPK_btnQLS = new javax.swing.JPanel();
         btnK_themMaSach = new javax.swing.JButton();
@@ -215,8 +218,6 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
         txt_idqly.setEditable(false);
         txt_idqly.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        txt_Lydo.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-
         javax.swing.GroupLayout jPK_themMaSachLayout = new javax.swing.GroupLayout(jPK_themMaSach);
         jPK_themMaSach.setLayout(jPK_themMaSachLayout);
         jPK_themMaSachLayout.setHorizontalGroup(
@@ -255,10 +256,7 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
                     .addComponent(txt_Total, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
                     .addComponent(txtNameBook)
                     .addComponent(txt_ghichu)
-                    .addGroup(jPK_themMaSachLayout.createSequentialGroup()
-                        .addComponent(cb_lydo, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txt_Lydo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cb_lydo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(40, 40, 40))
         );
         jPK_themMaSachLayout.setVerticalGroup(
@@ -269,8 +267,7 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
                     .addComponent(labelMasach, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_Id, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelMaphieuxuat, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_lydo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_Lydo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cb_lydo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPK_themMaSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelTensach, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -562,6 +559,17 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
         btnK_suaPX1.setEnabled(true);
         btnDelete.setEnabled(true);
         btn_back.setEnabled(false);
+        txt_Id.setText(thanhlysachs.get(0));
+        txt_idqly.setText(thanhlysachs.get(1));
+        txt_IdBook.setText(thanhlysachs.get(2));
+        txtNameBook.setText(thanhlysachs.get(3));
+        txt_SLg.setText(thanhlysachs.get(4));
+//        txt_Lydo.setText(thanhlysach.get(5));
+        String lydo = thanhlysachs.get(5);
+        cb_lydo.setSelectedItem(lydo);    
+        txt_ghichu.setText(thanhlysachs.get(7));
+        txtDate.setText(thanhlysachs.get(6));
+        txt_Total.setText(thanhlysachs.get(8));
     }//GEN-LAST:event_btn_backActionPerformed
 
     private void btnExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelActionPerformed
@@ -646,7 +654,6 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
     private javax.swing.JTextField txtNameBook;
     private javax.swing.JTextField txt_Id;
     private javax.swing.JTextField txt_IdBook;
-    private javax.swing.JTextField txt_Lydo;
     private javax.swing.JTextField txt_SLg;
     private javax.swing.JTextField txt_Total;
     private javax.swing.JTextField txt_ghichu;
