@@ -17,6 +17,7 @@ import java.awt.event.FocusListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +34,10 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
         initComponents();
         loadmaPhieuNhap();
         // loadChiTietTPhieuNhap();
+
         loadComboBoxMaPNhap();
+        loadComboBoxMaNhanVien();
+
     }
 
     /**
@@ -765,9 +769,10 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
         defaultTableModel_PN.addColumn("Mã phiếu nhập");
         defaultTableModel_PN.addColumn("Ngày nhập");
         defaultTableModel_PN.addColumn("Mã nhà cung cấp");
+        defaultTableModel_PN.addColumn("Mã nhân Viên");
         List<PhieuNhapSach> phieuNhapSach = PhieuNhapSach_DAO.getInstance().selectAll();
         for (PhieuNhapSach pns : phieuNhapSach) {
-            defaultTableModel_PN.addRow(new Object[] { pns.getMaPhieuNhap(), pns.getNgayNhap(), pns.getMaNhaCungCap() });
+            defaultTableModel_PN.addRow(new Object[] { pns.getMaPhieuNhap(), pns.getNgayNhap(), pns.getMaNhaCungCap(), pns.getMaQuanLy()});
         }
     }
 
@@ -822,6 +827,12 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
             comboBoxMaPNhap.addItem(pns.getMaPhieuNhap());
         }
     }
+    public void loadComboBoxMaNhanVien(){
+        List<QuanLy> phieuNhapSaches = QuanLy_DAO.getInstance().selectAll();
+        for (QuanLy pns : phieuNhapSaches){
+            maQuanlyComboBox.addItem(pns.getMaQuanly());
+        }
+    }
 
     private void btnK_veTrangTruocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnK_veTrangTruocActionPerformed
         new TrangChuThuThu().setVisible(true);
@@ -832,6 +843,7 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedRow = jTable1.getSelectedRow();
         comboBoxMaPNhap.setSelectedItem((String) jTable1.getValueAt(selectedRow, 0));
+        maQuanlyComboBox.setSelectedItem((String) jTable1.getValueAt(selectedRow, 3));
         maPhieuXuatField.setEnabled(true);
         ngayXuatField1.setEnabled(true);
         ngayXuatField.setEnabled(true);

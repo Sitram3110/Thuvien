@@ -1,17 +1,25 @@
 package DAO;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 import DTO.QuanLy;
+import DTO.Sach;
+import DTO.TacGia;
 
 
 public class QuanLy_DAO {
   KetNoiSQL connect = new KetNoiSQL();
 
   //danh sách admin và thủ thư
+  public static QuanLy_DAO getInstance(){
+    return new QuanLy_DAO();
+  }
   public ArrayList dsAllTaiKhoan(){
     ArrayList<QuanLy> dsql = new ArrayList<>();
     PreparedStatement ps = null;
@@ -131,4 +139,20 @@ public class QuanLy_DAO {
       }
       return false;
     }
+  public List<QuanLy> selectAll() {
+    List<QuanLy> rowSelected = new ArrayList<QuanLy>();
+    try (Connection conn = KetNoiSQL.getConnection();
+         PreparedStatement pst = conn.prepareStatement("SELECT * FROM dbo.[QuanLy]");
+         ResultSet rs = pst.executeQuery()) {
+      while (rs.next()) {
+        String maQuanLy = rs.getString("maQuanLy");
+        String tenQuanLy = rs.getString("tenQuanLy");
+        QuanLy quanLy = new QuanLy(maQuanLy, tenQuanLy);
+        rowSelected.add(quanLy);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return rowSelected;
+  }
 }

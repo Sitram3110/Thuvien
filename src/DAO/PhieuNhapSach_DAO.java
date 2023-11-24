@@ -36,12 +36,13 @@
      @Override
      public int add(PhieuNhapSach phieuNhapSach) {
          int rowsAffected = 0;
-         String sql = "INSERT INTO dbo.[PhieuNhapSach] (maPhieuNhap, ngayNhap, NhaCungCap) VALUES (?, ?, ?)";
+         String sql = "INSERT INTO dbo.[PhieuNhapSach] (maPhieuNhap, maQuanLy, ngayNhap, NhaCungCap) VALUES (?, ?, ?, ?)";
          try (Connection conn = KetNoiSQL.getConnection();
               PreparedStatement pst = conn.prepareStatement(sql)) {
              pst.setString(1, phieuNhapSach.getMaPhieuNhap());
              pst.setDate(2, java.sql.Date.valueOf(phieuNhapSach.getNgayNhap()));
-             pst.setString(3, phieuNhapSach.getMaNhaCungCap());
+             pst.setDate(3, java.sql.Date.valueOf(phieuNhapSach.getNgayNhap()));
+             pst.setString(4, phieuNhapSach.getMaNhaCungCap());
              rowsAffected = pst.executeUpdate();
          } catch (Exception e) {
              e.printStackTrace();
@@ -52,12 +53,13 @@
      @Override
      public int update(PhieuNhapSach phieuNhapSach) {
          int rowsAffected = 0;
-         String sql = "UPDATE dbo.[PhieuNhapSach] SET ngayNhap = ?, NhaCungCap = ? WHERE maPhieuNhap = ?";
+         String sql = "UPDATE dbo.[PhieuNhapSach] SET maQuanLy = ?, ngayNhap = ?, NhaCungCap = ? WHERE maPhieuNhap = ?";
          try (Connection conn = KetNoiSQL.getConnection();
               PreparedStatement pst = conn.prepareStatement(sql)) {
              pst.setDate(1, java.sql.Date.valueOf(phieuNhapSach.getNgayNhap()));
-             pst.setString(2, phieuNhapSach.getMaNhaCungCap());
-             pst.setString(3, phieuNhapSach.getMaPhieuNhap());
+             pst.setString(2, phieuNhapSach.getMaQuanLy());
+             pst.setString(3, phieuNhapSach.getMaNhaCungCap());
+             pst.setString(4, phieuNhapSach.getMaPhieuNhap());
              rowsAffected = pst.executeUpdate();
          } catch (Exception e) {
              e.printStackTrace();
@@ -88,9 +90,10 @@
               ResultSet rs = pst.executeQuery()) {
              while (rs.next()) {
                  String maPhieuNhap = rs.getString("maPhieuNhap");
+                 String maQuanLy = rs.getString("maQuanLy");
                  LocalDate ngayNhap = rs.getDate("ngayNhap").toLocalDate();
                  String maNhaCungCap = rs.getString("NhaCungCap");
-                 PhieuNhapSach phieuNhapSach = new PhieuNhapSach(maPhieuNhap, ngayNhap, maNhaCungCap);
+                 PhieuNhapSach phieuNhapSach = new PhieuNhapSach(maPhieuNhap, maQuanLy, ngayNhap, maNhaCungCap);
                  rowSelected.add(phieuNhapSach);
              }
          } catch (SQLException e) {
@@ -109,6 +112,7 @@
              ResultSet rs = pst.executeQuery();
              if (rs.next()) {
                  result.setMaPhieuNhap(rs.getString("maPhieuNhap"));
+                 result.setMaPhieuNhap(rs.getString("maQuanLy"));
                  result.setNgayNhap(rs.getDate("ngayNhap").toLocalDate());
                  result.setMaNhaCungCap(rs.getString("NhaCungCap"));
              }
