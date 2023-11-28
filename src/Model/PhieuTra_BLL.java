@@ -136,7 +136,7 @@ public class PhieuTra_BLL {
     
     public boolean exportToExcel(AbstractMap.SimpleEntry<List<Sach>, List<ChiTietPhieuMuon>> danhSachThanhLy, String filePath, String id) {
         try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Phiếu xuất "+id);
+            Sheet sheet = workbook.createSheet("Phiếu trả "+id);
             
              Font titleFont = workbook.createFont();
             titleFont.setBold(true);

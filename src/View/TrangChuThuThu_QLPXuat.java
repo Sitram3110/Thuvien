@@ -632,14 +632,13 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_btn_backActionPerformed
 
     private void btnExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelActionPerformed
-        String idtly = txt_Id.getText();
         int result = fileChooser.showSaveDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
-            String duongDanTep = fileChooser.getSelectedFile().getAbsolutePath() + ".docx";
-            AbstractMap.SimpleEntry<List<Sach>, List<ThanhLySach>> export = thanhLyBLL.loaddatatoExport(idtly);
+            String duongDanTep = fileChooser.getSelectedFile().getAbsolutePath() + ".xlsx";
+            AbstractMap.SimpleEntry<List<Sach>, List<ThanhLySach>> export = thanhLyBLL.loaddata();
 
-            if (thanhLyBLL.exportToWord(export, duongDanTep)) {
+            if (thanhLyBLL.exportToExcel(export, duongDanTep)) {
                 // Hiển thị hộp thoại thông báo giống như khi tải xuống
                 JOptionPane.showMessageDialog(this, "Tệp đã được lưu tại:\n" + duongDanTep, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             } else {

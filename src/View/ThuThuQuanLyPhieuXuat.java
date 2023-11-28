@@ -36,8 +36,7 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
     private List<String> thanhlysachs;
     public ThuThuQuanLyPhieuXuat(List<String> thanhlysach) {
         initComponents();
-        fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Chọn đường dẫn lưu tệp Excel");
+        
         thanhlysachs = thanhlysach;
         txt_Id.setText(thanhlysach.get(0));
         txt_idqly.setText(thanhlysach.get(1));
@@ -93,7 +92,6 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
         btnK_suaPX1 = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btn_back = new javax.swing.JButton();
-        btnExcel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -359,15 +357,6 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
             }
         });
 
-        btnExcel.setBackground(new java.awt.Color(255, 204, 204));
-        btnExcel.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        btnExcel.setText("Xuất File");
-        btnExcel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcelActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPK_btnQLSLayout = new javax.swing.GroupLayout(jPK_btnQLS);
         jPK_btnQLS.setLayout(jPK_btnQLSLayout);
         jPK_btnQLSLayout.setHorizontalGroup(
@@ -381,10 +370,8 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
                 .addComponent(btnK_suaPX1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnExcel)
                 .addContainerGap())
         );
         jPK_btnQLSLayout.setVerticalGroup(
@@ -396,8 +383,7 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
                     .addComponent(btnK_themMaSach)
                     .addComponent(btnK_suaPX1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_back, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -572,23 +558,6 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
         txt_Total.setText(thanhlysachs.get(8));
     }//GEN-LAST:event_btn_backActionPerformed
 
-    private void btnExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcelActionPerformed
-        String idtly = txt_Id.getText();
-        int result = fileChooser.showSaveDialog(this);
-
-        if (result == JFileChooser.APPROVE_OPTION) {
-            String duongDanTep = fileChooser.getSelectedFile().getAbsolutePath() + ".docx";
-            AbstractMap.SimpleEntry<List<Sach>, List<ThanhLySach>> export = thanhLyBLL.loaddatatoExport(idtly);
-
-            if (thanhLyBLL.exportToWord(export, duongDanTep)) {
-                // Hiển thị hộp thoại thông báo giống như khi tải xuống
-                JOptionPane.showMessageDialog(this, "Tệp đã được lưu tại:\n" + duongDanTep, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Xuất Excel thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_btnExcelActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         TrangChuThuThu trangChuThuThu = new TrangChuThuThu();
         trangChuThuThu.setVisible(true);
@@ -629,7 +598,6 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LabelTongtien;
     private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnExcel;
     private javax.swing.JButton btnK_luuMaSach;
     private javax.swing.JButton btnK_suaPX1;
     private javax.swing.JButton btnK_themMaSach;
