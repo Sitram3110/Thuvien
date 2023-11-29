@@ -40,7 +40,7 @@
          try (Connection conn = KetNoiSQL.getConnection();
               PreparedStatement pst = conn.prepareStatement(sql)) {
              pst.setString(1, phieuNhapSach.getMaPhieuNhap());
-             pst.setDate(2, java.sql.Date.valueOf(phieuNhapSach.getNgayNhap()));
+             pst.setString(2, phieuNhapSach.getMaQuanLy());
              pst.setDate(3, java.sql.Date.valueOf(phieuNhapSach.getNgayNhap()));
              pst.setString(4, phieuNhapSach.getMaNhaCungCap());
              rowsAffected = pst.executeUpdate();
@@ -56,11 +56,12 @@
          String sql = "UPDATE dbo.[PhieuNhapSach] SET maQuanLy = ?, ngayNhap = ?, NhaCungCap = ? WHERE maPhieuNhap = ?";
          try (Connection conn = KetNoiSQL.getConnection();
               PreparedStatement pst = conn.prepareStatement(sql)) {
-             pst.setDate(1, java.sql.Date.valueOf(phieuNhapSach.getNgayNhap()));
-             pst.setString(2, phieuNhapSach.getMaQuanLy());
+             pst.setString(1, phieuNhapSach.getMaQuanLy());
+             pst.setDate(2, java.sql.Date.valueOf(phieuNhapSach.getNgayNhap()));
              pst.setString(3, phieuNhapSach.getMaNhaCungCap());
              pst.setString(4, phieuNhapSach.getMaPhieuNhap());
              rowsAffected = pst.executeUpdate();
+             System.out.println(rowsAffected);
          } catch (Exception e) {
              e.printStackTrace();
          }

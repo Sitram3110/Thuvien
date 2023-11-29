@@ -6,6 +6,7 @@ package View;
 
 import DAO.*;
 import DTO.*;
+import TEST.KiemTraNhap;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -231,6 +232,11 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
                     .addComponent(maQuanlyComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
 
         jPK_themMaSach.setBackground(new java.awt.Color(204, 204, 255));
         jPK_themMaSach.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -680,7 +686,7 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Mã phiếu xuất", "Ngày nhập", "Ngày cung cấp"
+                "Mã phiếu nhập", "Ngày nhập", "Nhà cung cấp", "Mã nhân viên"
             }
         ));
         jScrollPane3.setViewportView(jTable1);
@@ -858,6 +864,9 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
         int selectedRow = jTable1.getSelectedRow();
         comboBoxMaPNhap.setSelectedItem((String) jTable1.getValueAt(selectedRow, 0));
         maQuanlyComboBox.setSelectedItem((String) jTable1.getValueAt(selectedRow, 3));
+        ngayXuatField1.setText((jTable1.getValueAt(selectedRow, 2).toString()).trim());
+        ngayXuatField.setText((jTable1.getValueAt(selectedRow, 1).toString()).trim());;
+        maPhieuXuatField.setText((jTable1.getValueAt(selectedRow, 0).toString()).trim());
         maPhieuXuatField.setEnabled(true);
         ngayXuatField1.setEnabled(true);
         ngayXuatField.setEnabled(true);
@@ -869,14 +878,14 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_QLTGiaTableMouseClicked
         // TODO add your handling code here:
         int selectedRow = jTable2.getSelectedRow();
-        maSachField.setText((String) jTable2.getValueAt(selectedRow, 1));
-        tenSachField.setText((String) jTable2.getValueAt(selectedRow, 2));
-        maTGiaFiedl.setText((String) jTable2.getValueAt(selectedRow, 3));
-        maTLoaiField.setText((String) jTable2.getValueAt(selectedRow, 4));
-        nxbField.setText((String) jTable2.getValueAt(selectedRow, 5));
-        namXBField.setText(String.valueOf(jTable2.getValueAt(selectedRow, 6)));
-        soLuongField.setText(String.valueOf(jTable2.getValueAt(selectedRow, 7)));
-        GNhapField.setText(String.valueOf(jTable2.getValueAt(selectedRow, 8)));
+        maSachField.setText(((String) jTable2.getValueAt(selectedRow, 1)).trim());
+        tenSachField.setText(((String) jTable2.getValueAt(selectedRow, 2)).trim());
+        maTGiaFiedl.setText(((String) jTable2.getValueAt(selectedRow, 3)).trim());
+        maTLoaiField.setText(((String) jTable2.getValueAt(selectedRow, 4)).trim());
+        nxbField.setText(((String) jTable2.getValueAt(selectedRow, 5)).trim());
+        namXBField.setText((String.valueOf(jTable2.getValueAt(selectedRow, 6))).trim());
+        soLuongField.setText((String.valueOf(jTable2.getValueAt(selectedRow, 7))).trim());
+        GNhapField.setText((String.valueOf(jTable2.getValueAt(selectedRow, 8))).trim());
         TacGia tacGia = TacGia_DAO.getInstance().selectById((String) jTable2.getValueAt(selectedRow, 3));
         tenTGiaField.setText(tacGia.getTenTacGia());
         maSachField.setEnabled (true);
@@ -903,7 +912,8 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_maSachFieldActionPerformed
 
     private void comboBoxMaPNhapItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxMaPNhapItemStateChanged
-
+        //ChiTietPhieuNhapSach ctpn = ChiTietPhieuNhap_DAO.getInstance().selectById(comboBoxMaPNhap.getSelectedItem().toString());
+        loadChiTietTPhieuNhap((comboBoxMaPNhap.getSelectedItem().toString()).trim());
     }//GEN-LAST:event_comboBoxMaPNhapItemStateChanged
 
     private void comboBoxMaPNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxMaPNhapActionPerformed
@@ -912,7 +922,7 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
         maPhieuXuatField.setText(phieuNhapSach.getMaPhieuNhap());
         ngayXuatField1.setText(phieuNhapSach.getMaNhaCungCap());
         ngayXuatField.setText(String.valueOf(phieuNhapSach.getNgayNhap()));
-        loadChiTietTPhieuNhap(phieuNhapSach.getMaPhieuNhap());
+        //loadChiTietTPhieuNhap(phieuNhapSach.getMaPhieuNhap());
 
     }//GEN-LAST:event_comboBoxMaPNhapActionPerformed
 
@@ -957,12 +967,21 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_btnK_themPNActionPerformed
 
     private void btnK_luuPNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnK_luuPNActionPerformed
-        if (maPhieuXuatField.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Bạn chưa điền mã phiếu nhập.");
+        if (maPhieuXuatField.getText().equals("")|| ngayXuatField1.getText().equals("")|| ngayXuatField.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đủ thông tin!");
         }else{
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(maPhieuXuatField.getText())){
+                JOptionPane.showMessageDialog(null, "LỖI: Mã phiếu nhập không được chứa kí tự đặc biệt.");
+                return;
+            }
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(ngayXuatField1.getText())){
+                JOptionPane.showMessageDialog(null, "LỖI: Mã nhà cung cấp không được chứa kí tự đặc biệt.");
+                return;
+            }
             PhieuNhapSach phieuNhapSach = new PhieuNhapSach();
             phieuNhapSach.setMaPhieuNhap(maPhieuXuatField.getText());
             phieuNhapSach.setMaNhaCungCap(ngayXuatField1.getText());
+            phieuNhapSach.setMaQuanLy(maQuanlyComboBox.getSelectedItem().toString());
             String dateString = ngayXuatField.getText();
             try {
                 if (!dateString.trim().isEmpty()) {
@@ -973,6 +992,7 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
             } catch (DateTimeParseException e) {
                 //System.out.println("Lỗi: Chuỗi không hợp lệ để chuyển đổi thành LocalDate.");
                 JOptionPane.showMessageDialog(null, "LỖI: Ngày nhập \n Vui lòng nhập theo định dạng: yyyy-MM-dd");
+                return;
             }
             if (btnK_themPN.isEnabled()){
                 if (PhieuNhapSach_DAO.getInstance().add(phieuNhapSach)>0){
@@ -1058,7 +1078,7 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
         maTGiaFiedl.setEnabled(true);
         soLuongField.setEnabled(true);
         tenSachField.setEnabled(true);
-        tenTGiaField.setEnabled(false);
+        tenTGiaField.setEnabled(true);
         GNhapField.setEnabled(true);
         nxbField.setEnabled(true);
         namXBField.setEnabled (true);
@@ -1098,31 +1118,45 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
     private void btnK_luuMaSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnK_luuMaSachActionPerformed
         // TODO add your handling code here:
         if (DelBtn.isEnabled()) {
-            if (comboBoxMaPNhap.getSelectedItem().equals("") || maSachField.getText().equals("") ){
+            if (comboBoxMaPNhap.getSelectedItem().equals("") || maSachField.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Vui Lòng nhập mã phiếu nhập và mã sách.");
+                return;
             }else{
                 if (ChiTietPhieuNhap_DAO.getInstance().delete((String) comboBoxMaPNhap.getSelectedItem(), maSachField.getText()) > 0) {
                     JOptionPane.showMessageDialog(null, "Xóa chi tiết phiếu nhập thành công!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Xóa chi tiết phiếu nhập thất bại!");
+                    return;
                 }
             }
 
         }
         else{
             ChiTietPhieuNhapSach chiTietPhieuNhapSach = new ChiTietPhieuNhapSach();
-            try{
-                chiTietPhieuNhapSach.setNamXuatBan(Integer.valueOf(namXBField.getText()));
-                chiTietPhieuNhapSach.setSoLuongNhap(Integer.valueOf(soLuongField.getText()));
-                chiTietPhieuNhapSach.setGiaNhap(Double.valueOf(GNhapField.getText()));
-            }
-            catch (Exception e){
-                JOptionPane.showMessageDialog(null, "Năm xuất bản, số lượng nhập, giá nhập: Vui lòng điền đúng định dạng số.");
-            }
             if (comboBoxMaPNhap.getSelectedItem().equals("") || maSachField.getText().equals("") || maTGiaFiedl.getText().equals("") || soLuongField.getText().equals("") ||
-                    tenSachField.getText().equals("") || tenTGiaField.getText().equals("") || GNhapField.getText().equals("") || nxbField.getText().equals("") || namXBField.getText().equals("")){
+                    tenSachField.getText().equals("") || GNhapField.getText().equals("") || nxbField.getText().equals("") || namXBField.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin.");
+                return;
             } else{
+                if (tenTGiaField.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Vui lòng nhập tên tác giả. Nếu tác giả đã có dữ liệu, vui lòng nhập đúng mã tác giả và nhấn ENTER!");
+                }
+                if (!KiemTraNhap.getInstance().checkSpecialCharacters(tenSachField.getText()) &&
+                        !KiemTraNhap.getInstance().checkSpecialCharacters(tenTGiaField.getText()) &&
+                        !KiemTraNhap.getInstance().checkSpecialCharacters(maSachField.getText()) &&
+                        !KiemTraNhap.getInstance().checkSpecialCharacters(maTGiaFiedl.getText()) &&
+                        !KiemTraNhap.getInstance().checkSpecialCharacters(maSachField.getText())){
+                    JOptionPane.showMessageDialog(null, "Vui lòng không nhập kí tự đặc biệt vào các ô!");
+                    return;
+                }
+                if (!KiemTraNhap.getInstance().isNonNegativeFloat(GNhapField.getText())){
+                    JOptionPane.showMessageDialog(null, "Giá nhập phải là số thực không âm!");
+                    return;
+                }
+                if (!KiemTraNhap.getInstance().isNaturalNumber(soLuongField.getText()) && !KiemTraNhap.getInstance().isNaturalNumber(namXBField.getText())){
+                    JOptionPane.showMessageDialog(null, "Số lượng và năm xuất bản phải là số tự nhiên");
+                    return;
+                }
                 ChiTietPhieuNhap_DAO chiTietPhieuNhap_dao = new ChiTietPhieuNhap_DAO();
                 chiTietPhieuNhap_dao.themVaoTacGia(maTGiaFiedl.getText(), tenTGiaField.getText());
 
@@ -1149,7 +1183,7 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
                 }
             }
         }
-        loadChiTietTPhieuNhap();
+        loadChiTietTPhieuNhap(comboBoxMaPNhap.getSelectedItem().toString());
         DelBtnActionPerformed (evt);
     }//GEN-LAST:event_btnK_luuMaSachActionPerformed
 
@@ -1159,7 +1193,7 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
         maTGiaFiedl.setEnabled(true);
         soLuongField.setEnabled(true);
         tenSachField.setEnabled(true);
-        tenTGiaField.setEnabled(true);
+        tenTGiaField.setEnabled(false);
         GNhapField.setEnabled(true);
         nxbField.setEnabled(true);
         namXBField.setEnabled (true);
@@ -1256,7 +1290,7 @@ public class TrangChuThuThu_QLPNhap extends javax.swing.JFrame {
     private javax.swing.JButton btnK_themPN;
     private javax.swing.JButton btnK_veTrangTruoc;
     private javax.swing.JButton btnRefreshPN;
-    private javax.swing.JComboBox<String> comboBoxMaPNhap;
+    private JComboBox<String> comboBoxMaPNhap;
     private javax.swing.JPanel jPK_btnQLPM;
     private javax.swing.JPanel jPK_btnQLS;
     private javax.swing.JPanel jPK_button;
