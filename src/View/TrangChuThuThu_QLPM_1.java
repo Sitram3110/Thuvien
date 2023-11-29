@@ -169,6 +169,11 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
                 btnK_veTrangTruocActionPerformed(evt, quayVe);
             }
         });
+        cbbK_soNgayMuon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbK_soNgayMuonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPK_tieuDeLayout = new javax.swing.GroupLayout(jPK_tieuDe);
         jPK_tieuDe.setLayout(jPK_tieuDeLayout);
@@ -227,7 +232,7 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
 
         labelNgayTra.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         labelNgayTra.setForeground(new java.awt.Color(0, 0, 0));
-        labelNgayTra.setText("Ngày trả:");
+        labelNgayTra.setText("Hạn phải trả:");
 
         fieldNgayTra.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
@@ -670,6 +675,8 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
+        fieldNgayTra.setEnabled(false);
+        fieldSoluongsach.setEnabled(false);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(MouseEvent evt) {// GEN-FIRST:event_QLTGiaTableMouseClicked
@@ -690,7 +697,6 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
             e.printStackTrace();
         }
         txtK_ngayMuon.setDate(date);
-        fieldNgayTra.setText(jTable1.getValueAt(selectedRow, 5).toString());
         fieldSoluongsach.setText(String.valueOf(jTable1.getValueAt(selectedRow, 6)));
         cbbK_trangThai.setSelectedItem((String) jTable1.getValueAt(selectedRow, 7));
 
@@ -715,8 +721,6 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         txtK_maPM_1.setEnabled(true);
         txtK_maTK.setEnabled(true);
         txtK_ngayMuon.setEnabled(true);
-        fieldNgayTra.setEnabled(true);
-        fieldSoluongsach.setEnabled(false);
         fieldSoluongsach.setText("0");
         btnK_luuPM.setEnabled(true);
         // btnK_themPM.setEnabled(false);
@@ -776,8 +780,6 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         txtK_maPM_1.setEnabled(true);
         txtK_maTK.setEnabled(true);
         txtK_ngayMuon.setEnabled(true);
-        fieldNgayTra.setEnabled(true);
-        fieldSoluongsach.setEnabled(true);
         btnK_luuPM.setEnabled(true);
         btnK_themPM.setEnabled(false);
         // btnK_suaPM.setEnabled(false);
@@ -794,8 +796,6 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         txtK_maPM_1.setEnabled(true);
         txtK_maTK.setEnabled(true);
         txtK_ngayMuon.setEnabled(true);
-        fieldNgayTra.setEnabled(true);
-        fieldSoluongsach.setEnabled(true);
         btnK_themPM.setEnabled(true);
         btnK_suaPM.setEnabled(true);
         btnXoa.setEnabled(true);
@@ -948,8 +948,6 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         txtK_maPM_1.setEnabled(true);
         txtK_maTK.setEnabled(false);
         txtK_ngayMuon.setEnabled(false);
-        fieldNgayTra.setEnabled(false);
-        fieldSoluongsach.setEnabled(false);
         btnK_luuPM.setEnabled(true);
         btnK_themPM.setEnabled(false);
         btnK_suaPM.setEnabled(false);

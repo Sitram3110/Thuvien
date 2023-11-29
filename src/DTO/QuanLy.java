@@ -7,7 +7,10 @@ public class QuanLy {
     public QuanLy() {
 
     }
-
+    public QuanLy(String maQuanly, String tenQuanly) {
+        this.maQuanly = maQuanly;
+        this.tenQuanly = tenQuanly;
+    }
     public QuanLy(String maQuanly,  String matKhau,String tenQuanly, String ngaySinh, String gioiTinh, String diaChi,
             String SDT, String Email , int trangThai) {
         this.maQuanly = maQuanly;

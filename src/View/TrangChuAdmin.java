@@ -26,6 +26,8 @@ import Model.PhieuTra_BLL;
 import Model.TaiKhoan;
 import Model.check;
 import Model.kho_BLL;
+import TEST.KiemTraNhap;
+
 import java.util.List;
 
 import static java.time.zone.ZoneRulesProvider.refresh;
@@ -2531,7 +2533,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         cbb_chucNangThongKe7.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cbb_chucNangThongKe7.setForeground(new java.awt.Color(0, 0, 153));
         cbb_chucNangThongKe7.setModel(new javax.swing.DefaultComboBoxModel<>(
-                new String[] { "Số lượng sách còn", "Số lượng sách hỏng", "Tổng số lượng" }));
+                new String[] { "Tổng số lượng", "Số lượng sách hỏng", "Số lượng sách còn" }));
         cbb_chucNangThongKe7.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbb_chucNangThongKe7ItemStateChanged(evt);
@@ -3768,7 +3770,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         sachtb.setRowCount(0);
         List<KhoSach> sachByCate;
         int soluong = 0;
-        if (index == 0) {
+        if (index == 2) {
             sachByCate = ThongKeDao.getInstance().SachCon();
             soluong = ThongKeDao.getInstance().SoLuongSachCon();
             int i = 0;
@@ -4476,11 +4478,24 @@ public class TrangChuAdmin extends javax.swing.JFrame {
 
     private void btnH_themSach2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnH_themSach2ActionPerformed
         // TODO add your handling code here:
-        if (H_tenSach3.getText().trim().equals("")
+        if (H_tenSach3.getText().trim().equals("") || H_tenSach2.getText().trim().equals("")
                 || H_tenTheLoai2.getText().trim().equals("") || H_tenDM2.getText().trim().equals("")
-                || H_soLuongCon2.getText().trim().equals("") || H_tacGia4.getText().trim().equals("")) {
+                || H_soLuongCon2.getText().trim().equals("") || H_tacGia4.getText().trim().equals("") || H_nhaXB2.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin!");
+            return;
         } else {
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(H_tenSach2.getText()+H_tacGia4.getText())){
+                JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt");
+                return;
+            }
+            if (!KiemTraNhap.getInstance().isNaturalNumber(H_namXB2.getText())){
+                JOptionPane.showMessageDialog(null, "Năm xuất bản không đúng định dạng.");
+                return;
+            }
+            if (!KiemTraNhap.getInstance().isNonNegativeFloat(H_soLuongCon2.getText())){
+                JOptionPane.showMessageDialog(null, "Giá tiền phải là số thực không âm");
+                return;
+            }
             int x = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm không?");
             if (x == JOptionPane.NO_OPTION) {
                 return;
@@ -4499,11 +4514,12 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 sach.setMaDMSach(Hc_maDM2.getItemAt(Hc_maDM2.getSelectedIndex()));
                 sach.setMaTheLoai(Hc_maTheLoai2.getItemAt(Hc_maTheLoai2.getSelectedIndex()));
                 TacGia tacGia = TacGia_DAO.getInstance().selectById(H_tacGia4.getText());
-                if (tacGia.getMaTacGia().equals("")) {
+                if (tacGia.getMaTacGia().equals("") || tacGia==null) {
                     if (H_tacGia5.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Mã tác giả mới, vui lòng nhập tên tác giả!");
+                        return;
                     } else {
-                        // tacGia.setMaTacGia(H_tacGia4.getText());
+                        tacGia.setMaTacGia(H_tacGia4.getText());
                         tacGia.setTenTacGia(H_tacGia5.getText());
                         TacGia_DAO.getInstance().add(tacGia);
                     }
@@ -4525,6 +4541,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             }
             refresh();
             loadThongTinSach();
+            loadmaTacGia();
             loadThongKe();
         }
 
@@ -4532,13 +4549,31 @@ public class TrangChuAdmin extends javax.swing.JFrame {
 
     private void btnH_suaSach2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnH_suaSach2ActionPerformed
         // TODO add your handling code here:
-        if (H_tenSach2.getText().trim().equals("") || H_tenTheLoai2.getText().trim().equals("")
-                || H_tenDM2.getText().trim().equals("") || H_namXB2.getText().trim().equals("")
-                || H_nhaXB2.getText().trim().equals("")) {
-            JOptionPane.showMessageDialog(null, "Vui lòng chọn thông tin sách muốn sửa!");
+        if (H_tenSach2.getText().trim().equals("") || H_tenTheLoai2.getText().trim().equals("") || H_tenSach3.getText().trim().equals("")
+                || H_tenDM2.getText().trim().equals("") || H_nhaXB2.getText().trim().equals("")  || H_soLuongCon2.getText().trim().equals("") || H_tacGia4.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin!");
+            return;
         } else {
-            if (!H_tacGia5.getText().equals("") || !H_tacGia4.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Bạn không thể sữa mã tác giả hay tên tác giả. Vui lòng để trống!");
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(H_tenSach2.getText()+H_tacGia4.getText())){
+                JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt vào mã sách hay mã tác giả");
+                return;
+            }
+            if (!KiemTraNhap.getInstance().isNaturalNumber(H_namXB2.getText())){
+                JOptionPane.showMessageDialog(null, "Năm xuất bản không đúng định dạng.");
+                return;
+            }
+            if (!KiemTraNhap.getInstance().isNonNegativeFloat(H_soLuongCon2.getText())){
+                JOptionPane.showMessageDialog(null, "Giá tiền phải là số thực không âm");
+                return;
+            }
+            TacGia tacGia = TacGia_DAO.getInstance().selectById(H_tacGia4.getText());
+            if (tacGia==null || tacGia.getTenTacGia().equals("")){
+                JOptionPane.showMessageDialog(null, "Mã tác giả không tồn tại. Hãy thêm dữ liệu tác giả trong phần quản lý tác giả trước.");
+                return;
+            }
+            if (!H_tacGia5.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Bạn không thể sửa tên tác giả. Vui lòng để trống!");
+                return;
             } else {
                 int x = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thay đổi không?");
                 if (x == JOptionPane.NO_OPTION) {
@@ -4663,8 +4698,12 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (txt_maDMSach4.getText().trim().equals("") || txt_tenDMSach10.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin!");
-
+            return;
         } else {
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(txt_maDMSach4.getText())){
+                JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt vào mã");
+                return;
+            }
             int x = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm không?");
             if (x == JOptionPane.NO_OPTION) {
                 return;
@@ -4680,6 +4719,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 }
             }
             loadmaDanhMuc();
+            loadComboBoxDanhMuc();
             btn_lammoi6ActionPerformed(evt);
         }
     }// GEN-LAST:event_btn_LuuDMSach6ActionPerformed
@@ -4699,6 +4739,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 DanhMucSach_DAO.getInstance().update(danhmuc);
             }
             loadmaDanhMuc();
+            loadThongTinSach();
+            loadComboBoxDanhMuc();
             btn_lammoi6ActionPerformed(evt);
         }
     }// GEN-LAST:event_btn_SuaDMSach6ActionPerformed
@@ -4756,6 +4798,10 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin!");
 
         } else {
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(txt_maDMSach5.getText())){
+                JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt vào mã");
+                return;
+            }
             int x = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm không?");
             if (x == JOptionPane.NO_OPTION) {
                 return;
@@ -4770,6 +4816,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 }
             }
             loadmaTheLoai();
+            loadComboBoxTheLoai();
+            loadThongTinSach();
             btn_lammoi7ActionPerformed(evt);
         }
     }// GEN-LAST:event_btn_LuuDMSach7ActionPerformed
@@ -4793,6 +4841,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 }
             }
             loadmaTheLoai();
+            loadComboBoxTheLoai();
+            loadThongTinSach();
             btn_lammoi7ActionPerformed(evt);
         }
     }// GEN-LAST:event_btn_SuaDMSach7ActionPerformed
@@ -4838,6 +4888,14 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin!");
 
         } else {
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(txt_tenDMSach14.getText())){
+                JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt vào mã");
+                return;
+            }
+            if (!KiemTraNhap.getInstance().isNaturalNumber(txt_tenDMSach12.getText())){
+                JOptionPane.showMessageDialog(null, "Số lượng sách phải là số tự nhiên");
+                return;
+            }
             int x = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm không?");
             if (x == JOptionPane.NO_OPTION) {
                 return;
@@ -4885,6 +4943,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 }
             }
             loadmaTacGia();
+            loadThongTinSach();
             btn_lammoi8ActionPerformed(evt);
         }
     }// GEN-LAST:event_btn_SuaDMSach8ActionPerformed
