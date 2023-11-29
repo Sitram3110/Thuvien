@@ -542,7 +542,7 @@ CREATE TRIGGER UpdateTienPhat
 				SET @tienboithuong = @giaTienSach * 1.2
 			ELSE
 				IF @matDoHai > 0
-					SET @tienboithuong = @giaTienSach * 0.05 + 0.1 * (POWER(2, @matDoHai - 1) - 1);
+					SET @tienboithuong = @giaTienSach * (0.05 + 0.1 * (POWER(2, @matDoHai - 1) - 1));
 				ELSE
 					SET @tienboithuong = 0;
 
@@ -596,7 +596,7 @@ CREATE TRIGGER UpdateTienPhat
 				SET @tienboithuong = @giaTienSach * 1.2
        			ELSE
             			IF @matDoHai > 0
-                			SET @tienboithuong = @giaTienSach * 0.05 + 0.1 * (POWER(2, @matDoHai - 1) - 1);
+                			SET @tienboithuong = @giaTienSach * (0.05 + 0.1 * (POWER(2, @matDoHai - 1) - 1));
            			ELSE
                 			SET @tienboithuong = 0;
 
@@ -614,6 +614,7 @@ CREATE TRIGGER UpdateTienPhat
 				set tienPhat = @tienPhat + @tienboithuong
 				WHERE maPhieuMuon = @maPhieuMuon AND maSach = @maSach; 
 			end
+			PRINT @matDoHai
 		end
 	END
 	go
@@ -677,19 +678,7 @@ BEGIN
 END;
 go
 
-CREATE TRIGGER tr_updateSoLuongNhapSach ON dbo.ChiTietPhieuNhapSach
-FOR INSERT
-AS
-BEGIN
-    DECLARE @maSach varchar(5)
-    DECLARE @soLuongNhap int
-    SELECT @maSach = i.maSach, @soLuongNhap = i.soLuongNhap
-    FROM inserted i
-    UPDATE dbo.KhoSach
-    SET soLuongCon = soLuongCon + @soLuongNhap
-    WHERE maSach = @maSach
-END
-GO 
+
 
 INSERT [dbo].[DanhMucSach] ([maDMSach], [tenDMSach]) VALUES (N'DM001', N'Chuyên ngành Điện-Điện tử')
 INSERT [dbo].[DanhMucSach] ([maDMSach], [tenDMSach]) VALUES (N'DM002', N'Chuyên ngành Cơ khí')
@@ -793,30 +782,30 @@ INSERT [dbo].[QuanLy] ([maQuanLy], [matKhau], [tenQuanLy], [ngaySinh], [gioiTinh
 INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM001', CAST(N'2023-08-10' AS Date), 7, CAST(N'2023-08-17' AS Date), 2 , N'312141002', N'101010 ', N'', N'Chưa trả')
 INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM002', CAST(N'2023-08-11' AS Date), 7, CAST(N'2023-08-18' AS Date), 3 , N'312141004', N'101010 ', N'', N'Chưa trả')
 INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM003', CAST(N'2023-08-12' AS Date),12, CAST(N'2023-08-24' AS Date), 1 , N'312141006', N'101010 ', N'', N'Chưa trả')
-INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM004', CAST(N'2023-08-24' AS Date), 7, CAST(N'2023-08-31' AS Date), 3 , N'312141001', N'101010 ', N'', N'Đã trả')
+INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM004', CAST(N'2023-08-24' AS Date), 7, CAST(N'2023-08-31' AS Date), 3 , N'312141001', N'101010 ', N'', N'Chưa trả')
 INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM005', CAST(N'2023-08-24' AS Date), 7, CAST(N'2023-08-31' AS Date), 2 , N'312041001', N'101010 ', N'', N'Chưa trả')
-INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM006', CAST(N'2023-08-24' AS Date), 7, CAST(N'2023-08-31' AS Date), 3 , N'312141004', N'101010 ', N'', N'Đã trả')
+INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM006', CAST(N'2023-08-24' AS Date), 7, CAST(N'2023-08-31' AS Date), 3 , N'312141004', N'101010 ', N'', N'Chưa trả')
 INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM007', CAST(N'2023-08-25' AS Date), 7, CAST(N'2023-09-01' AS Date), 2 , N'312141005', N'101010 ', N'Không', N'Chưa trả')
 INSERT [dbo].[PhieuMuon] ([maPhieuMuon], [ngayMuon], [soNgayMuon], [hanTraSach], [soLuongSach], [maTaiKhoan], [maQuanLy], [ghiChu], [trangThai]) VALUES (N'PM008', CAST(N'2023-08-20' AS Date), 7, CAST(N'2023-08-17' AS Date), 2 , N'312141006', N'101010 ', N'', N'Chưa trả')
 
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM001', N'S0001', CAST(N'2023-08-17' AS Date), 137500.0000, N'Mất')
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM001', N'S0002', CAST(N'2022-08-17' AS Date), 5500.0000, N'Hư hỏng mức 1')
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM002', N'S0003', CAST(N'2023-08-22' AS Date), 20000.0000, N'Trễ hạn')
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM002', N'S0004', CAST(N'2023-08-30' AS Date), 20000.0000, N'Trễ hạn')
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM002', N'S0005', CAST(N'2023-08-20' AS Date), 20000.0000, N'Trễ hạn')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM001', N'S0001', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM001', N'S0002', CAST(N'2023-08-17' AS Date), 505500.0, N'Hư hỏng mức ít')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM002', N'S0003', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM002', N'S0004', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM002', N'S0005', NULL, 0.0000, N'')
 INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM003', N'S0006', NULL, 0.0000, N'')
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM004', N'S0006', CAST(N'2023-08-30' AS Date), 0.0000, 0)
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM004', N'S0008', CAST(N'2023-08-30' AS Date), 0.0000, 0)
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM004', N'S0009', CAST(N'2023-08-30' AS Date), 0.0000, 0)
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM005', N'S0006', CAST(N'2023-08-30' AS Date), 0.0000, 0)
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM005', N'S0008', CAST(N'2023-08-30' AS Date), 0.0000, 0)
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM006', N'S0002', CAST(N'2023-08-31' AS Date), 0.0000, 0)
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM006', N'S0003', CAST(N'2023-08-31' AS Date), 0.0000, 0)
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM006', N'S0007', CAST(N'2023-08-31' AS Date), 0.0000, 0)
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM004', N'S0006', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM004', N'S0008', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM004', N'S0009', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM005', N'S0006', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM005', N'S0008', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM006', N'S0002', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM006', N'S0003', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM006', N'S0007', NULL, 0.0000, N'')
 INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM007', N'S0003', NULL, 0.0000, N'')
 INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM007', N'S0005', NULL, 0.0000, N'')
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM008', N'S0007', CAST(N'2023-09-10' AS Date), 240000.0000, N'Trễ hạn')
-INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM008', N'S0010', CAST(N'2023-09-10' AS Date), 240000.0000, N'Trễ hạn')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM008', N'S0007', NULL, 0.0000, N'')
+INSERT [dbo].[ChiTietPhieuMuon] ([maPhieuMuon], [maSach], [ngayThucTra], [tienPhat], [tinhTrangSach]) VALUES (N'PM008', N'S0010', NULL, 0.0000, N'')
 
 INSERT INTO [dbo].[PhieuNhapSach] ([maPhieuNhap], [maQuanLy], [ngayNhap], [nhaCungCap]) VALUES (N'PN001',N'101011', CAST(N'2023-08-01' AS Date), N'NCC001')
 INSERT INTO [dbo].[PhieuNhapSach] ([maPhieuNhap], [maQuanLy], [ngayNhap], [nhaCungCap]) VALUES (N'PN002',N'101011', CAST(N'2023-08-08' AS Date), N'NCC002')
@@ -826,17 +815,17 @@ INSERT INTO [dbo].[PhieuNhapSach] ([maPhieuNhap], [maQuanLy], [ngayNhap], [nhaCu
 INSERT INTO [dbo].[PhieuNhapSach] ([maPhieuNhap], [maQuanLy], [ngayNhap], [nhaCungCap]) VALUES (N'PN006',N'101011', CAST(N'2023-08-12' AS Date), N'NCC006')
 
 INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN001',N'S0025',N'Lập trình Python nâng cao',N'TG001',N'TL001',N'NXB Công nghệ thông tin',2023,10,175000)
-INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN001',N'S0026',N'Lập trình Java nâng cao',N'TG001',N'TL002',N'NXB Giáo dục',2023,20,20600)
-INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN001',N'S0027',N'Lập trình Go nâng cao',N'TG002' ,N'TL003',N'NXB Công nghệ thông tin',2023,15,198000)
-INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN002',N'S0028',N'Toán cao cấp',N'TG005',N'TL001',N'NXB Giáo dục',2023,25,210000)
-INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN002',N'S0029',N'Vật lý đại cương',N'TG006',N'TL002',N'NXB Giáo dục',2023,15,176000)
-INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN002',N'S0030',N'Hóa học đại cương',N'TG012',N'TL003',N'NXB Giáo dục',2023,15, 97000)
+INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN001',N'S0021',N'Lập trình Java nâng cao',N'TG001',N'TL002',N'NXB Giáo dục',2023,10,20600)
+INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN001',N'S0023',N'Lập trình Go nâng cao',N'TG002' ,N'TL003',N'NXB Công nghệ thông tin',2023,15,198000)
+INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN002',N'S0011',N'Toán cao cấp',N'TG005',N'TL001',N'NXB Giáo dục',2023,10,210000)
+INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN002',N'S0004',N'Vật lý đại cương',N'TG006',N'TL002',N'NXB Giáo dục',2023,15,176000)
+INSERT INTO [dbo].[ChiTietPhieuNhapSach] ([maPhieuNhap],[maSach],[tenSach],[maTacGia],[maTheLoai],[NXB],[namXuatBan],[soLuongNhap],[giaNhap]) VALUES (N'PN002',N'S0001',N'Hóa học đại cương',N'TG012',N'TL003',N'NXB Giáo dục',2023,15, 97000)
 
 INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL002', N'101011', N'S0001', 2, N'Hư hỏng mức ít', CAST(N'2023-08-13' AS Date) ,N'Sách bị cũ',20000)
-INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL003', N'101011', N'S0002', 3, N'Hư hỏng mức độ vừa', CAST(N'2023-08-14'AS Date), N'Sách bị mốc',525000)
-INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL004', N'101011', N'S0003', 4, N'Hư hỏng mức độ nhiều', CAST(N'2023-08-15'AS Date), N'Sách bị mất trang',150000)
-INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL005', N'101011', N'S0004', 5, N'Hư hỏng mức độ nhiều', CAST(N'2023-08-16'AS Date), N'Sách bị lỗi in',224000)
-INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL006', N'101011', N'S0005', 6, N'Hư hỏng nghiêm trọng', CAST(N'2023-08-17' AS Date), N'Sách bị cháy',632000)
+INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL003', N'101011', N'S0002', 3, N'Hư hỏng mức vừa', CAST(N'2023-08-14'AS Date), N'Sách bị mốc',525000)
+INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL004', N'101011', N'S0003', 4, N'Hư hỏng mức nhiều', CAST(N'2023-08-15'AS Date), N'Sách bị mất trang',150000)
+INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL005', N'101011', N'S0004', 5, N'Hư hỏng mức nhiều', CAST(N'2023-08-16'AS Date), N'Sách bị lỗi in',224000)
+INSERT INTO [dbo].[ThanhLySach] ([maThanhLySach], [maQuanLy], [maSach], [soLuongSachHong], [lyDoThanhLy], [ngayThanhLy], [ghiChu],[tongTienThanhLy]) VALUES (N'TL006', N'101011', N'S0005', 6, N'Hư hỏng mức nghiêm trọng', CAST(N'2023-08-17' AS Date), N'Sách bị cháy',632000)
 
 ALTER TABLE [dbo].[QuanLy] ADD  DEFAULT ('1') FOR [trangThai]
 GO

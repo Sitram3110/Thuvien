@@ -236,12 +236,12 @@ public class ThanhLy_DALL {
         return Soluong;
     }
     
-        public void UpdateKhoAfterAction(ThanhLySach thanhly){
+        public void UpdateKhoAfterAdd(ThanhLySach thanhly){
             Connection connection = KetNoiSQL.getConnection();
             try {
                 // The SQL query with placeholders (?)
                 String query = "UPDATE khoSach "+
-                                "SET soLuongSachHong = soLuongSachHong - ? "+
+                                "SET soLuongSachHong = soLuongSachHong - ?, tongSoLuong = tongSoLuong - ? "+
                                 "WHERE maSach = ?";
                 System.out.println(query);
                 // Create a PreparedStatement
@@ -249,7 +249,8 @@ public class ThanhLy_DALL {
 
                 // Set values for the placeholders
                 preparedStatement.setInt(1, thanhly.getSoLuongSachHong());
-                preparedStatement.setString(2, thanhly.getMaSach());
+                preparedStatement.setInt(2, thanhly.getSoLuongSachHong());
+                preparedStatement.setString(3, thanhly.getMaSach());
 
 
                 // Execute the query
@@ -265,12 +266,119 @@ public class ThanhLy_DALL {
         
     }
     
+    public void UpdateKhoAfterUpdateSlg(ThanhLySach thanhly, int soluong){
+            Connection connection = KetNoiSQL.getConnection();
+            try {
+                // The SQL query with placeholders (?)
+                String query = "UPDATE khoSach "+
+                                "SET soLuongSachHong = soLuongSachHong + ?, tongSoLuong = tongSoLuong + ? "+
+                                "WHERE maSach = ?";
+                System.out.println(query);
+                // Create a PreparedStatement
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+                // Set values for the placeholders
+                preparedStatement.setInt(1, soluong);
+                preparedStatement.setInt(2, soluong);
+                preparedStatement.setString(3, thanhly.getMaSach());
+
+
+                // Execute the query
+                preparedStatement.executeUpdate();
+
+                // Close the PreparedStatement
+                preparedStatement.close();
+                connection.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle exceptions appropriately in your application
+            }
+        
+    }
+    
+    public void UpdateKhoAfterUpdateIdBook(String idthanhlycu, int soluongcu, String idthanhlymoi, int soluongmoi){
+            Connection connection = KetNoiSQL.getConnection();
+            try {
+                // The SQL query with placeholders (?)
+                String query = "UPDATE khoSach "+
+                                "SET soLuongSachHong = soLuongSachHong + ?, tongSoLuong = tongSoLuong + ? "+
+                                "WHERE maSach = ?";
+                System.out.println(query);
+                // Create a PreparedStatement
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+                // Set values for the placeholders
+                preparedStatement.setInt(1, soluongcu);
+                preparedStatement.setInt(2, soluongcu);
+                preparedStatement.setString(3, idthanhlycu);
+
+                soluongmoi = -soluongmoi;
+                // Execute the query
+                preparedStatement.executeUpdate();
+                
+                preparedStatement.setInt(1, soluongmoi);
+                preparedStatement.setInt(2, soluongmoi);
+                preparedStatement.setString(3, idthanhlymoi);
+
+
+                // Execute the query
+                preparedStatement.executeUpdate();
+                
+                
+
+                // Close the PreparedStatement
+                preparedStatement.close();
+                connection.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle exceptions appropriately in your application
+            }
+        
+    }
+    
+    public void UpdateKhoAfterDelete(ThanhLySach thanhLy){
+            Connection connection = KetNoiSQL.getConnection();
+            try {
+                // The SQL query with placeholders (?)
+                String query = "UPDATE khoSach "+
+                                "SET soLuongSachHong = soLuongSachHong + ?, tongSoLuong = tongSoLuong + ? "+
+                                "WHERE maSach = ?";
+                System.out.println(query);
+                // Create a PreparedStatement
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+                // Set values for the placeholders
+                preparedStatement.setInt(1, thanhLy.getSoLuongSachHong());
+                preparedStatement.setInt(2, thanhLy.getSoLuongSachHong());
+                preparedStatement.setString(3, thanhLy.getMaSach());
+
+                
+                
+
+
+                // Execute the query
+                preparedStatement.executeUpdate();
+                
+                
+
+                // Close the PreparedStatement
+                preparedStatement.close();
+                connection.close();
+
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle exceptions appropriately in your application
+            }
+        
+    }
+    
+    
+        
     public double getprincebook(String idbook){
         double prince = 0;
         Connection connection = KetNoiSQL.getConnection();
         try {
             Statement statement = connection.createStatement();
-            String query = "select giaTienSach from ThongTinSach";
+            String query = "select giaTienSach from ThongTinSach where maSach = '" +idbook+ "'";
             System.out.println(query);
 			
             ResultSet rs =  statement.executeQuery(query);

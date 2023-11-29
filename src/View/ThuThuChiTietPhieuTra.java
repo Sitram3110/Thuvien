@@ -108,9 +108,9 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
         btnK_suaChiTiet = new javax.swing.JButton();
         btnK_luuChiTiet = new javax.swing.JButton();
         BTN_EXCEL = new javax.swing.JButton();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        tblK_ChiTiet = new javax.swing.JTable();
         btnK_veTrangTruoc = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblK_ChiTiet = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -254,7 +254,7 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
                                 .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtTienPhat, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,7 +285,7 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
         jPanel13.setLayout(jPanel13Layout);
         jPanel13Layout.setHorizontalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 13, Short.MAX_VALUE)
+            .addGap(0, 1, Short.MAX_VALUE)
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -325,28 +325,6 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
             }
         });
 
-        tblK_ChiTiet.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
-        tblK_ChiTiet.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        tblK_ChiTiet.setEnabled(false);
-        tblK_ChiTiet.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblK_ChiTietMouseClicked(evt);
-            }
-        });
-        tblK_ChiTiet.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tblK_ChiTietKeyTyped(evt);
-            }
-        });
-        jScrollPane6.setViewportView(tblK_ChiTiet);
-
         btnK_veTrangTruoc.setBackground(new java.awt.Color(255, 204, 204));
         btnK_veTrangTruoc.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         btnK_veTrangTruoc.setForeground(new java.awt.Color(0, 0, 0));
@@ -358,6 +336,24 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
             }
         });
 
+        tblK_ChiTiet.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tblK_ChiTiet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblK_ChiTietMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblK_ChiTiet);
+
         javax.swing.GroupLayout Panel_ChiTietPMLayout = new javax.swing.GroupLayout(Panel_ChiTietPM);
         Panel_ChiTietPM.setLayout(Panel_ChiTietPMLayout);
         Panel_ChiTietPMLayout.setHorizontalGroup(
@@ -367,18 +363,18 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addGroup(Panel_ChiTietPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel_ChiTietPMLayout.createSequentialGroup()
-                        .addGroup(Panel_ChiTietPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 1002, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnK_veTrangTruoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(Panel_ChiTietPMLayout.createSequentialGroup()
                         .addComponent(btnK_luuChiTiet)
                         .addGap(18, 18, 18)
                         .addComponent(btnK_suaChiTiet)
                         .addGap(18, 18, 18)
                         .addComponent(BTN_EXCEL, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnK_veTrangTruoc, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(Panel_ChiTietPMLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1012, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 8, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         Panel_ChiTietPMLayout.setVerticalGroup(
             Panel_ChiTietPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,14 +385,14 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
                     .addComponent(btnK_luuChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnK_suaChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTN_EXCEL, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(Panel_ChiTietPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(Panel_ChiTietPMLayout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
                         .addComponent(btnK_veTrangTruoc, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(18, Short.MAX_VALUE))))
+                        .addContainerGap(30, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -421,40 +417,6 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tblK_ChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblK_ChiTietMouseClicked
-        int row = tblK_ChiTiet.getSelectedRow();
-        txtMaSach.setText(tblK_ChiTiet.getValueAt(row, 0).toString());
-        txtname.setText(tblK_ChiTiet.getValueAt(row, 1).toString());
-        Object dateValue = tblK_ChiTiet.getValueAt(row, 2);
-        if (dateValue != null) {
-            txtDate.setText(dateValue.toString());
-        } 
-        else {
-            txtDate.setText("");
-        }
-        
-        String tinhtrangsachs = tblK_ChiTiet.getValueAt(row, 4).toString();
-        
-        int commaIndex = tinhtrangsachs.indexOf(',');
-        if(commaIndex != -1){
-            String tinhtrangsach = tinhtrangsachs.substring(0, commaIndex);
-            cb_tinhtrang.setSelectedItem(tinhtrangsach);
-        }
-        
-        txtTienPhat.setText(tblK_ChiTiet.getValueAt(row, 3).toString());
-        
-        
-        if(tblK_ChiTiet.getValueAt(row, 2) == null){
-            btnK_luuChiTiet.setEnabled(true);
-            btnK_suaChiTiet.setEnabled(false);
-        }else{
-            btnK_luuChiTiet.setEnabled(false);
-            btnK_suaChiTiet.setEnabled(true);
-
-        }
-        
-    }//GEN-LAST:event_tblK_ChiTietMouseClicked
 
     private void btnK_veTrangTruocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnK_veTrangTruocActionPerformed
         if(checkadmin){
@@ -566,10 +528,6 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cb_tinhtrangActionPerformed
 
-    private void tblK_ChiTietKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblK_ChiTietKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tblK_ChiTietKeyTyped
-
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         
     }//GEN-LAST:event_formWindowActivated
@@ -585,6 +543,41 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void tblK_ChiTietMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblK_ChiTietMouseClicked
+        int row = tblK_ChiTiet.getSelectedRow();
+        txtMaSach.setText(tblK_ChiTiet.getValueAt(row, 0).toString());
+        txtname.setText(tblK_ChiTiet.getValueAt(row, 1).toString());
+        Object dateValue = tblK_ChiTiet.getValueAt(row, 2);
+        if (dateValue != null) {
+            txtDate.setText(dateValue.toString());
+        } 
+        else {
+            txtDate.setText("");
+        }
+        
+        String tinhtrangsachs = tblK_ChiTiet.getValueAt(row, 4).toString();
+        
+        int commaIndex = tinhtrangsachs.indexOf(',');
+        if(commaIndex != -1){
+            String tinhtrangsach = tinhtrangsachs.substring(0, commaIndex);
+            cb_tinhtrang.setSelectedItem(tinhtrangsach);
+        }else{
+            cb_tinhtrang.setSelectedItem(tinhtrangsachs);
+        }
+        
+        txtTienPhat.setText(tblK_ChiTiet.getValueAt(row, 3).toString());
+        
+        
+        if(tblK_ChiTiet.getValueAt(row, 2) == null){
+            btnK_luuChiTiet.setEnabled(true);
+            btnK_suaChiTiet.setEnabled(false);
+        }else{
+            btnK_luuChiTiet.setEnabled(false);
+            btnK_suaChiTiet.setEnabled(true);
+
+        }
+    }//GEN-LAST:event_tblK_ChiTietMouseClicked
 
     /**
      * @param args the command line arguments
@@ -606,7 +599,7 @@ public class ThuThuChiTietPhieuTra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblK_ChiTiet;
     private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtMaSach;
