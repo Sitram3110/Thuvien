@@ -786,7 +786,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
 
         soLuongmuonField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         soLuongmuonField.setEditable(false);
-        soLuongField.setText("0");
+        soLuongmuonField.setText("0");
         jPanel29.add(soLuongmuonField);
         soLuongmuonField.setBounds(850, 153, 200, 30);
 
