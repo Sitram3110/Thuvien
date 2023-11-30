@@ -189,6 +189,11 @@ import javax.swing.table.DefaultTableModel;
                 txt_IdBookActionPerformed(evt);
             }
         });
+        txt_IdBook.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_IdBookKeyReleased(evt);
+            }
+        });
 
         labelTensach.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         labelTensach.setText("Mã sách:");
@@ -654,6 +659,12 @@ import javax.swing.table.DefaultTableModel;
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         
     }//GEN-LAST:event_formWindowActivated
+
+    private void txt_IdBookKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_IdBookKeyReleased
+        String Idbook = txt_IdBook.getText();
+        String namebook = thanhLyBLL.searchNameBook(Idbook);
+        txtNameBook.setText(namebook);
+    }//GEN-LAST:event_txt_IdBookKeyReleased
 
     /**
      * @param args the command line arguments

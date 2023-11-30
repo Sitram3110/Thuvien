@@ -409,4 +409,8 @@ public class ThanhLyBLL {
         List<ThanhLySach> thanhLySachs = thanhLy_DALL.search(id);
         return processLists(books, thanhLySachs);
     }
+    
+    public String searchNameBook(String id){
+        return thanhLy_DALL.searchNameBook(id);
+    }
 }

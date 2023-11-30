@@ -491,4 +491,27 @@ public class ThanhLy_DALL {
         return thanhLySachs;
     }
     
+    public String searchNameBook(String id){
+        String namebook = "";
+        Connection connection = KetNoiSQL.getConnection();
+        try {
+            try (Statement statement = connection.createStatement()) {
+                String query = "SELECT * FROM ThongTinSach " +
+                           " WHERE maSach = '" + id + "' ";                        
+                System.out.println(query);
+                
+                ResultSet rs =  statement.executeQuery(query);
+			
+                while(rs.next()) {
+                    namebook = rs.getString("tenSach");
+                }
+            }
+            connection.close();
+            return namebook;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return namebook;
+    }
+    
 }

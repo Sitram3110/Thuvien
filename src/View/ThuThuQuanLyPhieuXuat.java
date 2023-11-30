@@ -147,6 +147,11 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
                 txt_IdBookActionPerformed(evt);
             }
         });
+        txt_IdBook.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_IdBookKeyReleased(evt);
+            }
+        });
 
         labelTensach.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         labelTensach.setText("Mã sách:");
@@ -563,6 +568,12 @@ public class ThuThuQuanLyPhieuXuat extends javax.swing.JFrame {
         trangChuThuThu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void txt_IdBookKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_IdBookKeyReleased
+        String Idbook = txt_IdBook.getText();
+        String namebook = thanhLyBLL.searchNameBook(Idbook);
+        txtNameBook.setText(namebook);
+    }//GEN-LAST:event_txt_IdBookKeyReleased
 
     /**
      * @param args the command line arguments
