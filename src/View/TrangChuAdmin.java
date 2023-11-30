@@ -253,7 +253,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        setResizable(false);
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
@@ -453,7 +453,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         jLabel179 = new javax.swing.JLabel();
         gioitinhnam22 = new javax.swing.JRadioButton();
         gioitinhnu22 = new javax.swing.JRadioButton();
-        String[] tenQL={"ADMIN", "THỦ THƯ"};
+        String[] tenQL = { "ADMIN", "THỦ THƯ" };
         Hc_maTheLoai6 = new javax.swing.JComboBox<>(tenQL);
         jLabel175 = new javax.swing.JLabel();
         jLabel174 = new javax.swing.JLabel();
@@ -2792,19 +2792,20 @@ public class TrangChuAdmin extends javax.swing.JFrame {
 
         tableSearchSach7.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         tableSearchSach7.setModel(new javax.swing.table.DefaultTableModel(
-            new Object[][] {
+                new Object[][] {
 
-            },
-            new String[] {
-                "Mã Quản Lý", "Tên Quản Lý", "Mật khẩu", "Ngày Sinh", "Giới Tính","Địa Chỉ", "SDT", "Email", "Trạng Thái"
-            }
-        ));
+                },
+                new String[] {
+                        "Mã Quản Lý", "Tên Quản Lý", "Mật khẩu", "Ngày Sinh", "Giới Tính", "Địa Chỉ", "SDT", "Email",
+                        "Trạng Thái"
+                }));
         tableSearchSach7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableSearchSach7MouseClicked(evt);
             }
-        });;
-        loadTaiKhoanQuanLy(tableSearchSach7, new DanhSachQuanLy( new QuanLy_DAO().dsAllTaiKhoan()));
+        });
+        ;
+        loadTaiKhoanQuanLy(tableSearchSach7, new DanhSachQuanLy(new QuanLy_DAO().dsAllTaiKhoan()));
         jScrollPane30.setViewportView(tableSearchSach7);
 
         themmoidg6.setBackground(new java.awt.Color(255, 204, 204));
@@ -2903,7 +2904,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
 
         jLabel173.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel173.setText("Mã quản lý:");
-        
+
         textboxsearch14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textboxsearch14ActionPerformed(evt);
@@ -4086,10 +4087,10 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (!new QLDG_PhanLoai_DAO().checkMaThe(maLoaiField.getText().toString())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Thẻ Đã Tồn Tại!!");
-        } else if(Integer.parseInt(soLuongField.getText()) < 0 || Double.parseDouble(thoiGianField.getText())<0 || Integer.parseInt(thoiGianField1.getText())<0){
+        } else if (Integer.parseInt(soLuongField.getText()) < 0 || Double.parseDouble(thoiGianField.getText()) < 0
+                || Integer.parseInt(thoiGianField1.getText()) < 0) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Yêu cầu không nhập số âm!");
-        }
-        else {
+        } else {
             int x = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), "Bạn Có Chắn Chắc Thêm Loại Thẻ!");
             if (x == JOptionPane.NO_OPTION)
                 return;
@@ -4117,7 +4118,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (new QLDG_PhanLoai_DAO().checkMaThe(maLoaiField.getText().toString())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Thẻ Đã Tồn Tại!!");
-        } else if(Integer.parseInt(soLuongField.getText()) < 0 || Double.parseDouble(thoiGianField.getText())<0 || Integer.parseInt(thoiGianField1.getText())<0){
+        } else if (Integer.parseInt(soLuongField.getText()) < 0 || Double.parseDouble(thoiGianField.getText()) < 0
+                || Integer.parseInt(thoiGianField1.getText()) < 0) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Yêu cầu không nhập số âm!");
         } else {
             int x = JOptionPane.showConfirmDialog(JOptionPane.getRootFrame(), "Bạn Có Chắn Chắc Sửa Loại Thẻ!");
@@ -4201,10 +4203,10 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         } else
             gioitinhnu16.setSelected(true);
 
-        if (tableDocgia2.getValueAt(lineSelect, 8) == null){
+        if (tableDocgia2.getValueAt(lineSelect, 8) == null) {
             diaChiField.setText("");
-        }else diaChiField.setText(tableDocgia2.getValueAt(lineSelect, 8).toString());
-
+        } else
+            diaChiField.setText(tableDocgia2.getValueAt(lineSelect, 8).toString());
 
         ngayMotheField.setText(tableDocgia2.getValueAt(lineSelect, 9).toString().trim());
         hanDungField1.setText(tableDocgia2.getValueAt(lineSelect, 10).toString().trim());
@@ -4229,8 +4231,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         Hc_maTheLoai3.setSelectedItem("");
         soLuongmuonField.setText("");
         emailDocgia4.setText("");
-        ngayMotheField.setText(LocalDate.now()+"");
-        hanDungField1.setText(LocalDate.now().plusYears(1)+"");
+        ngayMotheField.setText(LocalDate.now() + "");
+        hanDungField1.setText(LocalDate.now().plusYears(1) + "");
         diaChiField.setText("");
         khoatk8.setEnabled(true);
         maDocGiaField.setEditable(true);
@@ -4244,7 +4246,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
     // thêm độc giả
     private void themmoidg2ActionPerformed(java.awt.event.ActionEvent evt) {
         if (maDocGiaField.getText().equals("") || matKhauField.getText().equals("")
-                || Hc_maTheLoai3.getSelectedItem().equals("") || sdt2.getText().equals("") || tenDocGiaField.getText().equals("")) {
+                || Hc_maTheLoai3.getSelectedItem().equals("") || sdt2.getText().equals("")
+                || tenDocGiaField.getText().equals("")) {
             JOptionPane.showMessageDialog((JOptionPane.getRootFrame()), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (!new QuanLiDocGia_DAO().checkMaTaiKhoan(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Đã Tồn Tại!");
@@ -4296,7 +4299,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
     // Cập nhật độc giả
     private void updatedg2ActionPerformed(java.awt.event.ActionEvent evt) {
         if (maDocGiaField.getText().equals("") || matKhauField.getText().equals("")
-                || emailDocgia4.getText().equals("") || sdt2.getText().equals("") || tenDocGiaField.getText().equals("")) {
+                || emailDocgia4.getText().equals("") || sdt2.getText().equals("")
+                || tenDocGiaField.getText().equals("")) {
             JOptionPane.showMessageDialog((JOptionPane.getRootFrame()), "Vui Lòng Nhập Đủ Thông Tin!");
         } else if (new QuanLiDocGia_DAO().checkMaTaiKhoan(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Không Tồn Tại!");
@@ -4480,19 +4484,20 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (H_tenSach3.getText().trim().equals("") || H_tenSach2.getText().trim().equals("")
                 || H_tenTheLoai2.getText().trim().equals("") || H_tenDM2.getText().trim().equals("")
-                || H_soLuongCon2.getText().trim().equals("") || H_tacGia4.getText().trim().equals("") || H_nhaXB2.getText().trim().equals("")) {
+                || H_soLuongCon2.getText().trim().equals("") || H_tacGia4.getText().trim().equals("")
+                || H_nhaXB2.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin!");
             return;
         } else {
-            if (!KiemTraNhap.getInstance().checkSpecialCharacters(H_tenSach2.getText()+H_tacGia4.getText())){
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(H_tenSach2.getText() + H_tacGia4.getText())) {
                 JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt");
                 return;
             }
-            if (!KiemTraNhap.getInstance().isNaturalNumber(H_namXB2.getText())){
+            if (!KiemTraNhap.getInstance().isNaturalNumber(H_namXB2.getText())) {
                 JOptionPane.showMessageDialog(null, "Năm xuất bản không đúng định dạng.");
                 return;
             }
-            if (!KiemTraNhap.getInstance().isNonNegativeFloat(H_soLuongCon2.getText())){
+            if (!KiemTraNhap.getInstance().isNonNegativeFloat(H_soLuongCon2.getText())) {
                 JOptionPane.showMessageDialog(null, "Giá tiền phải là số thực không âm");
                 return;
             }
@@ -4514,7 +4519,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 sach.setMaDMSach(Hc_maDM2.getItemAt(Hc_maDM2.getSelectedIndex()));
                 sach.setMaTheLoai(Hc_maTheLoai2.getItemAt(Hc_maTheLoai2.getSelectedIndex()));
                 TacGia tacGia = TacGia_DAO.getInstance().selectById(H_tacGia4.getText());
-                if (tacGia.getMaTacGia().equals("") || tacGia==null) {
+                if (tacGia.getMaTacGia().equals("") || tacGia == null) {
                     if (H_tacGia5.getText().equals("")) {
                         JOptionPane.showMessageDialog(null, "Mã tác giả mới, vui lòng nhập tên tác giả!");
                         return;
@@ -4549,26 +4554,29 @@ public class TrangChuAdmin extends javax.swing.JFrame {
 
     private void btnH_suaSach2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnH_suaSach2ActionPerformed
         // TODO add your handling code here:
-        if (H_tenSach2.getText().trim().equals("") || H_tenTheLoai2.getText().trim().equals("") || H_tenSach3.getText().trim().equals("")
-                || H_tenDM2.getText().trim().equals("") || H_nhaXB2.getText().trim().equals("")  || H_soLuongCon2.getText().trim().equals("") || H_tacGia4.getText().trim().equals("")) {
+        if (H_tenSach2.getText().trim().equals("") || H_tenTheLoai2.getText().trim().equals("")
+                || H_tenSach3.getText().trim().equals("")
+                || H_tenDM2.getText().trim().equals("") || H_nhaXB2.getText().trim().equals("")
+                || H_soLuongCon2.getText().trim().equals("") || H_tacGia4.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Vui lòng điền đầy đủ thông tin!");
             return;
         } else {
-            if (!KiemTraNhap.getInstance().checkSpecialCharacters(H_tenSach2.getText()+H_tacGia4.getText())){
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(H_tenSach2.getText() + H_tacGia4.getText())) {
                 JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt vào mã sách hay mã tác giả");
                 return;
             }
-            if (!KiemTraNhap.getInstance().isNaturalNumber(H_namXB2.getText())){
+            if (!KiemTraNhap.getInstance().isNaturalNumber(H_namXB2.getText())) {
                 JOptionPane.showMessageDialog(null, "Năm xuất bản không đúng định dạng.");
                 return;
             }
-            if (!KiemTraNhap.getInstance().isNonNegativeFloat(H_soLuongCon2.getText())){
+            if (!KiemTraNhap.getInstance().isNonNegativeFloat(H_soLuongCon2.getText())) {
                 JOptionPane.showMessageDialog(null, "Giá tiền phải là số thực không âm");
                 return;
             }
             TacGia tacGia = TacGia_DAO.getInstance().selectById(H_tacGia4.getText());
-            if (tacGia==null || tacGia.getTenTacGia().equals("")){
-                JOptionPane.showMessageDialog(null, "Mã tác giả không tồn tại. Hãy thêm dữ liệu tác giả trong phần quản lý tác giả trước.");
+            if (tacGia == null || tacGia.getTenTacGia().equals("")) {
+                JOptionPane.showMessageDialog(null,
+                        "Mã tác giả không tồn tại. Hãy thêm dữ liệu tác giả trong phần quản lý tác giả trước.");
                 return;
             }
             if (!H_tacGia5.getText().equals("")) {
@@ -4700,7 +4708,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin!");
             return;
         } else {
-            if (!KiemTraNhap.getInstance().checkSpecialCharacters(txt_maDMSach4.getText())){
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(txt_maDMSach4.getText())) {
                 JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt vào mã");
                 return;
             }
@@ -4798,7 +4806,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin!");
 
         } else {
-            if (!KiemTraNhap.getInstance().checkSpecialCharacters(txt_maDMSach5.getText())){
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(txt_maDMSach5.getText())) {
                 JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt vào mã");
                 return;
             }
@@ -4888,11 +4896,11 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Bạn chưa nhập đủ thông tin!");
 
         } else {
-            if (!KiemTraNhap.getInstance().checkSpecialCharacters(txt_tenDMSach14.getText())){
+            if (!KiemTraNhap.getInstance().checkSpecialCharacters(txt_tenDMSach14.getText())) {
                 JOptionPane.showMessageDialog(null, "Vui lòng không nhập ký tự đặc biệt vào mã");
                 return;
             }
-            if (!KiemTraNhap.getInstance().isNaturalNumber(txt_tenDMSach12.getText())){
+            if (!KiemTraNhap.getInstance().isNaturalNumber(txt_tenDMSach12.getText())) {
                 JOptionPane.showMessageDialog(null, "Số lượng sách phải là số tự nhiên");
                 return;
             }

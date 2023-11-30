@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 public class test {
     public static void main(String[] args) {
-        System.out.println(KiemTraNhap.getInstance().checkSpecialCharacters("DDFDfdss435"+"fsdfsdf"));
+        // System.out.println(KiemTraNhap.getInstance().checkSpecialCharacters("DDFDfdss435"+"fsdfsdf"));
+        PhieuMuon_DAO.getInstance().selectByUserId("3121410516");
     }
 }

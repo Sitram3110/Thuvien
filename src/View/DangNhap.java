@@ -25,7 +25,7 @@ public class DangNhap extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        setResizable(false);
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -258,7 +258,8 @@ public class DangNhap extends javax.swing.JFrame {
                     frameThuthu.setVisible(true);
                     dispose();
                 } else {
-                    TrangChuDocGia frameDocgia = new TrangChuDocGia(txt_tenDangNhap.getText());
+
+                    TrangChuDocGia frameDocgia = new TrangChuDocGia(user);
                     frameDocgia.setVisible(true);
                     dispose();
                 }

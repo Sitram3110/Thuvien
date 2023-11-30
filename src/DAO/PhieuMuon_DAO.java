@@ -33,14 +33,15 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
 
     @Override
     public int add(PhieuMuon phieuMuon) {
-        if (phieuMuon.getHanTraSach()==null){
+        if (phieuMuon.getHanTraSach() == null) {
             phieuMuon.setHanTraSach(phieuMuon.getNgayMuon().plusDays(phieuMuon.getSoNgayMuon()));
         }
         int rowsAffected = 0;
-        String sql = "INSERT INTO dbo.[PhieuMuon] (maPhieuMuon, ngayMuon, soNgayMuon, hanTraSach, soLuongSach, maTaikhoan, maQuanly, ghiChu, trangThai) " +
+        String sql = "INSERT INTO dbo.[PhieuMuon] (maPhieuMuon, ngayMuon, soNgayMuon, hanTraSach, soLuongSach, maTaikhoan, maQuanly, ghiChu, trangThai) "
+                +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = KetNoiSQL.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+                PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, phieuMuon.getMaPhieuMuon());
             pst.setDate(2, java.sql.Date.valueOf(phieuMuon.getNgayMuon()));
             pst.setInt(3, phieuMuon.getSoNgayMuon());
@@ -60,14 +61,14 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
     @Override
     public int update(PhieuMuon phieuMuon) {
         int rowsAffected = 0;
-        if (phieuMuon.getHanTraSach()==null){
+        if (phieuMuon.getHanTraSach() == null) {
             phieuMuon.setHanTraSach(phieuMuon.getNgayMuon().plusDays(phieuMuon.getSoNgayMuon()));
         }
         String sql = "UPDATE dbo.[PhieuMuon] SET ngayMuon = ?, soNgayMuon = ?, hanTraSach = ?, " +
                 "soLuongSach = ?, maTaikhoan = ?, maQuanly = ?, ghiChu = ?, trangThai = ? " +
                 "WHERE maPhieuMuon = ?";
         try (Connection conn = KetNoiSQL.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+                PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setDate(1, java.sql.Date.valueOf(phieuMuon.getNgayMuon()));
             pst.setInt(2, phieuMuon.getSoNgayMuon());
             pst.setDate(3, java.sql.Date.valueOf(phieuMuon.getHanTraSach()));
@@ -90,7 +91,7 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
         int rowsAffected = 0;
         String sql = "DELETE FROM dbo.[PhieuMuon] WHERE maPhieuMuon = ?";
         try (Connection conn = KetNoiSQL.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+                PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, maPhieuMuon);
             rowsAffected = pst.executeUpdate();
         } catch (Exception e) {
@@ -103,8 +104,8 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
     public List<PhieuMuon> selectAll() {
         List<PhieuMuon> rowSelected = new ArrayList<>();
         try (Connection conn = KetNoiSQL.getConnection();
-             PreparedStatement pst = conn.prepareStatement("SELECT * FROM dbo.[PhieuMuon]");
-             ResultSet rs = pst.executeQuery()) {
+                PreparedStatement pst = conn.prepareStatement("SELECT * FROM dbo.[PhieuMuon]");
+                ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
                 String maPhieuMuon = rs.getString("maPhieuMuon");
                 LocalDate ngayMuon = rs.getDate("ngayMuon").toLocalDate();
@@ -130,7 +131,7 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
         PhieuMuon result = new PhieuMuon();
         String sql = "SELECT * FROM dbo.[PhieuMuon] WHERE maPhieuMuon = ?";
         try (Connection conn = KetNoiSQL.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+                PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, maPhieuMuon);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
@@ -149,14 +150,18 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
         }
         return result;
     }
+
     public List<PhieuMuon> selectByUserId(String maTaiKhoan) {
-        List<PhieuMuon> rowSelected = new ArrayList<>();
-        String sql = "SELECT * FROM dbo.[PhieuMuon] WHERE maTaiKhoan = ?";
+        List<PhieuMuon> rowSelected = new ArrayList<PhieuMuon>();
+        String sql = "select * from PhieuMuon where maTaiKhoan = ?";
         try (Connection conn = KetNoiSQL.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+                PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, maTaiKhoan);
             ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
+            int i = 0;
+            while (rs.next()) {
+                i++;
+                System.out.println(i);
                 String maPhieuMuon = rs.getString("maPhieuMuon");
                 LocalDate ngayMuon = rs.getDate("ngayMuon").toLocalDate();
                 int soNgayMuon = rs.getInt("soNgayMuon");
@@ -168,18 +173,24 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
                 String trangThai = rs.getString("trangThai");
                 PhieuMuon phieuMuon = new PhieuMuon(maPhieuMuon, ngayMuon, soNgayMuon, hanTraSach, soLuongSach,
                         maTaikhoan, maQuanly, ghiChu, trangThai);
+                System.out.println(phieuMuon);
+
                 rowSelected.add(phieuMuon);
             }
+            System.out.println(sql);
+            rs.close();
+            return rowSelected;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return rowSelected;
     }
+
     public List<String> selectAllMaCanBo() {
-        List<String > rowSelected = new ArrayList<>();
+        List<String> rowSelected = new ArrayList<>();
         try (Connection conn = KetNoiSQL.getConnection();
-             PreparedStatement pst = conn.prepareStatement("SELECT DISTINCT maQuanLy FROM dbo.[PhieuMuon]");
-             ResultSet rs = pst.executeQuery()) {
+                PreparedStatement pst = conn.prepareStatement("SELECT DISTINCT maQuanLy FROM dbo.[PhieuMuon]");
+                ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
                 rowSelected.add(rs.getString("maQuanly"));
             }
@@ -206,7 +217,7 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
         logoRun.setText("Email: tt_hoclieu@sgu.edu.vn");
         logoRun.addBreak();
 
-        //title
+        // title
         XWPFParagraph title = document.createParagraph();
         title.setAlignment(ParagraphAlignment.CENTER);
         XWPFRun titleRun = title.createRun();
@@ -214,7 +225,7 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
         titleRun.setFontSize(16);
         titleRun.setText("PHIẾU MƯỢN SÁCH");
 
-        //Thong tin nhanh
+        // Thong tin nhanh
         XWPFParagraph info = document.createParagraph();
         XWPFRun infoRun = info.createRun();
         infoRun.addBreak();
@@ -278,10 +289,9 @@ public class PhieuMuon_DAO implements DAO_Interface<PhieuMuon> {
 
         // Thêm ngày in cho footer
         XWPFParagraph dateStamp = document.createParagraph();
-        //  dateStamp.setAlignment(ParagraphAlignment.RIGHT);
+        // dateStamp.setAlignment(ParagraphAlignment.RIGHT);
         XWPFRun dateStampRun = dateStamp.createRun();
         dateStampRun.setText("Ngày in: " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-
 
         // Ghi xuống tệp
         String fileName = "PhieuMuonSach" + phieuMuon.getMaPhieuMuon() + ".doc"; // Tên tệp Word

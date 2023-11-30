@@ -340,7 +340,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        setResizable(false);
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -785,6 +785,7 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         maDocGiaField.setBounds(122, 6, 200, 30);
 
         soLuongmuonField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
+        soLuongmuonField.setEditable(false);
         jPanel29.add(soLuongmuonField);
         soLuongmuonField.setBounds(850, 153, 200, 30);
 
@@ -834,6 +835,8 @@ public class TrangChuThuThu extends javax.swing.JFrame {
         ngayMotheField.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jPanel29.add(ngayMotheField);
         ngayMotheField.setBounds(850, 60, 200, 30);
+        ngayMotheField.setEditable(false);
+        ngayMotheField.setText(LocalDate.now() + "");
 
         jPanel29.add(Hc_maTheLoai3);
         Hc_maTheLoai3.setBounds(470, 150, 200, 32);
