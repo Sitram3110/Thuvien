@@ -51,7 +51,6 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
         defaultTableModel_Sach.addColumn("Tên sách");
         defaultTableModel_Sach.addColumn("Số lượng còn");
         setTableData_Sach(Sach_DAO.getInstance().selectAll());
-
     }
     private void setTableData_Sach(List<Sach> listSach) {
         for (Sach sach : listSach) {
