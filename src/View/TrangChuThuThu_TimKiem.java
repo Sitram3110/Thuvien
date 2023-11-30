@@ -8,17 +8,21 @@ package View;
 import DAO.DanhMucSach_DAO;
 import DAO.KhoSach_DAO;
 import DAO.PhanLoaiSach_DAO;
+import DAO.QuanLiDocGia_DAO;
 import DAO.Sach_DAO;
 import DTO.DanhMucSach;
 import DTO.KhoSach;
 import DTO.PhanLoaiSach;
 import DTO.Sach;
 //import Service.Sach_Service;
+import Model.DanhSachTaiKhoan;
+import Model.TaiKhoan;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.util.List;
+import java.util.Vector;
 
 /**
  *
@@ -51,6 +55,7 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
         defaultTableModel_Sach.addColumn("Tên sách");
         defaultTableModel_Sach.addColumn("Số lượng còn");
         setTableData_Sach(Sach_DAO.getInstance().selectAll());
+        loadTableDocGia(tblK_banDoc, new DanhSachTaiKhoan(new QuanLiDocGia_DAO().dsDOCGIA()));
     }
     private void setTableData_Sach(List<Sach> listSach) {
         for (Sach sach : listSach) {
@@ -64,6 +69,39 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
         tblK_Sach.setRowSorter(tbl);
         tbl.setRowFilter(RowFilter.regexFilter(query));
     }
+
+    // bảng độc giả
+    public void loadTableDocGia(JTable tb, DanhSachTaiKhoan dg) {
+        String[] columnNames = { "Mã độc giả", "Tên độc giả", "Loại Tài Khoản", "Mật khẩu", "Số điện thoại",
+                "Ngày sinh", "Email", "Giới tính", "Địa Chỉ", "Ngày Mở Thẻ", "Hạn Sử Dụng", "SoLuongMuon",
+                "Trạng Thái" };
+        DefaultTableModel fault = new DefaultTableModel();
+        for (String col : columnNames) {
+            fault.addColumn(col);
+        }
+
+        fault.setRowCount(0);
+
+        for (TaiKhoan tk : dg.getDsTaiKhoan()) {
+            Vector t = new Vector<>();
+            t.add(tk.getTenTaiKhoan());
+            t.add(tk.getTenNguoiDung());
+            t.add(tk.getLoaiTK());
+            t.add(tk.getMatKhau());
+            t.add(tk.getSdt());
+            t.add(tk.getNgaySinh());
+            t.add(tk.getEmail());
+            t.add(tk.getGioiTinh());
+            t.add(tk.getDiaChi());
+            t.add(tk.getNgayMoThe());
+            t.add(tk.getHanSuDung());
+            t.add(tk.getSoLuongMuon());
+            t.add(tk.getTrangThai());
+            fault.addRow(t);
+        }
+        tb.setModel(fault);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,7 +126,7 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
         jPK_timKiemBanDoc = new javax.swing.JPanel();
         lbK_timKiemBanDoc = new javax.swing.JLabel();
         txtK_timKiemBanDoc = new javax.swing.JTextField();
-        btnK_timBanDoc = new javax.swing.JButton();
+        // btnK_timBanDoc = new javax.swing.JButton();
         btnK_refreshBanDoc = new javax.swing.JButton();
         jSPK_timKiemBanDoc = new javax.swing.JScrollPane();
         tblK_banDoc = new javax.swing.JTable();
@@ -224,14 +262,13 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
         lbK_timKiemBanDoc.setText("Tìm kiếm");
 
         txtK_timKiemBanDoc.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtK_timKiemBanDoc.addKeyListener(new java.awt.event.KeyAdapter() {
+                public void keyReleased(java.awt.event.KeyEvent evt) {
+                    loadTableDocGia(tblK_banDoc,
+                            new DanhSachTaiKhoan(new QuanLiDocGia_DAO().timKiem(txtK_timKiemBanDoc.getText())));
+                }
+            });
 
-        btnK_timBanDoc.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        btnK_timBanDoc.setText("Tìm");
-        btnK_timBanDoc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnK_timBanDocActionPerformed(evt);
-            }
-        });
 
         btnK_refreshBanDoc.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         btnK_refreshBanDoc.setText("Làm mới");
@@ -248,8 +285,10 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
 
                 },
                 new String[] {
-
+                        "Mã Quản Lý", "Mật Khẩu", "Tên Quản Lý", "Số Điện Thoại", "Giới Tính", "Ngày Sinh",
+                "Email", "Địa Chỉ", "Trạng thái", "Quyền"
                 }));
+
         jSPK_timKiemBanDoc.setViewportView(tblK_banDoc);
 
         javax.swing.GroupLayout jPK_timKiemBanDocLayout = new javax.swing.GroupLayout(jPK_timKiemBanDoc);
@@ -264,10 +303,10 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
                                 .addComponent(txtK_timKiemBanDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 730,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnK_timBanDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 90,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19,
-                                        Short.MAX_VALUE)
+                                // .addComponent(btnK_timBanDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 90,
+                                //         javax.swing.GroupLayout.PREFERRED_SIZE)
+                                // .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19,
+                                //         Short.MAX_VALUE)
                                 .addComponent(btnK_refreshBanDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 111,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
@@ -286,10 +325,10 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
                                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(txtK_timKiemBanDoc)
                                         .addComponent(btnK_refreshBanDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 30,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnK_timBanDoc, javax.swing.GroupLayout.Alignment.TRAILING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        // .addComponent(btnK_timBanDoc, javax.swing.GroupLayout.Alignment.TRAILING,
+                                        //         javax.swing.GroupLayout.DEFAULT_SIZE,
+                                        //         javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(426, Short.MAX_VALUE))
                         .addGroup(jPK_timKiemBanDocLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPK_timKiemBanDocLayout.createSequentialGroup()
@@ -331,10 +370,10 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
 
     }// GEN-LAST:event_btnK_timSachActionPerformed
 
-    private void btnK_timBanDocActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnK_timBanDocActionPerformed
-        // TODO add your handling code here:
+//     private void btnK_timBanDocActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnK_timBanDocActionPerformed
+//         // TODO add your handling code here:
 
-    }// GEN-LAST:event_btnK_timBanDocActionPerformed
+//     }// GEN-LAST:event_btnK_timBanDocActionPerformed
 
     private void btnK_refreshSachActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnK_refreshSachActionPerformed
         // TODO add your handling code here:
@@ -344,7 +383,8 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
     }// GEN-LAST:event_btnK_refreshSachActionPerformed
 
     private void btnK_refreshBanDocActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnK_refreshBanDocActionPerformed
-        // TODO add your handling code here:
+        txtK_timKiemBanDoc.setText("");
+        loadTableDocGia(tblK_banDoc, new DanhSachTaiKhoan(new QuanLiDocGia_DAO().dsDOCGIA()));
 
     }// GEN-LAST:event_btnK_refreshBanDocActionPerformed
 
@@ -408,7 +448,7 @@ public class TrangChuThuThu_TimKiem extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnK_refreshBanDoc;
     private javax.swing.JButton btnK_refreshSach;
-    private javax.swing.JButton btnK_timBanDoc;
+//     private javax.swing.JButton btnK_timBanDoc;
     private javax.swing.JButton btnK_timSach;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPK_tieuDe;
