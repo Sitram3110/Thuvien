@@ -6,9 +6,7 @@
 package View;
 
 import DAO.*;
-import DTO.ChiTietPhieuMuon;
-import DTO.PhieuMuon;
-import DTO.TacGia;
+import DTO.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -41,7 +39,6 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         loadComboBoxMaCanBo();
         loadComboBoxmaPhieuMuon();
     }
-
     public void loadmaPhieuMuon() {
         defaultTableModel_PM = new DefaultTableModel() {
             @Override
@@ -217,7 +214,11 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         lbL_maTK.setText("Mã tài khoản:");
 
         txtK_maTK.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-
+        txtK_maTK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtK_maTKActionPerformed(evt);
+            }
+        });
         lbK_maCB.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lbK_maCB.setForeground(new java.awt.Color(0, 0, 0));
         lbK_maCB.setText("Mã cán bộ:");
@@ -770,6 +771,7 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         fieldNgayTra.setEnabled(false);
         fieldSoluongsach.setEnabled(false);
+        txt_soNgayMuon.setEnabled(false);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(MouseEvent evt) {// GEN-FIRST:event_QLTGiaTableMouseClicked
@@ -778,7 +780,8 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         cbbK_maPM.setSelectedItem((String) jTable1.getValueAt(selectedRow, 0));
         txtK_maPM_1.setText((String) jTable1.getValueAt(selectedRow, 0));
         txtK_maTK.setText((String) jTable1.getValueAt(selectedRow, 1));
-        // cbbK_soNgayMuon.setSelectedItem(String.valueOf(jTable1.getValueAt(selectedRow, 2)));
+        // cbbK_soNgayMuon.setSelectedItem( String.valueOf(jTable1.getValueAt(selectedRow,2)));
+        txt_soNgayMuon.setText(String.valueOf(jTable1.getValueAt(selectedRow,2)));
         cbbK_maCB.setSelectedItem((String) jTable1.getValueAt(selectedRow, 3));
         Object selectedValue = jTable1.getValueAt(selectedRow, 4);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -840,7 +843,7 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
             } else {
                 PhieuMuon phieuMuon = new PhieuMuon();
                 phieuMuon.setMaPhieuMuon(txtK_maPM_1.getText());
-                // phieuMuon.setSoNgayMuon(Integer.parseInt((String) cbbK_soNgayMuon.getSelectedItem()));
+                phieuMuon.setSoNgayMuon(Integer.parseInt(txt_soNgayMuon.getText()));
                 Date date = txtK_ngayMuon.getDate();
                 // Chuyển đổi từ Date sang LocalDate
                 LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -904,7 +907,33 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
     private void cbbK_maPMItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_cbbK_maPMItemStateChanged
 
     }// GEN-LAST:event_cbbK_maPMItemStateChanged
+    private void txtK_maTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maSachFieldActionPerformed
+        // TODO add your handling code here:
+        TaiKhoan taiKhoan = TaiKhoan_DAO.getInstance().selectById(txtK_maTK.getText());
+        if (taiKhoan==null || taiKhoan.getMaTaikhoan()==null || taiKhoan.getMaTaikhoan().equals("")){
+            JOptionPane.showMessageDialog(null, "Tài khoản không tồn tại!");
+            txtK_maTK.setText("");
+            txt_soNgayMuon.setText("");
+            fieldNgayTra.setText("");
+            return;
+        }
+        LoaiThe loaiThe = LoaiThe_DAO.getInstance().selectById(taiKhoan.getLoaitaikhoan());
+        txt_soNgayMuon.setText(String.valueOf(loaiThe.getThoiGianDuocMuonToiDa()));
 
+        Date currentDate = txtK_ngayMuon.getDate();
+        if (currentDate == null) {
+            currentDate = new Date();
+        }
+        // int numberOfDaysToAdd = Integer.parseInt((String) cbbK_soNgayMuon.getSelectedItem());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+         calendar.add(Calendar.DAY_OF_MONTH, Integer.parseInt(txt_soNgayMuon.getText()));
+        Date newDate = calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = dateFormat.format(newDate);
+        fieldNgayTra.setText(dateString);
+
+    }
     private void btnK_luuMaSachActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnK_luuMaSachActionPerformed
         // TODO add your handling code here:
         if (txtK_maSach.getText().equals("")) {
@@ -969,6 +998,7 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         txtK_maPM_1.setText(phieuMuon.getMaPhieuMuon());
         txtK_maTK.setText(phieuMuon.getMaTaikhoan());
         // cbbK_soNgayMuon.setSelectedItem(String.valueOf(phieuMuon.getSoNgayMuon()));
+        txt_soNgayMuon.setText(String.valueOf(phieuMuon.getSoNgayMuon()));
         cbbK_maCB.setSelectedItem(phieuMuon.getMaQuanly());
         Object selectedValue = phieuMuon.getNgayMuon().toString();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

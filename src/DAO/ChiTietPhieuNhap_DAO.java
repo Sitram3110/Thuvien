@@ -258,7 +258,13 @@ public class ChiTietPhieuNhap_DAO implements DAO_Interface<ChiTietPhieuNhapSach>
                     themVaoTacGia(maTacGia, tenTacGia);
                     ChiTietPhieuNhapSach chiTietPhieuNhapSach = new ChiTietPhieuNhapSach(maPhieuNhap, maSach, tenSach, maTacGia, maTheLoai, nxb, namXuatBan, soLuongNhap, giaNhap);
                     add(chiTietPhieuNhapSach);
-                    themVaoThongTinSach (maSach, tenSach, maTacGia, tenTacGia, maTheLoai, nxb, namXuatBan);
+                    Sach sach = Sach_DAO.getInstance().selectById(maSach);
+                    if (sach.getMaSach()==null || sach==null || sach.getMaSach().equals("")){
+                        themVaoThongTinSach (maSach, tenSach, maTacGia, tenTacGia, maTheLoai, nxb, namXuatBan);
+                        TacGia tacGia = TacGia_DAO.getInstance().selectById(maTacGia);
+                        tacGia.setSoSach(tacGia.getSoSach()+1);
+                        TacGia_DAO.getInstance().update(tacGia);
+                    }
                 }
             }
 
