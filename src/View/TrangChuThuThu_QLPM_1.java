@@ -119,7 +119,8 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         txtK_maTK = new javax.swing.JTextField();
         lbK_maCB = new javax.swing.JLabel();
         lbK_soNgayMuon = new javax.swing.JLabel();
-        cbbK_soNgayMuon = new javax.swing.JComboBox<>();
+        // cbbK_soNgayMuon = new javax.swing.JComboBox<>();
+        txt_soNgayMuon = new javax.swing.JTextField();
         lbK_ngayMuon = new javax.swing.JLabel();
         txtK_ngayMuon = new com.toedter.calendar.JDateChooser();
         labelNgayTra = new javax.swing.JLabel();
@@ -171,11 +172,11 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
                 btnK_veTrangTruocActionPerformed(evt, quayVe);
             }
         });
-        cbbK_soNgayMuon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbK_soNgayMuonActionPerformed(evt);
-            }
-        });
+        // cbbK_soNgayMuon.addActionListener(new java.awt.event.ActionListener() {
+        //     public void actionPerformed(java.awt.event.ActionEvent evt) {
+        //         cbbK_soNgayMuonActionPerformed(evt);
+        //     }
+        // });
 
         javax.swing.GroupLayout jPK_tieuDeLayout = new javax.swing.GroupLayout(jPK_tieuDe);
         jPK_tieuDe.setLayout(jPK_tieuDeLayout);
@@ -225,8 +226,10 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         lbK_soNgayMuon.setForeground(new java.awt.Color(0, 0, 0));
         lbK_soNgayMuon.setText("Số ngày mượn:");
 
-        cbbK_soNgayMuon.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        cbbK_soNgayMuon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "14", "21" }));
+        // cbbK_soNgayMuon.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        // cbbK_soNgayMuon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "14", "21" }));
+
+        txt_soNgayMuon.setFont(new java.awt.Font("Times New Roman", 0, 18));
 
         lbK_ngayMuon.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lbK_ngayMuon.setForeground(new java.awt.Color(0, 0, 0));
@@ -279,7 +282,7 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
                                                                         javax.swing.GroupLayout.Alignment.LEADING,
                                                                         false)
                                                                         .addComponent(txtK_maPM_1)
-                                                                        .addComponent(cbbK_soNgayMuon,
+                                                                        .addComponent(txt_soNgayMuon,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE,
                                                                                 163,
                                                                                 javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -352,7 +355,7 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
                                         .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                                         .addComponent(lbK_soNgayMuon, javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbbK_soNgayMuon)
+                                        .addComponent(txt_soNgayMuon)
                                         .addComponent(cbbK_maCB, javax.swing.GroupLayout.PREFERRED_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -775,7 +778,7 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         cbbK_maPM.setSelectedItem((String) jTable1.getValueAt(selectedRow, 0));
         txtK_maPM_1.setText((String) jTable1.getValueAt(selectedRow, 0));
         txtK_maTK.setText((String) jTable1.getValueAt(selectedRow, 1));
-        cbbK_soNgayMuon.setSelectedItem(String.valueOf(jTable1.getValueAt(selectedRow, 2)));
+        // cbbK_soNgayMuon.setSelectedItem(String.valueOf(jTable1.getValueAt(selectedRow, 2)));
         cbbK_maCB.setSelectedItem((String) jTable1.getValueAt(selectedRow, 3));
         Object selectedValue = jTable1.getValueAt(selectedRow, 4);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -837,7 +840,7 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
             } else {
                 PhieuMuon phieuMuon = new PhieuMuon();
                 phieuMuon.setMaPhieuMuon(txtK_maPM_1.getText());
-                phieuMuon.setSoNgayMuon(Integer.parseInt((String) cbbK_soNgayMuon.getSelectedItem()));
+                // phieuMuon.setSoNgayMuon(Integer.parseInt((String) cbbK_soNgayMuon.getSelectedItem()));
                 Date date = txtK_ngayMuon.getDate();
                 // Chuyển đổi từ Date sang LocalDate
                 LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -965,7 +968,7 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         PhieuMuon phieuMuon = PhieuMuon_DAO.getInstance().selectById(cbbK_maPM.getSelectedItem().toString());
         txtK_maPM_1.setText(phieuMuon.getMaPhieuMuon());
         txtK_maTK.setText(phieuMuon.getMaTaikhoan());
-        cbbK_soNgayMuon.setSelectedItem(String.valueOf(phieuMuon.getSoNgayMuon()));
+        // cbbK_soNgayMuon.setSelectedItem(String.valueOf(phieuMuon.getSoNgayMuon()));
         cbbK_maCB.setSelectedItem(phieuMuon.getMaQuanly());
         Object selectedValue = phieuMuon.getNgayMuon().toString();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -990,10 +993,10 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
         if (currentDate == null) {
             currentDate = new Date();
         }
-        int numberOfDaysToAdd = Integer.parseInt((String) cbbK_soNgayMuon.getSelectedItem());
+        // int numberOfDaysToAdd = Integer.parseInt((String) cbbK_soNgayMuon.getSelectedItem());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
-        calendar.add(Calendar.DAY_OF_MONTH, numberOfDaysToAdd);
+        // calendar.add(Calendar.DAY_OF_MONTH, numberOfDaysToAdd);
         Date newDate = calendar.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = dateFormat.format(newDate);
@@ -1116,7 +1119,8 @@ public class TrangChuThuThu_QLPM_1 extends javax.swing.JFrame {
     private javax.swing.JButton btnXuatPhieuMuon;
     private javax.swing.JComboBox<String> cbbK_maCB;
     private javax.swing.JComboBox<String> cbbK_maPM;
-    private javax.swing.JComboBox<String> cbbK_soNgayMuon;
+//     private javax.swing.JComboBox<String> cbbK_soNgayMuon;
+    private javax.swing.JTextField txt_soNgayMuon;
     private javax.swing.JComboBox<String> cbbK_trangThai;
     private javax.swing.JTextField fieldNgayTra;
     private javax.swing.JTextField fieldSoluongsach;
