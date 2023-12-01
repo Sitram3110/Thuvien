@@ -5,7 +5,7 @@
 * Đặc tả yêu cầu phần mềm
 * Thiết kế luồng hoạt động
 2. Công việc riêng:
-* Nguyễn Đình Khoa: Phân chia công việc, Code chức năng Quản Lý Mượn Trả, Kiểm thử phần mềm, Thiết kế cơ sở dữ liệu.
+* Hà Nguyên Yến Vi: Phân chia công việc, 
 * Cao Thị Thúy Hằng: Code chức năng Quản Lý Sách và Danh mục Sách, Thiết kế giao diện phần mềm, Thiết kế cơ sở dữ liệu, Viết báo cáo.
 * Võ Xuân Phúc: Code chức năng Quản Lý Độc giả, Code chức năng Thống Kê, Kiểm thử phần mềm.
 * Lê Quốc Tuấn: Code chức năng Mượn sách, Kiểm thử phần mềm, Thiết kế cơ sở dữ liệu.
