@@ -275,8 +275,14 @@ public class DangNhap extends javax.swing.JFrame {
                     dispose();
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Thông tin đăng nhập hoặc mật khẩu không hợp lệ!", "ERROR",
+                if(loginBLL.checkTaiKhoanbikhoa(user, pass)){
+                    JOptionPane.showMessageDialog(null, "Tài khoản đã bị khóa!", "ERROR",
                         JOptionPane.ERROR_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Thông tin đăng nhập hoặc mật khẩu không hợp lệ!", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+                
             }
         }
     }

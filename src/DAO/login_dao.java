@@ -86,12 +86,12 @@ public class login_dao {
         return quanLyss;
     }
     
-    public List<TaiKhoan> getall_Docgia(){
+    public List<TaiKhoan> getall_Docgia(int trangthai){
         List<TaiKhoan> taiKhoans = new ArrayList<TaiKhoan>();
         Connection connection = KetNoiSQL.getConnection();
         try {
             Statement statement = connection.createStatement();
-            String query = "select * from TaiKhoan";
+            String query = "select * from TaiKhoan where trangThai = '"+ trangthai +"'";
             System.out.println(query);
 			
             ResultSet rss =  statement.executeQuery(query);

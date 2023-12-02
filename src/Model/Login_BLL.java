@@ -19,7 +19,7 @@ public class Login_BLL {
     public boolean checkUser(String user, String pass, String position) {
         List<QuanLy> adminList = loginDao.getall_Admin();
         List<QuanLy> thuThuList = loginDao.getall_Thuthu();
-        List<TaiKhoan> docGiaList = loginDao.getall_Docgia();
+        List<TaiKhoan> docGiaList = loginDao.getall_Docgia(1);
 
         if ("Admin".equals(position)) {
             for (QuanLy quanLy : adminList) {
@@ -54,5 +54,15 @@ public class Login_BLL {
         return false;
     }
 
+    public boolean checkTaiKhoanbikhoa(String user, String pass){
+        List<TaiKhoan> docGiaList = loginDao.getall_Docgia(0);
+        for (TaiKhoan taiKhoan : docGiaList) {
+                if (user.equalsIgnoreCase(taiKhoan.getMaTaikhoan()) && pass.equalsIgnoreCase(taiKhoan.getMatKhau())) {
+                    System.out.println("Tài khoản bị khóa!");
+                    return true;
+                }
+            }
+        return false;
+    }
     
 }
