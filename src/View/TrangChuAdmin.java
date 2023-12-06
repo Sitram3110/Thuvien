@@ -616,7 +616,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         khoatk8.setBackground(new java.awt.Color(255, 204, 204));
         khoatk8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         khoatk8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/block-user.png"))); // NOI18N
-        khoatk8.setText("Xóa");
+        khoatk8.setText("Khóa");
         khoatk8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 khoatk8ActionPerformed(evt);
