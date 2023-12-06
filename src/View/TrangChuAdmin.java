@@ -3822,7 +3822,8 @@ public class TrangChuAdmin extends javax.swing.JFrame {
             gioitinhnam22.setSelected(true);
         } else if (gioiTinh.equals("Nữ"))
             gioitinhnu22.setSelected(true);
-        else buttonGroup2.clearSelection();
+        else
+            buttonGroup2.clearSelection();
         textboxsearch16.setText(tableSearchSach7.getValueAt(lineSelect, 5).toString());
         tenDocGiaField5.setText(tableSearchSach7.getValueAt(lineSelect, 6).toString().trim());
         tenDocGiaField6.setText(tableSearchSach7.getValueAt(lineSelect, 7).toString());
@@ -3842,7 +3843,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
     // load bảng tài khoản quản lý
     private void loadTaiKhoanQuanLy(JTable tb, DanhSachQuanLy dsql) {
         String[] nameColumn = { "Mã Quản Lý", "Mật Khẩu", "Tên Quản Lý", "Số Điện Thoại", "Giới Tính", "Ngày Sinh",
-                "Email", "Địa Chỉ", "Trạng thái", "Quyền" };
+                "Email", "Địa Chỉ", "Trạng thái" };
 
         DefaultTableModel faut = new DefaultTableModel();
         for (String col : nameColumn) {
@@ -3899,10 +3900,9 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         if (textboxsearch14.getText().equals("") || textboxsearch15.getText().equals("")
                 || matKhauField3.getText().equals("")) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
-        } else if(isSpecialCharacter(textboxsearch14.getText())){
+        } else if (isSpecialCharacter(textboxsearch14.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Quản Lý Không Chứa Ký Tự Đặc Biệt");
-        }
-        else if (!new check().isDateValid(textboxsearch16.getText())) {
+        } else if (!new check().isDateValid(textboxsearch16.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
                     "Vui Lòng Nhập Ngày Theo Định Dạng 'yyyy-mm-dd'!");
         } else if (!new QuanLy_DAO().checkMaQuanLy(textboxsearch14.getText())) {
@@ -3950,9 +3950,9 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         if (textboxsearch14.getText().equals("") || textboxsearch15.getText().equals("")
                 || matKhauField3.getText().equals("")) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
-        } else if(isSpecialCharacter(textboxsearch14.getText())){
+        } else if (isSpecialCharacter(textboxsearch14.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Quản Lý Không Chứa Ký Tự Đặc Biệt");
-        }else if (!new check().isDateValid(textboxsearch16.getText())) {
+        } else if (!new check().isDateValid(textboxsearch16.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(),
                     "Vui Lòng Nhập Ngày Theo Định Dạng 'yyyy-mm-dd'!");
         } else if (new QuanLy_DAO().checkMaQuanLy(textboxsearch14.getText())) {
@@ -4103,7 +4103,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         if (maLoaiField.getText().equals("") || soLuongField.getText().equals("")
                 || thoiGianField.getText().equals("")) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
-        }else if(isSpecialCharacter(maLoaiField.getText())){
+        } else if (isSpecialCharacter(maLoaiField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Loại Thẻ Không Chứa Ký Tự Đặc Biệt");
         } else if (!new QLDG_PhanLoai_DAO().checkMaThe(maLoaiField.getText().toString())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Thẻ Đã Tồn Tại!!");
@@ -4136,7 +4136,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         if (maLoaiField.getText().equals("") || soLuongField.getText().equals("")
                 || thoiGianField.getText().equals("")) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Vui Lòng Nhập Đủ Thông Tin!");
-        }else if(isSpecialCharacter(maLoaiField.getText())){
+        } else if (isSpecialCharacter(maLoaiField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Loại Thẻ Không Chứa Ký Tự Đặc Biệt");
         } else if (new QLDG_PhanLoai_DAO().checkMaThe(maLoaiField.getText().toString())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Thẻ Đã Tồn Tại!!");
@@ -4222,9 +4222,10 @@ public class TrangChuAdmin extends javax.swing.JFrame {
         String gioiTinh = tableDocgia2.getValueAt(lineSelect, 7).toString();
         if (gioiTinh.equals("Nam")) {
             gioitinhnam18.setSelected(true);
-        } else if(gioiTinh.equals("Nữ"))
+        } else if (gioiTinh.equals("Nữ"))
             gioitinhnu18.setSelected(true);
-        else buttonGroup2.clearSelection();
+        else
+            buttonGroup2.clearSelection();
 
         if (tableDocgia2.getValueAt(lineSelect, 8) == null) {
             diaChiField.setText("");
@@ -4272,7 +4273,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 || Hc_maTheLoai3.getSelectedItem().equals("") || sdt2.getText().equals("")
                 || tenDocGiaField.getText().equals("")) {
             JOptionPane.showMessageDialog((JOptionPane.getRootFrame()), "Vui Lòng Nhập Đủ Thông Tin!");
-        } else if(isSpecialCharacter(maDocGiaField.getText())){
+        } else if (isSpecialCharacter(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Không Chứa Ký Tự Đặc Biệt");
         } else if (!new QuanLiDocGia_DAO().checkMaTaiKhoan(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Đã Tồn Tại!");
@@ -4327,7 +4328,7 @@ public class TrangChuAdmin extends javax.swing.JFrame {
                 || emailDocgia4.getText().equals("") || sdt2.getText().equals("")
                 || tenDocGiaField.getText().equals("")) {
             JOptionPane.showMessageDialog((JOptionPane.getRootFrame()), "Vui Lòng Nhập Đủ Thông Tin!");
-        }else if(isSpecialCharacter(maDocGiaField.getText())){
+        } else if (isSpecialCharacter(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Không Chứa Ký Tự Đặc Biệt");
         } else if (new QuanLiDocGia_DAO().checkMaTaiKhoan(maDocGiaField.getText())) {
             JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "Mã Độc Giả Không Tồn Tại!");
